@@ -1,3 +1,4 @@
+DROP schema `databaseProj`;
 CREATE DATABASE `databaseProj`; 
 USE `databaseProj`;
 -- Create database that will hold user credentials--
@@ -14,11 +15,11 @@ CREATE TABLE `creds` (
 
 -- Create database that will hold event info -- avoiding using "event" as thats keyword
 CREATE TABLE `eventsinfo` ( 
-  `event_id` int(255) NOT NULL,
-  `name` varchar(255) NOT NULL AUTO_INCREMENT,
+  `event_id` int(255) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `time` time(50) NOT NULL, 
+  `time` time(6) NOT NULL, 
   `date` date NOT NULL,
   `location` varchar(255) NOT NULL, -- we have to set this with a google map or something?
   `contact_phone` varchar(22) NOT NULL,
@@ -30,8 +31,8 @@ CREATE TABLE `eventsinfo` (
 
 -- Create database that will hold university--
 CREATE TABLE `university` (
-  `uni_id` int(255) NOT NULL,
-  `owner` varchar(255) NOT NULL AUTO_INCREMENT, -- will relate to the id of user that created the university?--
+  `uni_id` int(255) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(255) NOT NULL, -- will relate to the id of user that created the university?--
   `location` varchar(255) NOT NULL,
   `amt_students` varchar(255) NOT NULL,
   -- we can add extra here, like contact info and such.
@@ -41,24 +42,24 @@ PRIMARY KEY (`uni_id`)
 
 CREATE TABLE `comment` (
   `comment_id` int(255) NOT NULL  AUTO_INCREMENT,
-  `user_id` varchar(255) NOT NULL, -- RELATE TO USER THAT POSTED
-  `event_id` varchar(255) NOT NULL, -- This will relate to the event its posted on--
+  `user_id` int(255) NOT NULL, -- RELATE TO USER THAT POSTED
+  `event_id` int(255) NOT NULL, -- This will relate to the event its posted on--
   `content` varchar(255) NOT NULL,
   `rating` int(255) NOT NULL,
-  `time` time(50) NOT NULL,  -- optional, date and time of comment creation?
+  `time` time(6) NOT NULL,  -- optional, date and time of comment creation?
   `date` date NOT NULL,
   PRIMARY KEY (`comment_id`, `event_id`, `user_id`),
-  FOREIGN KEY (`event_id`) references eventinfo ON DELETE CASCADE,
-  FOREIGN KEY (`user_id`) references creds ON DELETE CASCADE 
+  FOREIGN KEY (`event_id`) references eventsinfo(event_id) ON DELETE CASCADE,
+  FOREIGN KEY (`user_id`) references creds(user_id) ON DELETE CASCADE 
   -- "Cascade" deletes the comment if either the event or user is deleted.
   
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE `RSO` (
-  `rso_id` int(255) NOT NULL,
+  `rso_id` int(255) NOT NULL AUTO_INCREMENT,
   `rso` varchar(255) NOT NULL,
-  `owner` varchar(255) NOT NULL AUTO_INCREMENT, -- will relate to the id of user that created the rso maybe?--
+  `owner` varchar(255) NOT NULL, -- will relate to the id of user that created the rso maybe?--
 -- probably more info needed her
 PRIMARY KEY (`rso_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
