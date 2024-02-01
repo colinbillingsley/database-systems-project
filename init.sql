@@ -12,8 +12,8 @@ CREATE TABLE `creds` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- Create database that will hold event info--
-CREATE TABLE `events` (
+-- Create database that will hold event info -- avoiding using "event" as thats keyword
+CREATE TABLE `eventsinfo` ( 
   `event_id` int(255) NOT NULL,
   `name` varchar(255) NOT NULL AUTO_INCREMENT,
   `category` varchar(255) NOT NULL,
@@ -40,13 +40,18 @@ PRIMARY KEY (`uni_id`)
 
 
 CREATE TABLE `comment` (
-  `comment_id` int(255) NOT NULL,
-  `event_id` varchar(255) NOT NULL AUTO_INCREMENT, -- This will relate to the event its posted on--
+  `comment_id` int(255) NOT NULL  AUTO_INCREMENT,
+  `user_id` varchar(255) NOT NULL, -- RELATE TO USER THAT POSTED
+  `event_id` varchar(255) NOT NULL, -- This will relate to the event its posted on--
   `content` varchar(255) NOT NULL,
   `rating` int(255) NOT NULL,
   `time` time(50) NOT NULL,  -- optional, date and time of comment creation?
   `date` date NOT NULL,
-  PRIMARY KEY (`comment_id`)
+  PRIMARY KEY (`comment_id`, `event_id`, `user_id`),
+  FOREIGN KEY (`event_id`) references eventinfo ON DELETE CASCADE,
+  FOREIGN KEY (`user_id`) references creds ON DELETE CASCADE 
+  -- "Cascade" deletes the comment if either the event or user is deleted.
+  
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
