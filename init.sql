@@ -1,4 +1,4 @@
-DROP schema `databaseProj`;
+-- DROP schema `databaseProj`; < use this for testing purposes
 CREATE DATABASE `databaseProj`; 
 USE `databaseProj`;
 -- Create database that will hold user credentials--
