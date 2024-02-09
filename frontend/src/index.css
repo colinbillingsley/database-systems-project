@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* 
+Photo by <a href="https://unsplash.com/@theunsteady5?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Edwin Andrade</a> on <a href="https://unsplash.com/photos/people-raising-their-hands-4V1dC_eoCwg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --nav-bg-color: black;
+  --nav-font-color: white;
+  --nav-link-hover-color: gold;
+  --form-bg-color: rgb(234, 234, 234);
+  --form-login-button-color: rgba(255, 217, 0, 0.406);
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* ===================================
+Styles for Nav.js
+=================================== */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--nav-bg-color);
+}
+
+.nav-links-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 1rem;
+}
+
+.navbar-container a {
+  color: var(--nav-font-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+
+.nav-links-list a {
+  position: relative;
+}
+
+.nav-links-list a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  top: 36.5px;
+  left: 0;
+  background-color: var(--nav-link-hover-color);
+  transition: all 0.3s ease;
+}
+
+.nav-links-list a:hover::after {
+  width: 100%;
+}
+
+.nav-links-list a:hover {
+  color: var(--nav-link-hover-color);
+  text-shadow: 0 0 10px var(--nav-link-hover-color);
+}
+
+.nav-links-list i {
+  padding-right: 0.5rem;
+}
+
+.nav-links-list i:hover {
+  cursor: pointer;
+}
+
+/* ===================================
+Styles for Welcome.js
+=================================== */
+.welcome-img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(./imgs/edwin-andrade-4V1dC_eoCwg-unsplash.jpg);
+  background-size: cover;
+  background-position: center;
+  width: 50%;
+  height: calc(100vh - 3.3rem);
+  color: white;
+  padding: 1em;
+}
+
+.welcome-img-container h1 {
+  text-align: center;
+  font-size: 4em;
+  padding-bottom: 10px;
+}
+
+.welcome-img-container p {
+  text-align: center;
+}
+
+/* ===================================
+Styles for Login.js
+=================================== */
+.landing-content-container {
+  display: flex;
+  align-content: center;
+}
+
+.form-container {
+  padding: 1em;
+  width: 50%;
+}
+
+/* ===================================
+Styles for LoginForm.js
+=================================== */
+.login-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form-header {
+  color: black;
+  padding: 1em;
+}
+
+.form-heading {
+  font-weight: 500;
+  font-size: 1.6em;
+  padding-bottom: 10px;
+}
+
+.form-heading-text {
+  font-size: 0.9em;
+}
+
+.login-form-body {
+  padding: 0 1em;
+}
+
+.form-section {
+  padding-bottom: 10px;
+}
+
+.login-form-body label {
+  display: block;
+  padding-bottom: 5px;
+}
+
+.login-form-body input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 0.8em 0.5em;
+  border: none;
+  background-color: rgb(238, 238, 238);
+  outline: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.login-form-body input[type="text"]:focus, input[type="password"]:focus {
+  outline: 2px solid gold;
+  background-color: white;
+}
+
+.login-form-body input[type="submit"] {
+  margin-top: 10px;
+  padding: 0.5em 3.5em;
+  font-size: 0.9em;
+  background-color: var(--form-login-button-color);
+  border: 2px solid gold;
+  outline: 2px solid transparent;
+  border-radius: 10px;
+  transition: all 0.16s linear;
+}
+
+.login-form-body input[type="submit"]:hover {
+  cursor: pointer;
+  background-color: gold;
+  outline: 2px solid var(--form-login-button-color);
+  outline-offset: 3px;
+}
+
+.no-account {
+  padding: 1em;
+}
+
+.no-account p {
+  font-size: 0.9em;
+}
+
+.no-account p:hover {
+  cursor: default;
+}
+
+.no-account a {
+  color: blue;
+}
+
+.no-account a:hover {
+  opacity: 90%;
+}
+
+/* ===================================
+Styles for AccountType.js
+=================================== */
+.account-type-container {
+  padding: 2em;
+}
+
+.account-type-list {
+  list-style: none;
+  padding: 10px 0 15px 0;
+}
+
+.account-type-list li a {
+  text-decoration: none;
+  color: black;
+  background-color: var(--form-login-button-color);
+  border: 2px solid gold;
+  outline: 2px solid transparent;
+  border-radius: 10px;
+  padding: 0.5em 3.5em;
+  display: block;
+  text-align: center;
+  margin-top: 1em;
+  transition: all 0.3s ease;
+}
+
+.account-type-list li a:hover {
+  background-color: gold;
+  outline: 2px solid var(--form-login-button-color);
+  outline-offset: 3px;
+}
+
+.have-account {
+  margin-top: 1em;
+  font-size: 0.9em;
+}
+
+.have-account p:hover {
+  cursor: default;
+}
+
+.have-account a {
+  color: blue;
+}
+
+.have-account a:hover {
+  opacity: 90%;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!! 
+Screen size smaller than 800px
+!!!!!!!!!!!!!!!!!!!!!!!!! */
+@media (max-width: 800px) {
+  /* ===================================
+  Styles for Login.js
+  =================================== */
+  .landing-content-container {
+    flex-direction: column;
+  }
+
+  .welcome-img-container {
+    width: 100%;
+  }
+}
