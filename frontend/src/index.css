@@ -83,51 +83,86 @@ Styles for Nav.js
 Styles for Welcome.js
 =================================== */
 .welcome-img-container {
+  background-image: linear-gradient(to top, #000000ba, #fefefe0e), url(./imgs/edwin-andrade-4V1dC_eoCwg-unsplash.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.welcome-content-container {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url(./imgs/edwin-andrade-4V1dC_eoCwg-unsplash.jpg);
-  background-size: cover;
-  background-position: center;
-  width: 50%;
-  height: calc(100vh - 3.3rem);
   color: white;
   padding: 1em;
 }
 
-.welcome-img-container h1 {
+.welcome-content-container h1 {
   text-align: center;
   font-size: 4em;
   padding-bottom: 10px;
 }
 
-.welcome-img-container p {
+.welcome-content-container p {
   text-align: center;
 }
 
-/* ===================================
-Styles for Login.js
-=================================== */
-.landing-content-container {
+.welcome-buttons-container {
   display: flex;
-  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding-top: 20px;
 }
 
-.form-container {
-  padding: 1em;
-  width: 50%;
+.welcome-button {
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  padding: 0.8em 2em;
+  border-radius: 10px;
+  border: 2px solid white;
+  outline: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.welcome-button:hover {
+  background-color: white;
+  color: black;
+  border-color: transparent;
+  outline-color: white;
+  outline-offset: 3px;
 }
 
 /* ===================================
-Styles for LoginForm.js
+Styles for LoginForm.js,
+           CreateAdStForm.js,
+           CreateSuperForm.js
 =================================== */
-.login-form-container form {
+.form-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3em 1em;
+}
+
+.form-container form {
   display: flex;
   flex-direction: column;
+  min-width: 280px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgb(153, 153, 153);
+  border-radius: 10px;
+  padding: 0 1em 5em 1em;
 }
 
-.login-form-header {
+.form-header {
   color: black;
   padding: 1em;
 }
@@ -142,36 +177,49 @@ Styles for LoginForm.js
   font-size: 0.9em;
 }
 
-.login-form-body {
+.form-header hr {
+  margin: 1em 0 0 0;
+  border: none;
+  border-top: 2px solid gold;
+}
+
+.form-body {
   padding: 0 1em;
 }
 
 .form-section {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
-.login-form-body label {
+.form-section label {
   display: block;
   padding-bottom: 5px;
 }
 
-.login-form-body input[type="text"], input[type="password"] {
+.form-section input[type="text"], input[type="password"], textarea {
+  font-family: inherit;
   width: 100%;
-  padding: 0.8em 0.5em;
+  padding: 1em 0.8em;
   border: none;
-  background-color: rgb(238, 238, 238);
+  border-radius: 10px;
+  background-color: rgb(246, 246, 246);
   outline: 2px solid transparent;
   transition: all 0.3s ease;
 }
 
-.login-form-body input[type="text"]:focus, input[type="password"]:focus {
+.form-section input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
   outline: 2px solid gold;
   background-color: white;
 }
 
-.login-form-body input[type="submit"] {
+.form-section textarea {
+  resize: none;
+}
+
+.form-section input[type="submit"] {
   margin-top: 10px;
-  padding: 0.5em 3.5em;
+  padding: 1em;
+  width: 100%;
   font-size: 0.9em;
   background-color: var(--form-login-button-color);
   border: 2px solid gold;
@@ -180,7 +228,7 @@ Styles for LoginForm.js
   transition: all 0.16s linear;
 }
 
-.login-form-body input[type="submit"]:hover {
+.form-section input[type="submit"]:hover {
   cursor: pointer;
   background-color: gold;
   outline: 2px solid var(--form-login-button-color);
@@ -189,6 +237,7 @@ Styles for LoginForm.js
 
 .no-account {
   padding: 1em;
+  text-align: center;
 }
 
 .no-account p {
@@ -208,28 +257,73 @@ Styles for LoginForm.js
 }
 
 /* ===================================
+Styles for CreateSuperForm.js
+=================================== */
+.create-super-form-container .form-container form{
+  max-width: 800px;
+}
+
+.super-form-body-container {
+  display: flex;
+}
+
+.super-form-body-container .form-body {
+  flex-grow: 2;
+}
+
+.super-descr-container {
+  flex-grow: 1;
+  padding: 0 1em;
+}
+
+.super-descr-container textarea {
+  resize: none;
+  display: block;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+/* ===================================
 Styles for AccountType.js
 =================================== */
+.account-content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3em 1em;
+}
+
 .account-type-container {
-  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  padding: 1em 1em 3em 1em;
+  box-shadow: 0 5px 10px rgb(115, 115, 115);
+  border-radius: 10px;
+  min-width: 280px;
+  max-width: 500px;
+  width: 100%;
 }
 
 .account-type-list {
   list-style: none;
-  padding: 10px 0 15px 0;
+  width: 100%;
+  padding: 0 1em 1em 1em;
 }
 
+
 .account-type-list li a {
+  display: block;
+  padding: 1em;
+  margin-top: 1em;
+  width: 100%;
+  font-size: 0.9em;
   text-decoration: none;
+  text-align: center;
   color: black;
   background-color: var(--form-login-button-color);
   border: 2px solid gold;
   outline: 2px solid transparent;
   border-radius: 10px;
-  padding: 0.5em 3.5em;
-  display: block;
-  text-align: center;
-  margin-top: 1em;
   transition: all 0.3s ease;
 }
 
@@ -242,6 +336,8 @@ Styles for AccountType.js
 .have-account {
   margin-top: 1em;
   font-size: 0.9em;
+  padding-left: 1em;
+  text-align: center;
 }
 
 .have-account p:hover {
@@ -256,6 +352,12 @@ Styles for AccountType.js
   opacity: 90%;
 }
 
+/* ===================================
+Styles for CreateAdStForm.js
+
+!!! uses styling from LoginForm.js !!!
+=================================== */
+
 /* !!!!!!!!!!!!!!!!!!!!!!!!! 
 Screen size smaller than 800px
 !!!!!!!!!!!!!!!!!!!!!!!!! */
@@ -269,5 +371,13 @@ Screen size smaller than 800px
 
   .welcome-img-container {
     width: 100%;
+  }
+
+  .form-container {
+    width: 100%;
+  }
+
+  .super-form-body-container {
+    flex-direction: column;
   }
 }

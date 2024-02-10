@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
@@ -10,14 +11,14 @@ const Nav = () => {
         return (
             <header>
                 <nav className="navbar-container">
-                    <a href="#" className="univents">UNIVENTS</a>
+                    <Link to="/" className="univents">UNIVENTS</Link>
                     
                     <ul className="nav-links-list">
                         <li>
-                            <a href="">RSOs</a>
+                            <Link to="">RSOs</Link>
                         </li>
                         <li>
-                            <a href="">Events</a>
+                            <Link to="">Events</Link>
                         </li>
                         <li>
                             <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: 'white'}}/></i>
@@ -33,7 +34,7 @@ const Nav = () => {
         return (
             <header>
                 <nav className="navbar-container">
-                    <a href="#" className="univents">UNIVENTS</a>
+                <Link to="/" className="univents">UNIVENTS</Link>
                 </nav>
             </header>
         )

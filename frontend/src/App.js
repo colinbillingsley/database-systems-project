@@ -1,9 +1,16 @@
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Link } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import AccountType from './pages/AccountType';
+import CreateAdStAccount from './pages/CreateAdStAccount';
+import CreateSuperAccount from './pages/CreateSuperAccount';
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Welcome />,
+  },
   {
     path: "/login",
     element: <Login />,
@@ -11,6 +18,14 @@ const router = createBrowserRouter([
   {
     path: "/account-type",
     element: <AccountType />,
+  },
+  {
+    path: "/create-account-adst",
+    element: <CreateAdStAccount />,
+  },
+  {
+    path: "/create-account-super",
+    element: <CreateSuperAccount />,
   },
 ]);
 
