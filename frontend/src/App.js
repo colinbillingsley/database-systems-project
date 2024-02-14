@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import AccountType from './pages/AccountType';
 import CreateAdStAccount from './pages/CreateAdStAccount';
 import CreateSuperAccount from './pages/CreateSuperAccount';
+import AllEvents from './pages/AllEvents';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/create-account-super",
     element: <CreateSuperAccount />,
+  },
+  {
+    path: "/events",
+    element: <AllEvents />,
   },
 ]);
 

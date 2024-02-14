@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 /* 
-Photo by <a href="https://unsplash.com/@theunsteady5?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Edwin Andrade</a> on <a href="https://unsplash.com/photos/people-raising-their-hands-4V1dC_eoCwg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+Image in Welcome.js
+  Photo by <a href="https://unsplash.com/@theunsteady5?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Edwin Andrade</a> on <a href="https://unsplash.com/photos/people-raising-their-hands-4V1dC_eoCwg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 */
 
 * {
@@ -16,6 +17,7 @@ Photo by <a href="https://unsplash.com/@theunsteady5?utm_content=creditCopyText&
   --nav-link-hover-color: gold;
   --form-bg-color: rgb(234, 234, 234);
   --form-login-button-color: rgba(255, 217, 0, 0.406);
+  --filter-hover-bg-color: rgb(233, 233, 233);
 }
 
 body {
@@ -37,7 +39,7 @@ Styles for Nav.js
   display: flex;
   align-items: center;
   list-style: none;
-  gap: 1rem;
+  gap: 1.2em;
 }
 
 .navbar-container a {
@@ -49,26 +51,13 @@ Styles for Nav.js
 
 .nav-links-list a {
   position: relative;
-}
-
-.nav-links-list a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  top: 36.5px;
-  left: 0;
-  background-color: var(--nav-link-hover-color);
-  transition: all 0.3s ease;
-}
-
-.nav-links-list a:hover::after {
-  width: 100%;
+  padding: 1em 0.5em;
 }
 
 .nav-links-list a:hover {
   color: var(--nav-link-hover-color);
-  text-shadow: 0 0 10px var(--nav-link-hover-color);
+  text-shadow: 0 0 10px rgba(255, 217, 0, 0.508);
+  background-color: rgba(255, 217, 0, 0.244);
 }
 
 .nav-links-list i {
@@ -353,10 +342,157 @@ Styles for AccountType.js
 }
 
 /* ===================================
-Styles for CreateAdStForm.js
-
-!!! uses styling from LoginForm.js !!!
+Styles for Events.js
 =================================== */
+.events-page-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 1em;
+  margin: 0 3em;
+}
+
+.main-heading {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+#searchbar {
+  font-family: inherit;
+  padding: 1em;
+  border-radius: 10px;
+  border: 2px solid gray;
+  outline: none;
+  width: 250px;
+}
+
+#searchbar:focus {
+  border: 2px solid black;
+}
+
+.events-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 1em 3em;
+  padding: 0 1em;
+}
+
+.day-filter-heading {
+  font-size: 2em;
+  font-weight: 400;
+  margin-top: 1em;
+}
+
+/* ===================================
+Styles for Filters.js
+=================================== */
+.filter-container {
+  box-shadow: 0 5px 10px rgba(128, 128, 128, 0.472);
+  border-radius: 10px;
+  padding: 1em;
+  width: 250px;
+}
+
+.filter-container ul {
+  list-style: none;
+}
+
+.filter-heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.filter-heading-container h3 {
+  font-weight: 500;
+}
+
+.filter-heading-container p {
+  padding: 0.3em 1em;
+  border-radius: 10px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.filter-heading-container p:hover {
+  cursor: pointer;
+  background-color: var(--filter-hover-bg-color);
+  
+}
+
+.filter-list > li {
+  border-top: 2px solid rgba(128, 128, 128, 0.436);
+}
+
+.filter-list > li > p {
+  padding: 0.5em 0;
+}
+
+.filter-sublist {
+  margin-bottom: 0.5em;
+}
+
+.filter-sublist li {
+  margin-left: 10px;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  background-color: white;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.filter-sublist li:hover {
+  background-color: var(--filter-hover-bg-color);
+  cursor: pointer;
+}
+
+.filter-sublist li.active {
+  background-color: var(--filter-hover-bg-color);
+}
+
+/* ===================================
+Styles for DayFilters.js
+=================================== */
+.day-filters-container {
+  margin-top: 1em;
+}
+
+.day-filters-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 1em;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(128, 128, 128, 0.474);
+  width: fit-content;
+  padding: 0.5em 1em;
+}
+
+.day-filters-list button {
+  position: relative;
+  display: block;
+  font-family: inherit;
+  font-size: 1em;
+  text-decoration: none;
+  color: black;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-color: white;
+  padding: 0.5em 1em;
+  transition: all 0.3s ease;
+}
+
+
+.day-filters-list button:hover {
+  cursor: pointer;
+  background-color: var(--filter-hover-bg-color);
+}
+
+.day-filters-list button.active {
+  background-color: var(--filter-hover-bg-color);
+}
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!! 
 Screen size smaller than 800px
