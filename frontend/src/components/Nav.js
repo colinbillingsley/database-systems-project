@@ -22,7 +22,7 @@ const Nav = () => {
                                 <Link to="">RSOs</Link>
                             </li>
                             <li>
-                                <Link to="/all-events">Events</Link>
+                                <Link to="/events">Events</Link>
                             </li>
                             <li>
                                 <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: 'white'}}/></i>
@@ -45,7 +45,7 @@ const Nav = () => {
                                 <Link to="">RSOs</Link>
                             </li>
                             <li>
-                                <Link to="/all-events">Events</Link>
+                                <Link to="/events">Events</Link>
                             </li>
                             <li>
                                 <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: 'white'}}/></i>
@@ -68,7 +68,7 @@ const Nav = () => {
                                 <Link to="">RSOs</Link>
                             </li>
                             <li>
-                                <Link to="/all-events">Events</Link>
+                                <Link to="/events">Events</Link>
                             </li>
                             <li>
                                 <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: 'white'}}/></i>
