@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { faCircleUser, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
     const [loggedIn, setLoggedIn] = useState(true);
@@ -19,13 +19,16 @@ const Nav = () => {
                         
                         <ul className="nav-links-list">
                             <li>
+                                <Link to="">Requests</Link>
+                            </li>
+                            <li>
                                 <Link to="">RSOs</Link>
                             </li>
                             <li>
                                 <Link to="/events">Events</Link>
                             </li>
                             <li>
-                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: 'white'}}/></i>
+                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
                             </li>
                         </ul>
                     </nav>
@@ -48,7 +51,7 @@ const Nav = () => {
                                 <Link to="/events">Events</Link>
                             </li>
                             <li>
-                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: 'white'}}/></i>
+                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
                             </li>
                         </ul>
                     </nav>
@@ -71,7 +74,7 @@ const Nav = () => {
                                 <Link to="/events">Events</Link>
                             </li>
                             <li>
-                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: 'white'}}/></i>
+                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
                             </li>
                         </ul>
                     </nav>
