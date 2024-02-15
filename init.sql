@@ -1,22 +1,7 @@
 -- DROP schema `eventdb`; for testing purposes
 CREATE DATABASE `eventdb`; 
 USE `eventdb`;
-/*
-CREATE TABLE `comment` (
-  `comment_id` int(255) NOT NULL  AUTO_INCREMENT,
-  `user_id` int(255) NOT NULL, -- RELATE TO USER THAT POSTED
-  `event_id` int(255) NOT NULL, -- This will relate to the event its posted on--
-  `content` varchar(255) NOT NULL,
-  `rating` int(255) NOT NULL,
-  `time` time(6) NOT NULL,  -- optional, date and time of comment creation?
-  `date` date NOT NULL,
-  PRIMARY KEY (`comment_id`, `event_id`, `user_id`),
-  FOREIGN KEY (`event_id`) references eventsinfo(event_id) ON DELETE CASCADE,
-  FOREIGN KEY (`user_id`) references creds(user_id) ON DELETE CASCADE
-  -- "Cascade" deletes the comment if either the event or user is deleted.
-  
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-*/ 
+
   CREATE TABLE `Users` (
   `uid` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255),
