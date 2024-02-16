@@ -6,11 +6,14 @@ import AccountType from './pages/AccountType';
 import CreateAdStAccount from './pages/CreateAdStAccount';
 import CreateSuperAccount from './pages/CreateSuperAccount';
 import AllEvents from './pages/AllEvents';
+import EventInfo from './pages/EventInfo';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Welcome />,
+    children: [
+    ],
   },
   {
     path: "/login",
@@ -31,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/events",
     element: <AllEvents />,
+  },
+  {
+    path: "/events/:event-id/:event-name",
+    element: <EventInfo />,
   },
 ]);
 

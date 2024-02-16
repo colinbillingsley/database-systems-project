@@ -4,15 +4,19 @@ import Nav from "./Nav"
 import DayFilters from "./DayFilters";
 import Filters from "./Filters";
 import EventBox from "./EventBox";
+import { Link } from "react-router-dom";
 
 const Events = () => {
+    const date = new Date();
 
     // temp event for styling
     const tempEvent = {
+        id:'0',
         name: 'UCF Database Project',
-        category: 'Software Development',
+        location: 'L3Harris Engineering Center Room 115',
+        category: 'Tech',
         time: '3pm',
-        date: 'February 14, 2024',
+        date: `${date.toDateString()}`,
         type: 'Public',
         description: `You are asked to implement a web-based application that solves the problems. Any student
         (user) may register with the application to obtain a user ID and a password. There are three
@@ -21,11 +25,10 @@ const Events = () => {
         who uses the application to look up information about the various events.`
     }
 
-    const [events, setEvents] = useState([tempEvent]);
+    const [events, setEvents] = useState([tempEvent, tempEvent, tempEvent]);
     const [uniName, setUniName] = useState("UCF");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
-
 
     return (
         <div>
@@ -48,17 +51,33 @@ const Events = () => {
                         {/* check if there's any events in database */}
                         {(events.length === 0) 
                             // if no events found, display message
-                            ? <p className="no-events-found">No events found.</p>
+                            ? 
+                            <li>
+                                <p className="no-events-found">No events found.</p>
+                            </li> 
                             // if events found, display all events
                             :
-                            <li className="event-item">
-                                <EventBox name={tempEvent.name} 
-                                time={tempEvent.time}
-                                date={tempEvent.date}
-                                type={tempEvent.type}
-                                category={tempEvent.category}
-                                description={tempEvent.description}/>
-                            </li>
+                            events.map((event, index) => {
+                                const trimmedName = event.name.trim();
+                                const formattedName = trimmedName.replace(/\s+/g, '-');
+
+                                return (
+                                    <li className="event-item">
+                                        <Link to={`/events/${event.id}/${formattedName}`}>
+                                            <EventBox
+                                                index={index}
+                                                name={event.name} 
+                                                location={event.location}
+                                                time={event.time}
+                                                date={event.date}
+                                                type={event.type}
+                                                category={event.category}
+                                                description={event.description}
+                                            />
+                                        </Link>
+                                    </li>
+                                )
+                            })
                         }
                     </ul>
                 </div>

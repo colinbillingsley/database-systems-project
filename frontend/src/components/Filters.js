@@ -53,8 +53,19 @@ const Filters = () => {
                     <p>Event Categories:</p>
                     <ul className="filter-sublist">
                         <li id="4" className="filter-sublist-item" onClick={handleFilterClick}>Academic</li>
-                        <li id="5" className="filter-sublist-item" onClick={handleFilterClick}>Tech</li>
-                        <li id="6" className="filter-sublist-item" onClick={handleFilterClick}>Sports</li>
+                        <li id="5" className="filter-sublist-item" onClick={handleFilterClick}>Art</li>
+                        <li id="6" className="filter-sublist-item" onClick={handleFilterClick}>Career/Jobs</li>
+                        <li id="7" className="filter-sublist-item" onClick={handleFilterClick}>Entertainment</li>
+                        <li id="8" className="filter-sublist-item" onClick={handleFilterClick}>Fundraising</li>
+                        <li id="9" className="filter-sublist-item" onClick={handleFilterClick}>Gaming</li>
+                        <li id="10" className="filter-sublist-item" onClick={handleFilterClick}>Health</li>
+                        <li id="11" className="filter-sublist-item" onClick={handleFilterClick}>Meeting</li>
+                        <li id="12" className="filter-sublist-item" onClick={handleFilterClick}>Recreation/Excerise</li>
+                        <li id="13" className="filter-sublist-item" onClick={handleFilterClick}>Service/Volunteer</li>
+                        <li id="14" className="filter-sublist-item" onClick={handleFilterClick}>Social</li>
+                        <li id="15" className="filter-sublist-item" onClick={handleFilterClick}>Sports</li>
+                        <li id="16" className="filter-sublist-item" onClick={handleFilterClick}>Tech</li>
+                        <li id="17" className="filter-sublist-item" onClick={handleFilterClick}>Uncategorized/Other</li>
                     </ul>
                 </li>
             </ul>

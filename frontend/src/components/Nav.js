@@ -6,6 +6,11 @@ import { faCircleUser, faUser } from "@fortawesome/free-solid-svg-icons";
 const Nav = () => {
     const [loggedIn, setLoggedIn] = useState(true);
     const [levelAccount, setLevelAccount] = useState(0);
+
+    const handleUserProfileClick = () => {
+        const dropdown = document.getElementsByClassName('user-profile-dropdown');
+        dropdown[0].classList.toggle('hidden');
+    }
     
     // if user logged in display nav links (temp solution for testing)
     if (loggedIn) {
@@ -28,7 +33,15 @@ const Nav = () => {
                                 <Link to="/events">Events</Link>
                             </li>
                             <li>
-                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
+                                <i className="user-profile"><FontAwesomeIcon onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
+                                <ul className="user-profile-dropdown hidden">
+                                    <li>My Account</li>
+                                    <li>
+                                        <form action="" method="POST">
+                                            <input type="submit" value="Logout"/>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </nav>
@@ -51,7 +64,15 @@ const Nav = () => {
                                 <Link to="/events">Events</Link>
                             </li>
                             <li>
-                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
+                                <i className="user-profile"><FontAwesomeIcon onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
+                                <ul className="user-profile-dropdown hidden">
+                                    <li>My Account</li>
+                                    <li>
+                                        <form action="" method="POST">
+                                            <input type="submit" value="Logout"/>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </nav>
@@ -74,7 +95,15 @@ const Nav = () => {
                                 <Link to="/events">Events</Link>
                             </li>
                             <li>
-                                <i className="user-profile"><FontAwesomeIcon icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
+                                <i className="user-profile"><FontAwesomeIcon onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} /></i>
+                                <ul className="user-profile-dropdown hidden">
+                                    <li>My Account</li>
+                                    <li>
+                                        <form action="" method="POST">
+                                            <input type="submit" value="Logout"/>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </nav>
