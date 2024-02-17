@@ -12,8 +12,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Welcome />,
-    children: [
-    ],
   },
   {
     path: "/login",
@@ -32,7 +30,7 @@ const router = createBrowserRouter([
     element: <CreateSuperAccount />,
   },
   {
-    path: "/events",
+    path: "/all-events",
     element: <AllEvents />,
   },
   {

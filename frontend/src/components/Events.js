@@ -1,12 +1,13 @@
 import { useState } from "react"
+import { Link } from "react-router-dom";
 
 import Nav from "./Nav"
 import DayFilters from "./DayFilters";
 import Filters from "./Filters";
 import EventBox from "./EventBox";
-import { Link } from "react-router-dom";
 
-const Events = () => {
+const Events = ({userLevel}) => {
+    // temp date for styling
     const date = new Date();
 
     // temp event for styling
@@ -32,7 +33,7 @@ const Events = () => {
 
     return (
         <div>
-            <Nav />
+            <Nav userLevel={userLevel}/>
 
             <div className="events-page-top">
                 <h2 className="main-heading">Events at {uniName}</h2>
@@ -45,6 +46,9 @@ const Events = () => {
                 <div className="events-main-content">
                     <div className="day-filter-buttons-container">
                         <DayFilters dayFilter={dayFilter} setDayFilter={setDayFilter} setDayFilterHeading={setDayFilterHeading}/>
+                        
+                        {/* user is not student, they can create event */}
+                        {userLevel !== 0 ? <button className="btn">Create Event</button> : ''}
                     </div>
                     <h3 className="day-filter-heading">{dayFilterHeading}</h3>
                     <ul className="list-of-events">
