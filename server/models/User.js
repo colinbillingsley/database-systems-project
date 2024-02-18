@@ -1,6 +1,4 @@
-const db = require('../db');
-
-
+//const db = require('../db');
 
 // Model for Users table
 class User {
@@ -8,7 +6,7 @@ class User {
     this.username = username;
     this.password = password;
   }
-
+  
   // Method to create a new user
   static create(username, password, callback) {
     const query = 'INSERT INTO Users (username, password) VALUES (?, ?)';

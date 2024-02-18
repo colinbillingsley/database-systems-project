@@ -1,19 +1,16 @@
 require('dotenv').config()
+
 const mysql = require('mysql');
 const express = require('express');
 const app = express();
 const port = process.env.PORT
 app.use(express.json());
 
+
+const user = require('./user');
+
  
-//register
-app.post("/api/register", (req, res)=> {
-  res.json({
-   status: "success",
-   data: {},
-  })
- });
- 
+app.use('/user', user);
  
 
 
