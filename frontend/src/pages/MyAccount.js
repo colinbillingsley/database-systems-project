@@ -1,9 +1,12 @@
+import { useState } from "react";
+
 import Nav from "../components/Nav"
 
 const MyAccount = () => {
+    const [userLevel, setUserLevel] = useState(1);
     return (
         <div className="my-account">
-            <Nav />
+            <Nav userLevel={userLevel}/>
             <h2 className="main-heading">My Account</h2>
 
             <form className="account-info-form">

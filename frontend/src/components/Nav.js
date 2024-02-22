@@ -47,10 +47,10 @@ const Nav = ({userLevel}) => {
                         
                         <ul className="nav-links-list">
                             <li>
-                                <Link className="nav-link-item" to="">Requests</Link>
+                                <Link className="nav-link-item" to="/requests">Requests</Link>
                             </li>
                             <li>
-                                <Link className="nav-link-item" to="">RSOs</Link>
+                                <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
                             <li>
                                 <Link className="nav-link-item" to="/all-events">Events</Link>
@@ -83,7 +83,7 @@ const Nav = ({userLevel}) => {
                         
                         <ul className="nav-links-list">
                             <li>
-                                <Link className="nav-link-item" to="">RSOs</Link>
+                                <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
                             <li>
                                 <p className="event-toggle" onMouseOver={changeCaretColorBlue} onMouseLeave={changeCaretColorBlack} onClick={handleEventNavClick}>
@@ -125,7 +125,7 @@ const Nav = ({userLevel}) => {
                         <Link to="/" className="univents">UNIVENTS</Link>
                         <ul className="nav-links-list">
                             <li>
-                                <Link className="nav-link-item" to="">RSOs</Link>
+                                <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
                             <li>
                                 <Link className="nav-link-item" to="/all-events">Events</Link>

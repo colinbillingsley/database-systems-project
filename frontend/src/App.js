@@ -8,6 +8,7 @@ import CreateSuperAccount from './pages/CreateSuperAccount';
 import AllEvents from './pages/AllEvents';
 import EventInfo from './pages/EventInfo';
 import MyAccount from './pages/MyAccount';
+import RsoPage from './pages/RsoPage';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/my-account",
     element: <MyAccount />,
+  },
+  {
+    path: "/rsos",
+    element: <RsoPage />,
   },
 ]);
 

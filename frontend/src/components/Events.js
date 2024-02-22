@@ -40,8 +40,6 @@ const Events = ({userLevel}) => {
 
     return (
         <div>
-            <Nav userLevel={userLevel}/>
-
             <div className="events-page-top">
                 <h2 className="main-heading">Events at {uniName}</h2>
                 <form>
