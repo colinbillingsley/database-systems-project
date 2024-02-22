@@ -58,7 +58,9 @@ const Nav = ({userLevel}) => {
                             <li>
                                 <FontAwesomeIcon className="user-profile" onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} />
                                 <ul className="user-profile-dropdown hidden">
-                                    <li>My Account</li>
+                                    <li>
+                                        <Link to="/my-account">My Account</Link>
+                                    </li>
                                     <li>
                                         <form action="" method="POST">
                                             <input type="submit" value="Logout"/>
@@ -99,7 +101,9 @@ const Nav = ({userLevel}) => {
                             <li>
                                 <FontAwesomeIcon className="user-profile" onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} />
                                 <ul className="user-profile-dropdown hidden">
-                                    <li>My Account</li>
+                                    <li>
+                                        <Link to="/my-account">My Account</Link>
+                                    </li>
                                     <li>
                                         <form action="" method="POST">
                                             <input type="submit" value="Logout"/>
@@ -114,7 +118,7 @@ const Nav = ({userLevel}) => {
         }
 
         // user is student
-        else {
+        else if (userLevel === 0){
             return (
                 <header>
                     <nav className="navbar-container">
@@ -129,7 +133,9 @@ const Nav = ({userLevel}) => {
                             <li>
                                 <FontAwesomeIcon className="user-profile" onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} />
                                 <ul className="user-profile-dropdown hidden">
-                                    <li>My Account</li>
+                                    <li>
+                                        <Link to="/my-account">My Account</Link>
+                                    </li>
                                     <li>
                                         <form action="" method="POST">
                                             <input type="submit" value="Logout"/>
@@ -138,6 +144,16 @@ const Nav = ({userLevel}) => {
                                 </ul>
                             </li>
                         </ul>
+                    </nav>
+                </header>
+            )
+        } 
+        
+        else {
+            return (
+                <header>
+                    <nav className="navbar-container">
+                        <Link to="/" className="univents">UNIVENTS</Link>
                     </nav>
                 </header>
             )

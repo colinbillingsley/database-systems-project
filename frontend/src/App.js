@@ -7,6 +7,7 @@ import CreateAdStAccount from './pages/CreateAdStAccount';
 import CreateSuperAccount from './pages/CreateSuperAccount';
 import AllEvents from './pages/AllEvents';
 import EventInfo from './pages/EventInfo';
+import MyAccount from './pages/MyAccount';
 
 const router = createBrowserRouter([
   {
@@ -37,12 +38,18 @@ const router = createBrowserRouter([
     path: "/events/:event-id/:event-name",
     element: <EventInfo />,
   },
+  {
+    path: "/my-account",
+    element: <MyAccount />,
+  },
 ]);
 
 function App() {
 
   return (
-    <RouterProvider router={router}/>
+    <div className="app">
+      <RouterProvider router={router}/>
+    </div>
   )
 }
 

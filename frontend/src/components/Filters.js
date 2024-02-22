@@ -60,7 +60,7 @@ const Filters = () => {
                         <li id="9" className="filter-sublist-item" onClick={handleFilterClick}>Gaming</li>
                         <li id="10" className="filter-sublist-item" onClick={handleFilterClick}>Health</li>
                         <li id="11" className="filter-sublist-item" onClick={handleFilterClick}>Meeting</li>
-                        <li id="12" className="filter-sublist-item" onClick={handleFilterClick}>Recreation/Excerise</li>
+                        <li id="12" className="filter-sublist-item" onClick={handleFilterClick}>Recreation/Exercise</li>
                         <li id="13" className="filter-sublist-item" onClick={handleFilterClick}>Service/Volunteer</li>
                         <li id="14" className="filter-sublist-item" onClick={handleFilterClick}>Social</li>
                         <li id="15" className="filter-sublist-item" onClick={handleFilterClick}>Sports</li>

@@ -5,6 +5,7 @@ import Nav from "./Nav"
 import DayFilters from "./DayFilters";
 import Filters from "./Filters";
 import EventBox from "./EventBox";
+import CreateEvent from "./CreateEvent";
 
 const Events = ({userLevel}) => {
     // temp date for styling
@@ -31,6 +32,12 @@ const Events = ({userLevel}) => {
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
 
+    // open create event menu when create events is clicked
+    const EventClick = () => {
+        const createEvent = document.querySelector('.create-event-wrapper');
+        createEvent.classList.remove('hidden');
+    }
+
     return (
         <div>
             <Nav userLevel={userLevel}/>
@@ -48,7 +55,7 @@ const Events = ({userLevel}) => {
                         <DayFilters dayFilter={dayFilter} setDayFilter={setDayFilter} setDayFilterHeading={setDayFilterHeading}/>
                         
                         {/* user is not student, they can create event */}
-                        {userLevel !== 0 ? <button className="btn">Create Event</button> : ''}
+                        {userLevel !== 0 ? <button className="btn" onClick={EventClick}>Create Event</button> : ''}
                     </div>
                     <h3 className="day-filter-heading">{dayFilterHeading}</h3>
                     <ul className="list-of-events">
@@ -62,6 +69,7 @@ const Events = ({userLevel}) => {
                             // if events found, display all events
                             :
                             events.map((event, index) => {
+                                // format event name to be placed in URL
                                 const trimmedName = event.name.trim();
                                 const formattedName = trimmedName.replace(/\s+/g, '-');
 
@@ -90,6 +98,7 @@ const Events = ({userLevel}) => {
                     <Filters />
                 </div>
             </div>
+            <CreateEvent />
         </div>
     )
 }
