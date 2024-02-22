@@ -1,3 +1,4 @@
+import { text } from "@fortawesome/fontawesome-svg-core";
 import GoogleMap from "./GoogleMap";
 
 const CreateEvent = () => {
@@ -5,6 +6,18 @@ const CreateEvent = () => {
     const HandleCancelClick = (e) => {
         e.preventDefault();
         const createEvent = document.querySelector('.create-event-wrapper');
+        const textFields = document.querySelectorAll('.create-event-text-field');
+        const selectFields = document.querySelectorAll('.create-event-select-field');
+
+        // reset text fields
+        textFields.forEach(field => {
+            field.value = "";
+        });
+
+        selectFields.forEach(field => {
+            field.value = field.options[0].value;
+        });
+        // hide the event menu
         createEvent.classList.add('hidden');
     }
     
@@ -21,21 +34,22 @@ const CreateEvent = () => {
                     <form action="" method="POST">
                         {/* event name */}
                         <div className="form-section">
-                            <label htmlFor="event-name">Event Name:</label>
-                            <input type="text" name="event-name" id="event-name" placeholder="Enter event name"/>
+                            <label htmlFor="event-name">Event Name</label>
+                            <input className="create-event-text-field" type="text" name="event-name" id="event-name" placeholder="Enter event name" required/>
                         </div>
 
                         {/* event description */}
                         <div className="form-section">
-                            <label htmlFor="event-description">Event Description:</label>
-                            <textarea name="event-description" id="event-description" rows="10" placeholder="Enter a description of the event..."></textarea>
+                            <label htmlFor="event-description">Event Description</label>
+                            <textarea className="create-event-text-field" name="event-description" id="event-description" rows="10" placeholder="Enter a description of the event..." required></textarea>
                         </div>
 
                         <div className="create-event-in-line-section">
                             {/* category selection */}
                             <div className="form-section">
-                                <label htmlFor="event-category">Select event category</label>
-                                <select name="event-category" id="event-category">
+                                <label htmlFor="event-category">Event Category</label>
+                                <select className="create-event-select-field" name="event-category" id="event-category" required>
+                                    <option disabled selected value> -- Select a Category  -- </option>
                                     <option value="academic">Academic</option>
                                     <option value="art">Art</option>
                                     <option value="career-jobs">Career/Jobs</option>
@@ -55,8 +69,9 @@ const CreateEvent = () => {
 
                             {/* type selection */}
                             <div className="form-section">
-                                <label htmlFor="event-type">Select event type</label>
-                                <select name="event-type" id="event-type">
+                                <label htmlFor="event-type">Event Type</label>
+                                <select className="create-event-select-field" name="event-type" id="event-type" required>
+                                    <option disabled selected value> -- Select an Event Type  -- </option>
                                     <option value="public">Public</option>
                                     <option value="private">Private</option>
                                     <option value="rso">RSO</option>
@@ -67,14 +82,15 @@ const CreateEvent = () => {
                         <div className="create-event-in-line-section">
                             {/* event date */}
                             <div className="form-section">
-                                <label htmlFor="event-date">Enter event date</label>
-                                <input type="text" name="event-date" id="event-date" placeholder="Enter event date"/>
+                                <label htmlFor="event-date">Event Date</label>
+                                <input className="create-event-text-field" type="text" name="event-date" id="event-date" placeholder="Example: 01/01/24" required/>
                             </div>
 
                             {/* time selection */}
                             <div className="form-section time-section">
-                                <label htmlFor="event-time">Select event start time</label>
-                                <select name="event-time" id="event-time">
+                                <label htmlFor="event-time">Event Start Time</label>
+                                <select className="create-event-select-field" name="event-time" id="event-time" required>
+                                    <option disabled selected value> -- Select a Time  -- </option>
                                     <option value="12am">12:00am</option>
                                     <option value="1am">1:00am</option>
                                     <option value="2am">2:00am</option>
@@ -107,20 +123,20 @@ const CreateEvent = () => {
                         <div className="create-event-in-line-section">
                             {/* contact phone number */}
                             <div className="form-section">
-                                <label htmlFor="event-phone-number">Enter contact phone number</label>
-                                <input type="text" name="event-phone-number" id="event-phone-number" placeholder="Enter contact phone number"/>
+                                <label htmlFor="event-phone-number">Contact Phone Number</label>
+                                <input className="create-event-text-field" type="text" name="event-phone-number" id="event-phone-number" placeholder="Example: 000-000-0000" required/>
                             </div>
 
                             {/* contact email */}
                             <div className="form-section">
-                                <label htmlFor="event-email">Enter contact email</label>
-                                <input type="text" name="event-email" id="event-email" placeholder="Enter contact email"/>
+                                <label htmlFor="event-email">Contact email</label>
+                                <input className="create-event-text-field" type="text" name="event-email" id="event-email" placeholder="Example: abc@gmail.com" required/>
                             </div>
                         </div>
 
-                        {/* select location */}
+                        {/* select location (not sure if we cant get location data from current implementation of google map)*/}
                         <div className="form-section">
-                            <label htmlFor="event-location">Select event location</label>
+                            <label htmlFor="event-location">Event location</label>
                             <GoogleMap />
                         </div>
 
