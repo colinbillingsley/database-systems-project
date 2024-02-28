@@ -704,7 +704,7 @@ Styles for MyAccount.js
 }
 
 .account-info-form .form-section {
-  width: 60%;
+  width: 50%;
 }
 
 /* ===================================
@@ -919,13 +919,13 @@ Styles for EventInfo.js
   width: fit-content;
 }
 
-.star-item.white {
-  color: white;
+.star-item svg{
+  padding: 0.1em;
+  pointer-events: none;
 }
 
 .star-item:hover {
   cursor: pointer;
-  color: gold;
 }
 
 /* ===================================

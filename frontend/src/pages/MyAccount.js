@@ -15,13 +15,13 @@ const MyAccount = () => {
                     {/* university input */}
                     <div className="form-section">
                         <label htmlFor="university">University</label>
-                        <input type="text" name="university" id="university" value="University of user will show here"/>
+                        <input type="text" name="university" id="university" value="University of user will show here" disabled/>
                     </div>
 
                     {/* username input */}
                     <div className="form-section">
                         <label htmlFor="username">Username</label>
-                        <input type="text" name="username" id="username" value="Username of user will show here"/>
+                        <input type="text" name="username" id="username" value="Username of user will show here" disabled/>
                     </div>
                 </div>
             </form>
