@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 
 import Nav from "./Nav"
@@ -27,7 +27,7 @@ const Events = ({userLevel}) => {
         who uses the application to look up information about the various events.`
     }
 
-    const [events, setEvents] = useState([tempEvent, tempEvent, tempEvent]);
+    const [events, setEvents] = useState([]);
     const [uniName, setUniName] = useState("UCF");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
@@ -37,6 +37,10 @@ const Events = ({userLevel}) => {
         const createEvent = document.querySelector('.create-event-wrapper');
         createEvent.classList.remove('hidden');
     }
+
+    useEffect(() => {
+        setEvents(events => [...events, tempEvent]);
+    }, [])
 
     return (
         <div>
@@ -74,16 +78,7 @@ const Events = ({userLevel}) => {
                                 return (
                                     <li className="event-item">
                                         <Link to={`/events/${event.id}/${formattedName}`}>
-                                            <EventBox
-                                                index={index}
-                                                name={event.name} 
-                                                location={event.location}
-                                                time={event.time}
-                                                date={event.date}
-                                                type={event.type}
-                                                category={event.category}
-                                                description={event.description}
-                                            />
+                                            <EventBox event={event}/>
                                         </Link>
                                     </li>
                                 )

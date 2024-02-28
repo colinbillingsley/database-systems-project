@@ -70,8 +70,18 @@ const Nav = ({userLevel}) => {
                             <li>
                                 <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
-                            <li>
-                                <Link className="nav-link-item" to="/events">Events</Link>
+                            <li onMouseOver={mouseOverEvents} onMouseLeave={mouseLeaveEvents}>
+                                <p className="event-toggle">
+                                    Events <FontAwesomeIcon className="caret" icon={faAngleDown} size="sm" style={{color: "#000000",}} />
+                                </p>
+                                <ul className="events-dropdown hidden">
+                                    <li>
+                                        <Link to="/events">All Events</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/my-events">My Events</Link>
+                                    </li>
+                                </ul>
                             </li>
                             <li onMouseOver={mouseOverUser} onMouseLeave={mouseLeaveUser}>
                                 <FontAwesomeIcon className="user-profile" icon={faCircleUser} size="xl" style={{color: "#000000",}} />
@@ -112,7 +122,7 @@ const Nav = ({userLevel}) => {
                                         <Link to="/events">All Events</Link>
                                     </li>
                                     <li>
-                                        <Link to="">My Events</Link>
+                                        <Link to="/my-events">My Events</Link>
                                     </li>
                                 </ul>
                             </li>

@@ -9,6 +9,7 @@ import AllEvents from './pages/AllEvents';
 import EventInfo from './pages/EventInfo';
 import MyAccount from './pages/MyAccount';
 import RsoPage from './pages/RsoPage';
+import MyEvents from './pages/MyEvents';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/events",
     element: <AllEvents />,
+  },
+  {
+    path: "/my-events",
+    element: <MyEvents />,
   },
   {
     path: "/events/:event-id/:event-name",

@@ -843,6 +843,7 @@ Styles for Rso.js
   padding: 1rem 2rem;
   margin-inline: 3rem;
   text-align: center;
+  font-style: italic;
   font-size: 1.2em;
   background-color: var(--filter-hover-bg-color);
   border-radius: 10px;
@@ -1012,6 +1013,41 @@ Styles for Comment.js
   border-radius: 10px;
   background-color: var(--filter-hover-bg-color);
 }
+
+/* ===================================
+Styles for MyEvents.js
+=================================== */
+.my-events-container {
+  margin: 2rem 4rem;
+}
+
+.my-events-container .main-heading {
+  margin-bottom: 1em;
+}
+
+.my-event-heading {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 1em;
+}
+
+.no-my-events {
+  margin: 0 2em;
+  padding: 1em 2em;
+  text-align: center;
+  font-style: italic;
+  background-color: var(--filter-hover-bg-color);
+  border-radius: 5px;
+}
+
+.accepted-events-container,
+.pending-events-container,
+.denied-events-container {
+  margin-bottom: 2em;
+}
+
+
+
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!! 
 Screen size smaller than 800px
