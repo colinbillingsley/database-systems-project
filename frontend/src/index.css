@@ -80,7 +80,7 @@ Styles for Nav.js
 
 .nav-links-list .user-profile {
   position: relative;
-  padding-right: 0.5rem;
+  padding: 0.5rem;
   z-index: 999;
 }
 
@@ -108,12 +108,12 @@ Styles for Nav.js
 }
 
 .events-dropdown {
-  top: 60px;
+  top: 51px;
   right: 60px;
 }
 
 .user-profile-dropdown {
-  top: 60px;
+  top: 51px;
   right: 20px;
 }
 
@@ -848,6 +848,170 @@ Styles for Rso.js
   border-radius: 10px;
 }
 
+/* ===================================
+Styles for EventInfo.js
+=================================== */
+.event-info-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3em;
+}
+
+.event-info-left-content {
+  flex-basis: 2000px;
+  padding-left: 4rem;
+  padding-top: 1rem;
+}
+
+.event-info-date-time {
+  margin-bottom: 1em;
+}
+
+.event-info-type-cat {
+  margin-bottom: 1em;
+}
+
+.event-info-description {
+  margin-bottom: 4em;
+}
+
+.event-info-right-content {
+  flex-basis: 1000px;
+  padding-right: 4rem;
+  padding-top: 1rem;
+}
+
+.event-info-right-content hr {
+  border-radius: 5px;
+  border: none;
+  border-top: 2px solid var(--blue-color);
+  margin: 1em 0;
+}
+
+.event-info-right-content h3 {
+  font-weight: 500;
+  margin-bottom: 0.3em;
+}
+
+.event-info-type-cat {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.event-info-category {
+  padding: 0.3em 1em;
+  border-radius: 20px;
+  background-color: var(--filter-hover-bg-color);
+}
+
+.stars {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.3em;
+  list-style: none;
+  background-color: var(--filter-hover-bg-color);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  width: fit-content;
+}
+
+.star-item.white {
+  color: white;
+}
+
+.star-item:hover {
+  cursor: pointer;
+  color: gold;
+}
+
+/* ===================================
+Styles for Comment.js
+=================================== */
+.comments-section h3 {
+  margin-bottom: 0.3em;
+}
+
+.leave-comment-section label {
+  display: block;
+  margin-bottom: 0.3em;
+}
+
+.leave-comment-section input {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  padding: 1em;
+  margin-bottom: 1em;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid var(--filter-hover-bg-color);
+  transition: all 0.3s ease;
+}
+
+.leave-comment-section input:focus {
+  border-bottom: 2px solid var(--blue-color);
+}
+
+.comment-container {
+  background-color: rgba(92, 141, 255, 0.119);
+  border-radius: 5px;
+  margin-bottom: 1.5em;
+  padding: 1em;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.comment-header ul {
+  list-style: none;
+}
+
+.comment-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.user-comment {
+  display: block;
+  width: 100%;
+  height: fit-content;
+}
+
+.comment-edit,
+.comment-delete {
+  font-size: 0.9em;
+  padding: 0.3em 0.5em;
+  border-radius: 10px;
+  border: 1px solid black;
+  transition: all 0.3s ease;
+}
+
+.comment-edit:hover,
+.comment-delete:hover {
+  cursor: pointer;
+  background-color: var(--filter-hover-bg-color);
+}
+
+.comment-username {
+  font-weight: 500;
+}
+
+.no-comments {
+  padding: 1em;
+  text-align: center;
+  font-style: italic;
+  border-radius: 10px;
+  background-color: var(--filter-hover-bg-color);
+}
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!! 
 Screen size smaller than 800px

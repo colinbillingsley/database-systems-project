@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     element: <CreateSuperAccount />,
   },
   {
-    path: "/all-events",
+    path: "/events",
     element: <AllEvents />,
   },
   {

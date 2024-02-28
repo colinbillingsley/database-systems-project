@@ -9,6 +9,24 @@ const Nav = ({userLevel}) => {
     const eventDropdown = document.getElementsByClassName('events-dropdown');
     const caret = document.getElementsByClassName('caret');
 
+    const mouseOverEvents = () => {
+        changeCaretColorBlue();
+        eventDropdown[0].classList.remove('hidden');
+    }
+
+    const mouseLeaveEvents = () => {
+        changeCaretColorBlack();
+        eventDropdown[0].classList.add('hidden');
+    }
+
+    const mouseOverUser = () => {
+        userDropdown[0].classList.remove('hidden');
+    }
+
+    const mouseLeaveUser = () => {
+        userDropdown[0].classList.add('hidden');
+    }
+    
     // set user dropdown to hidden
     const handleUserProfileClick = () => {
         if (userLevel > 0 && !eventDropdown[0].classList.contains('hidden')) {
@@ -53,10 +71,10 @@ const Nav = ({userLevel}) => {
                                 <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
                             <li>
-                                <Link className="nav-link-item" to="/all-events">Events</Link>
+                                <Link className="nav-link-item" to="/events">Events</Link>
                             </li>
-                            <li>
-                                <FontAwesomeIcon className="user-profile" onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} />
+                            <li onMouseOver={mouseOverUser} onMouseLeave={mouseLeaveUser}>
+                                <FontAwesomeIcon className="user-profile" icon={faCircleUser} size="xl" style={{color: "#000000",}} />
                                 <ul className="user-profile-dropdown hidden">
                                     <li>
                                         <Link to="/my-account">My Account</Link>
@@ -85,21 +103,21 @@ const Nav = ({userLevel}) => {
                             <li>
                                 <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
-                            <li>
-                                <p className="event-toggle" onMouseOver={changeCaretColorBlue} onMouseLeave={changeCaretColorBlack} onClick={handleEventNavClick}>
+                            <li onMouseOver={mouseOverEvents} onMouseLeave={mouseLeaveEvents}>
+                                <p className="event-toggle">
                                     Events <FontAwesomeIcon className="caret" icon={faAngleDown} size="sm" style={{color: "#000000",}} />
                                 </p>
                                 <ul className="events-dropdown hidden">
                                     <li>
-                                        <Link to="/all-events">All Events</Link>
+                                        <Link to="/events">All Events</Link>
                                     </li>
                                     <li>
                                         <Link to="">My Events</Link>
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <FontAwesomeIcon className="user-profile" onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} />
+                            <li onMouseOver={mouseOverUser} onMouseLeave={mouseLeaveUser}>
+                                <FontAwesomeIcon className="user-profile" icon={faCircleUser} size="xl" style={{color: "#000000",}} />
                                 <ul className="user-profile-dropdown hidden">
                                     <li>
                                         <Link to="/my-account">My Account</Link>
@@ -128,10 +146,10 @@ const Nav = ({userLevel}) => {
                                 <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
                             <li>
-                                <Link className="nav-link-item" to="/all-events">Events</Link>
+                                <Link className="nav-link-item" to="/events">Events</Link>
                             </li>
-                            <li>
-                                <FontAwesomeIcon className="user-profile" onClick={handleUserProfileClick} icon={faCircleUser} size="xl" style={{color: "#000000",}} />
+                            <li onMouseOver={mouseOverUser} onMouseLeave={mouseLeaveUser}>
+                                <FontAwesomeIcon className="user-profile" icon={faCircleUser} size="xl" style={{color: "#000000",}} />
                                 <ul className="user-profile-dropdown hidden">
                                     <li>
                                         <Link to="/my-account">My Account</Link>
