@@ -38,6 +38,12 @@ const CreateEvent = () => {
                             <input className="create-event-text-field" type="text" name="event-name" id="event-name" placeholder="Enter event name" required/>
                         </div>
 
+                        {/* event host */}
+                        <div className="form-section">
+                            <label htmlFor="event-host">Event Host</label>
+                            <input className="create-event-text-field" type="text" name="event-host" id="event-host" placeholder="Enter event host name/organization" required/>
+                        </div>
+
                         {/* event description */}
                         <div className="form-section">
                             <label htmlFor="event-description">Event Description</label>

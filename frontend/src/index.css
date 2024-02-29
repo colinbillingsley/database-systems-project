@@ -25,6 +25,10 @@ body {
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* ===================================
 Styles for Nav.js
 =================================== */
@@ -468,15 +472,6 @@ Styles for Events.js
   margin: 1em 0;
 }
 
-.no-events-found {
-  background-color: var(--filter-hover-bg-color);
-  border-radius: 10px;
-  font-size: 1.3em;
-  text-align: center;
-  padding: 3em 2em;
-  margin: 1em 0;
-}
-
 .list-of-events {
   list-style-type: none;
 }
@@ -708,14 +703,17 @@ Styles for MyAccount.js
 
 /* ===================================
 Styles for CreateEvent.js
+           CreateRSO.js
 =================================== */
-.create-event {
+.create-event,
+.create-rso {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.create-event-wrapper {
+.create-event-wrapper,
+.create-rso-wrapper {
   position: absolute;
   content: '';
   top: 100px;
@@ -727,30 +725,36 @@ Styles for CreateEvent.js
   margin: 0 2em 3em 2em;
 }
 
-.create-event-wrapper.hidden {
+.create-event-wrapper.hidden,
+.create-rso-wrapper.hidden {
   display: none;
 }
 
-.create-event-header {
+.create-event-header,
+.create-rso-header {
   margin-bottom: 1.5rem;
 }
 
-.create-event-header p {
+.create-event-header p,
+.create-rso-header p {
   margin-bottom: 1rem;
 }
 
-.create-event-header h2 {
+.create-event-header h2,
+.create-rso-header h2 {
   font-weight: 500;
   font-size: 1.7rem;
 }
 
-.create-event-header hr {
+.create-event-header hr,
+.create-rso-header hr {
   border: none;
   border-radius: 5px;
   border-top: 4px solid var(--blue-color);
 }
 
-.create-event form select{
+.create-event form select,
+.create-rso form select {
   padding: 0.5rem;
   font-family: inherit;
   border-radius: 5px;
@@ -760,7 +764,8 @@ Styles for CreateEvent.js
   flex-grow: 1;
 }
 
-.create-event-in-line-section {
+.create-event-in-line-section,
+.create-rso-in-line-section {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -822,10 +827,40 @@ Styles for CreateEvent.js
 }
 
 /* ===================================
+Styles for CreateRSO.js
+=================================== */
+.create-rso-main .create-rso-in-line-section .form-section {
+  flex-grow: 1;
+}
+
+.rso-disclaimer {
+  font-weight: 500;
+}
+
+/* ===================================
 Styles for Rso.js
 =================================== */
 .rso-container {
   margin: 2rem 4rem 1rem 4rem;
+}
+
+.rsos-heading-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5em;
+  margin-bottom: 2em;
+}
+
+.rso-main-heading {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.rso-heading {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 1em;
 }
 
 .my-rsos-content-container {
@@ -837,16 +872,148 @@ Styles for Rso.js
   margin-bottom: 1rem;
 }
 
-.no-joined-rsos,
-.no-active-rsos {
-  padding: 1rem 2rem;
-  margin-inline: 3rem;
-  text-align: center;
-  font-style: italic;
-  font-size: 1.2em;
-  background-color: var(--filter-hover-bg-color);
-  border-radius: 10px;
+.list-of-my-rsos,
+.list-of-active-rsos {
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto;
+  column-gap: 3em;
+  row-gap: 2em;
 }
+
+/* ===================================
+Styles for RSOCard.js
+=================================== */
+.rso-card-container {
+  color: black;
+  outline: 4px solid transparent;
+  background-color: white;
+  box-shadow: 0 5px 10px rgba(128, 128, 128, 0.416);
+  padding: 1em;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.rso-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rso-name {
+  font-size: 1.3em;
+  font-weight: 500;
+  color: var(--blue-color);
+}
+
+.rso-type {
+  padding: 0.5em 1em;
+  background-color: rgba(62, 62, 255, 0.196);
+  border-radius: 20px;
+}
+
+.rso-members span {
+  font-weight: 600;
+}
+
+.rso-members {
+  margin-bottom: 1em;
+}
+
+.rso-card-container:hover {
+  transform: scale(1.015);
+  outline: 4px solid rgba(74, 92, 255, 0.243);
+}
+
+.rso-card-container:hover .rso-name {
+  text-decoration: underline;
+}
+
+/* ===================================
+Styles for RSOInfoPage.js
+=================================== */
+
+.rso-info-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3em;
+}
+
+.rso-info-left-content {
+  flex-basis: 2000px;
+  padding-left: 4rem;
+  padding-top: 1rem;
+}
+
+.rso-info-heading {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.rso-info-name {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.rso-info-type {
+  padding: 0.5em 1em;
+  width: fit-content;
+  background-color: rgba(66, 66, 255, 0.207);
+  border-radius: 20px;
+}
+
+.rso-info-description {
+  margin-bottom: 1em;
+}
+
+.rso-info-right-content {
+  flex-basis: 1000px;
+  padding-right: 4rem;
+  padding-top: 1rem;
+}
+
+.rso-info-right-content hr,
+.rso-info-left-content hr {
+  border-radius: 5px;
+  border: none;
+  border-top: 2px solid var(--blue-color);
+  margin: 1em 0;
+}
+
+.rso-info-right-content h3 {
+  font-weight: 500;
+  margin-bottom: 0.3em;
+}
+
+.members-list {
+  list-style: none;
+}
+
+.join-rso-btn {
+  padding: 0.5em 1.5em;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--blue-color);
+  font-size: 1em;
+  color: white;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.join-rso-btn:hover {
+  cursor: pointer;
+  outline: 2px solid rgba(46, 46, 255, 0.329);
+  outline-offset: 0;
+  background-color: rgb(67, 67, 224);
+  box-shadow: 0 10px 10px rgba(73, 73, 255, 0.221);
+}
+
 
 /* ===================================
 Styles for EventInfo.js
@@ -873,7 +1040,7 @@ Styles for EventInfo.js
 }
 
 .event-info-description {
-  margin-bottom: 4em;
+  margin-bottom: 2em;
 }
 
 .event-info-right-content {
@@ -956,6 +1123,10 @@ Styles for Comment.js
   border-bottom: 2px solid var(--blue-color);
 }
 
+.comments-list {
+  list-style: none;
+}
+
 .comment-container {
   background-color: rgba(92, 141, 255, 0.119);
   border-radius: 5px;
@@ -974,10 +1145,25 @@ Styles for Comment.js
   list-style: none;
 }
 
-.comment-icons {
+.comment-icons-container {
   display: flex;
   align-items: center;
   gap: 0.5em;
+}
+
+.comment-icon {
+  padding: 0.5em;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.comment-icon svg {
+  pointer-events: none;
+}
+
+.comment-icon:hover {
+  cursor: pointer;
+  background-color: rgba(76, 112, 255, 0.272);
 }
 
 .user-comment {
@@ -1005,14 +1191,6 @@ Styles for Comment.js
   font-weight: 500;
 }
 
-.no-comments {
-  padding: 1em;
-  text-align: center;
-  font-style: italic;
-  border-radius: 10px;
-  background-color: var(--filter-hover-bg-color);
-}
-
 /* ===================================
 Styles for MyEvents.js
 =================================== */
@@ -1028,15 +1206,6 @@ Styles for MyEvents.js
   font-size: 1.5em;
   font-weight: 400;
   margin-bottom: 1em;
-}
-
-.no-my-events {
-  margin: 0 2em;
-  padding: 1em 2em;
-  text-align: center;
-  font-style: italic;
-  background-color: var(--filter-hover-bg-color);
-  border-radius: 5px;
 }
 
 .accepted-events-container,
@@ -1080,6 +1249,31 @@ Styles for MyEventInfo.js
   color: red;
 }
 
+/* ===================================
+Styles for RequestsPage.js
+=================================== */
+.requests-page-container {
+  margin: 2em 4em;
+}
+
+.request-heading {
+  font-size: 2em;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+}
+
+.event-requests-container {
+  margin-bottom: 2em;
+}
+
+.no-data {
+  font-size: 1em;
+  padding: 1em 2em;
+  text-align: center;
+  font-style: italic;
+  background-color: var(--filter-hover-bg-color);
+  border-radius: 5px;
+}
 
 
 

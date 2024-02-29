@@ -11,6 +11,8 @@ import MyAccount from './pages/MyAccount';
 import RsoPage from './pages/RsoPage';
 import MyEvents from './pages/MyEvents';
 import MyEventInfo from './pages/MyEventInfo';
+import RSOInfoPage from './pages/RSOInfoPage';
+import RequestsPage from './pages/RequestsPage';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
   {
     path: "/rsos",
     element: <RsoPage />,
+  },
+  {
+    path: "/rsos/:rso-id/:rso-name",
+    element: <RSOInfoPage />,
+  },
+  {
+    path: "/requests",
+    element: <RequestsPage />,
   },
 ]);
 

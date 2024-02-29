@@ -66,7 +66,7 @@ const Events = ({userLevel}) => {
                             // if no events found, display message
                             ? 
                             <li>
-                                <p className="no-events-found">No events found.</p>
+                                <p className="no-data">No events found.</p>
                             </li> 
                             // if events found, display all events
                             :

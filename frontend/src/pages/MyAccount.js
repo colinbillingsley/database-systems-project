@@ -3,7 +3,7 @@ import { useState } from "react";
 import Nav from "../components/Nav"
 
 const MyAccount = () => {
-    const [userLevel, setUserLevel] = useState(1);
+    const [userLevel, setUserLevel] = useState(2);
     return (
         <div className="my-account">
             <Nav userLevel={userLevel}/>

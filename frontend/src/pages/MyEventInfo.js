@@ -27,7 +27,7 @@ const tempEvent = {
 
 const MyEventInfo = () => {
     const [eventInfo, setEventInfo] = useState('');
-    const [userLevel, setUserLevel] = useState(1);
+    const [userLevel, setUserLevel] = useState(2);
     const [eventStatus, setEventStatus]= useState('');
 
     useEffect(() => {

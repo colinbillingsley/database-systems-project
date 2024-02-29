@@ -39,7 +39,7 @@ let tempRating = 0
 const EventInfo = () => {
     const [eventInfo, setEventInfo] = useState('');
     const [eventComments, setEventComments] = useState([]);
-    const [userLevel, setUserLevel] = useState(1);
+    const [userLevel, setUserLevel] = useState(2);
     const [eventRating, setEventRating] = useState(tempRating);
 
     useEffect(() => {
