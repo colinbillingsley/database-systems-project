@@ -10,6 +10,7 @@ import EventInfo from './pages/EventInfo';
 import MyAccount from './pages/MyAccount';
 import RsoPage from './pages/RsoPage';
 import MyEvents from './pages/MyEvents';
+import MyEventInfo from './pages/MyEventInfo';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/events/:event-id/:event-name",
     element: <EventInfo />,
+  },
+  {
+    path: "/my-events/:event-id/:event-name",
+    element: <MyEventInfo />,
   },
   {
     path: "/my-account",

@@ -538,16 +538,15 @@ Styles for EventBox.js
 .event-date-time {
   font-weight: 500;
   color: rgb(98, 98, 98);
+  margin-bottom: 0.2em;
+}
+
+.event-location {
   margin-bottom: 1em;
 }
 
-.event-location span,
-.event-category span {
+.event-location span{
   font-weight: 600;
-}
-
-.event-category {
-  margin-bottom: 0.7em;
 }
 
 .event-type {
@@ -1044,6 +1043,41 @@ Styles for MyEvents.js
 .pending-events-container,
 .denied-events-container {
   margin-bottom: 2em;
+}
+
+/* ===================================
+Styles for MyEventInfo.js
+=================================== */
+.event-status-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em;
+}
+
+.my-event-info-heading {
+  font-size: 1.5em;
+  font-weight: 400;
+}
+
+.event-status {
+  padding: 0.5em 1em;
+  border-radius: 20px;
+}
+
+.event-status.accepted {
+  background-color: rgba(37, 156, 37, 0.323);
+  color: green;
+}
+
+.event-status.pending {
+  background-color: rgba(255, 255, 0, 0.406);
+  color: rgb(209, 209, 42);
+}
+
+.event-status.denied {
+  background-color: rgba(255, 0, 0, 0.393);
+  color: red;
 }
 
 

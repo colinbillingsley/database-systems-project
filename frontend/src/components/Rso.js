@@ -9,7 +9,7 @@ const Rso = () => {
             <div className="my-rsos-content-container">
                 <h2 className="main-heading">My RSOs</h2>
                 <div className="my-rsos-cards-container">
-                    {myRsos.length === 0 ? <div className="no-joined-rsos"><p>You have not joined any RSOs.</p></div> : ''}
+                    {myRsos.length === 0 ? <div className="no-joined-rsos"><p>You are not a part of any RSOs.</p></div> : ''}
                 </div>
             </div>
             <div className="active-rsos-content-container">

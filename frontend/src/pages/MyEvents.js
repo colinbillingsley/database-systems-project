@@ -51,7 +51,7 @@ const MyEvents = () => {
                             const formattedName = trimmedName.replace(/\s+/g, '-');
                             return (
                                 <li className="event-item">
-                                    <Link to={`/events/${event.id}/${formattedName}`}>
+                                    <Link to={`/my-events/${event.id}/${formattedName}`}>
                                         <EventBox event={event}/>
                                     </Link>
                                 </li>
@@ -64,15 +64,20 @@ const MyEvents = () => {
                 <div className="pending-events-container">
                     <h3 className="my-event-heading">Pending Events</h3>
                     <ul className="list-of-events">
-                        {myPendingEvents.length > 0 
-                        ? myPendingEvents.map((event, index) => {
-                            return (
-                                <li className="event-item">
-                                    <EventBox event={event}/>
-                                </li>
-                            )
-                        })
-                        : <li><p className="no-my-events">You have no pending events at the moment.</p></li>
+                        {myPendingEvents.length === 0 
+                            ? <li><p className="no-my-events">You have no pending events at the moment.</p></li> 
+                            : myPendingEvents.map((event, index) => {
+                                // format event name to be placed in URL
+                                const trimmedName = event.name.trim();
+                                const formattedName = trimmedName.replace(/\s+/g, '-');
+                                return (
+                                    <li className="event-item">
+                                        <Link to={`/my-events/${event.id}/${formattedName}`}>
+                                            <EventBox event={event}/>
+                                        </Link>
+                                    </li>
+                                )
+                            })
                         }
                     </ul>
                 </div>
@@ -80,15 +85,20 @@ const MyEvents = () => {
                 <div className="denied-events-container">
                     <h3 className="my-event-heading">Denied Events</h3>
                     <ul className="list-of-events">
-                        {myDeniedEvents.length > 0 
-                        ? myDeniedEvents.map((event, index) => {
-                            return (
-                                <li className="event-item">
-                                    <EventBox event={event}/>
-                                </li>
-                            )
-                        })
-                        : <li><p className="no-my-events">You have no denied events at the moment.</p></li>
+                        {myDeniedEvents.length === 0 
+                            ? <li><p className="no-my-events">You have no denied events at the moment.</p></li> 
+                            : myDeniedEvents.map((event, index) => {
+                                // format event name to be placed in URL
+                                const trimmedName = event.name.trim();
+                                const formattedName = trimmedName.replace(/\s+/g, '-');
+                                return (
+                                    <li className="event-item">
+                                        <Link to={`/my-events/${event.id}/${formattedName}`}>
+                                            <EventBox event={event}/>
+                                        </Link>
+                                    </li>
+                                )
+                            })
                         }
                     </ul>
                 </div>
