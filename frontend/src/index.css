@@ -12,7 +12,7 @@ Image in Welcome.js
 }
 
 :root {
-  --blue-color: rgb(80, 100, 255);
+  --blue-color: #5064ff;
   --nav-bg-color: white;
   --nav-font-color: black;
   --nav-link-hover-color: blue;
@@ -1273,6 +1273,89 @@ Styles for RequestsPage.js
   font-style: italic;
   background-color: var(--filter-hover-bg-color);
   border-radius: 5px;
+}
+
+/* ===================================
+Styles for RequestEventBox.js
+=================================== */
+.request-event-box-container {
+  padding: 1em 2em;
+  outline: 4px solid transparent;
+  box-shadow: 0 5px 10px rgba(128, 128, 128, 0.493);
+  border-radius: 10px;
+  margin-bottom: 2em;
+  transition: all 0.3s ease;
+}
+
+.request-event-box-container summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.request-event-box-container:hover {
+  cursor: pointer;
+  outline: 4px solid rgba(74, 92, 255, 0.243);
+}
+
+.request-event-box-container:hover .event-name {
+  text-decoration: underline;
+}
+
+.left-content-request-box {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.right-content-request-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.request-btn {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  font-family: inherit;
+  border-radius: 5px;
+}
+
+.request-btn.accept {
+  border: 2px solid green;
+  background-color: rgba(41, 165, 41, 0.353);
+  color: green;
+}
+
+.request-btn.deny {
+  border: 2px solid red;
+  background-color: rgba(255, 0, 0, 0.369);
+  color: red;
+}
+
+.request-btn:hover {
+  cursor: pointer;
+}
+
+.request-btn.accept:hover {
+  background-color: rgba(33, 136, 33, 0.353);
+}
+
+.request-btn.deny:hover {
+  background-color: rgba(183, 3, 3, 0.369);
+}
+
+.request-box-info-container {
+  margin-top: 1em;
+}
+
+.request-box-info-container span {
+  font-weight: 600;
+}
+
+.request-box-info-container p:first-child {
+  margin-bottom: 1em;
 }
 
 

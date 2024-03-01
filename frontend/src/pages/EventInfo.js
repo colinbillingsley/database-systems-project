@@ -13,7 +13,7 @@ const date = new Date();
 const tempEvent = {
     id:'0',
     name: 'UCF Database Project',
-    orgName: 'UCF',
+    host: 'UCF',
     location: 'L3Harris Engineering Center Room 115',
     category: 'Tech',
     time: '3pm',
@@ -355,7 +355,7 @@ const EventInfo = () => {
                     <hr />
                     <div className="contact-section">
                         <h3>Contact Info</h3>
-                        <p>{eventInfo.orgName}</p>
+                        <p>{eventInfo.host}</p>
                         <p>{eventInfo.email}</p>
                         <p>{eventInfo.phone}</p>
                     </div>

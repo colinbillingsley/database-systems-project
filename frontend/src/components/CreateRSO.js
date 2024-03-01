@@ -104,7 +104,7 @@ const CreateRSO = () => {
                         {/* create/cancel buttons */}
                         <div className="form-section btn-section">
                             <button className="cancel-btn" onClick={HandleCancelClick}>Cancel</button>
-                            <button className="create-btn" type="submit">Create Event</button>
+                            <button className="create-btn" type="submit">Create RSO</button>
                         </div>
                     </form>
                 </div>
