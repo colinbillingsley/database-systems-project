@@ -1,4 +1,3 @@
-import { text } from "@fortawesome/fontawesome-svg-core";
 import GoogleMap from "./GoogleMap";
 
 const CreateEvent = () => {

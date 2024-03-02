@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-import Nav from "../components/Nav"
 import Comments from "../components/Comments";
 import EventContent from "../components/EventContent";
 
@@ -340,7 +339,6 @@ const EventInfo = () => {
 
     return (
         <div className="event-info">
-            <Nav userLevel={userLevel}/>
             <div className="event-info-container">
                 <div className="event-info-left-content">
                     <EventContent eventInfo={eventInfo}/>

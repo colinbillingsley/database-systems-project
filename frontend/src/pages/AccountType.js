@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
 
-import Nav from "../components/Nav";
-
 const AccountType = () => {
     return (
         <div className="account-type">
-            {/* Navbar */}
-            <Nav />
-
             <div className="account-content-container">
                 {/* Choosing account type */}
                 <div className="account-type-container">

@@ -61,7 +61,7 @@ const Nav = ({userLevel}) => {
             return (
                 <header>
                     <nav className="navbar-container">
-                        <Link to="/" className="univents">UNIVENTS</Link>
+                        <Link to="/welcome" className="univents">UNIVENTS</Link>
                         
                         <ul className="nav-links-list">
                             <li>
@@ -76,7 +76,7 @@ const Nav = ({userLevel}) => {
                                 </p>
                                 <ul className="events-dropdown hidden">
                                     <li>
-                                        <Link to="/events">All Events</Link>
+                                        <Link to="/">All Events</Link>
                                     </li>
                                     <li>
                                         <Link to="/my-events">My Events</Link>
@@ -107,7 +107,7 @@ const Nav = ({userLevel}) => {
             return (
                 <header>
                     <nav className="navbar-container">
-                        <Link to="/" className="univents">UNIVENTS</Link>
+                        <Link to="/welcome" className="univents">UNIVENTS</Link>
                         
                         <ul className="nav-links-list">
                             <li>
@@ -119,7 +119,7 @@ const Nav = ({userLevel}) => {
                                 </p>
                                 <ul className="events-dropdown hidden">
                                     <li>
-                                        <Link to="/events">All Events</Link>
+                                        <Link to="/">All Events</Link>
                                     </li>
                                     <li>
                                         <Link to="/my-events">My Events</Link>
@@ -150,13 +150,13 @@ const Nav = ({userLevel}) => {
             return (
                 <header>
                     <nav className="navbar-container">
-                        <Link to="/" className="univents">UNIVENTS</Link>
+                        <Link to="/welcome" className="univents">UNIVENTS</Link>
                         <ul className="nav-links-list">
                             <li>
                                 <Link className="nav-link-item" to="/rsos">RSOs</Link>
                             </li>
                             <li>
-                                <Link className="nav-link-item" to="/events">Events</Link>
+                                <Link className="nav-link-item" to="/">Events</Link>
                             </li>
                             <li onMouseOver={mouseOverUser} onMouseLeave={mouseLeaveUser}>
                                 <FontAwesomeIcon className="user-profile" icon={faCircleUser} size="xl" style={{color: "#000000",}} />
@@ -193,7 +193,7 @@ const Nav = ({userLevel}) => {
         return (
             <header>
                 <nav className="navbar-container">
-                <Link to="/" className="univents">UNIVENTS</Link>
+                <Link to="/welcome" className="univents">UNIVENTS</Link>
                 </nav>
             </header>
         )

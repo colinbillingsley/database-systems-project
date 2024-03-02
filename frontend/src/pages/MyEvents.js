@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
-import Nav from "../components/Nav"
 import EventBox from "../components/EventBox";
 
 // temp date for styling
@@ -36,7 +35,6 @@ const MyEvents = () => {
 
     return (
         <div>
-            <Nav userLevel={userLevel}/>
             <div className="my-events-container">
                 <h2 className="main-heading">My Events</h2>
 

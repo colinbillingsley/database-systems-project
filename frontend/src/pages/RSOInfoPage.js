@@ -1,5 +1,4 @@
 import { useState } from "react"
-import Nav from "../components/Nav"
 
 const tempRSO = {
     id: 0,
@@ -17,7 +16,6 @@ const RSOInfoPage = () => {
 
     return (
         <div className="rso-info">
-            <Nav userLevel={userLevel}/>
             <div className="rso-info-container">
                 <div className="rso-info-left-content">
                     <div className="rso-info-heading">

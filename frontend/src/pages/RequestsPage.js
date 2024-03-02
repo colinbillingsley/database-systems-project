@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-import Nav from "../components/Nav"
 import RequestEventBox from "../components/RequestEventBox";
 import RequestRSOBox from "../components/RequestRSOBox";
 
@@ -44,7 +43,6 @@ const RequestsPage = () => {
 
     return (
         <div className="requests-page">
-            <Nav userLevel={userLevel}/>
             <div className="requests-page-container">
                 <div className="event-requests-container">
                     <h2 className="request-heading">Event Requests</h2>

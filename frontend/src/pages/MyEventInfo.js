@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-import Nav from "../components/Nav";
 import EventContent from "../components/EventContent";
 
 // temp date for styling
@@ -38,7 +37,6 @@ const MyEventInfo = () => {
 
     return (
         <div className="event-info">
-            <Nav userLevel={userLevel}/>
             <div className="event-info-container">
                 <div className="event-info-left-content">
                     <EventContent eventInfo={eventInfo}/>
