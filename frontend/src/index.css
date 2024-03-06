@@ -12,7 +12,7 @@ Image in Welcome.js
 }
 
 :root {
-  --blue-color: rgb(80, 100, 255);
+  --blue-color: #5064ff;
   --nav-bg-color: white;
   --nav-font-color: black;
   --nav-link-hover-color: blue;
@@ -23,6 +23,10 @@ Image in Welcome.js
 
 body {
   font-family: 'IBM Plex Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
 }
 
 /* ===================================
@@ -80,7 +84,7 @@ Styles for Nav.js
 
 .nav-links-list .user-profile {
   position: relative;
-  padding-right: 0.5rem;
+  padding: 0.5rem;
   z-index: 999;
 }
 
@@ -108,24 +112,29 @@ Styles for Nav.js
 }
 
 .events-dropdown {
-  top: 60px;
+  top: 51px;
   right: 60px;
 }
 
 .user-profile-dropdown {
-  top: 60px;
+  top: 51px;
   right: 20px;
 }
 
-.user-profile-dropdown li,
-.events-dropdown li {
+.user-profile-dropdown li a,
+.events-dropdown li a {
   padding: 0.5em 1em;
   border-radius: 5px;
 }
 
 .user-profile-dropdown li:hover,
 .events-dropdown li:hover {
-  cursor: pointer;
+  background-color: var(--filter-hover-bg-color);
+  border-radius: 5px;
+}
+
+.user-profile-dropdown li a:hover,
+.events-dropdown li a:hover {
   background-color: var(--filter-hover-bg-color);
 }
 
@@ -134,6 +143,8 @@ Styles for Nav.js
   font-family: inherit;
   font-size: 1em;
   background-color: transparent;
+  padding: 0.5em 1em;
+  border-radius: 5px;
 }
 
 .user-profile-dropdown input[type="submit"]:hover {
@@ -461,15 +472,6 @@ Styles for Events.js
   margin: 1em 0;
 }
 
-.no-events-found {
-  background-color: var(--filter-hover-bg-color);
-  border-radius: 10px;
-  font-size: 1.3em;
-  text-align: center;
-  padding: 3em 2em;
-  margin: 1em 0;
-}
-
 .list-of-events {
   list-style-type: none;
 }
@@ -531,16 +533,15 @@ Styles for EventBox.js
 .event-date-time {
   font-weight: 500;
   color: rgb(98, 98, 98);
+  margin-bottom: 0.2em;
+}
+
+.event-location {
   margin-bottom: 1em;
 }
 
-.event-location span,
-.event-category span {
+.event-location span{
   font-weight: 600;
-}
-
-.event-category {
-  margin-bottom: 0.7em;
 }
 
 .event-type {
@@ -682,6 +683,682 @@ Styles for DayFilters.js
   background-color: var(--filter-active-bg-color);
   color: var(--filter-active-font-color);
 }
+
+/* ===================================
+Styles for MyAccount.js
+=================================== */
+.my-account .main-heading {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 4rem;
+}
+
+.account-info-form {
+  margin-left: 3rem;
+}
+
+.account-info-form .form-section {
+  width: 50%;
+}
+
+/* ===================================
+Styles for CreateEvent.js
+           CreateRSO.js
+=================================== */
+.create-event,
+.create-rso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-event-wrapper,
+.create-rso-wrapper {
+  position: absolute;
+  content: '';
+  top: 100px;
+  z-index: 999;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgb(167, 167, 167);
+  padding: 1em 2em;
+  margin: 0 2em 3em 2em;
+}
+
+.create-event-wrapper.hidden,
+.create-rso-wrapper.hidden {
+  display: none;
+}
+
+.create-event-header,
+.create-rso-header {
+  margin-bottom: 1.5rem;
+}
+
+.create-event-header p,
+.create-rso-header p {
+  margin-bottom: 1rem;
+}
+
+.create-event-header h2,
+.create-rso-header h2 {
+  font-weight: 500;
+  font-size: 1.7rem;
+}
+
+.create-event-header hr,
+.create-rso-header hr {
+  border: none;
+  border-radius: 5px;
+  border-top: 4px solid var(--blue-color);
+}
+
+.create-event form select,
+.create-rso form select {
+  padding: 0.5rem;
+  font-family: inherit;
+  border-radius: 5px;
+}
+
+.create-event-main .create-event-in-line-section:nth-child(5) .form-section {
+  flex-grow: 1;
+}
+
+.create-event-in-line-section,
+.create-rso-in-line-section {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1em;
+}
+
+.time-section p {
+  font-size: 0.8em;
+  max-width: 50ch;
+}
+
+.google-map {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+}
+
+.cancel-btn,
+.create-btn {
+  font-size: 1em;
+  color: white;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 5px;
+  outline: 2px solid transparent;
+  outline-offset: 6px;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn {
+  background: linear-gradient(to right, rgb(255, 116, 116), rgb(255, 59, 59));
+}
+
+.create-btn {
+  background: linear-gradient(to right, rgb(114, 168, 114), rgb(67, 172, 77));
+}
+
+.cancel-btn:hover,
+.create-btn:hover {
+  cursor: pointer;
+  outline-offset: 0;
+}
+
+.cancel-btn:hover {
+  outline: 2px solid rgba(255, 0, 0, 0.617);
+  background-color: rgba(255, 0, 0, 0.413);
+}
+
+.create-btn:hover {
+  outline: 2px solid rgba(0, 128, 0, 0.64);
+  background-color: rgba(0, 128, 0, 0.356);
+}
+
+.btn-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* ===================================
+Styles for CreateRSO.js
+=================================== */
+.create-rso-main .create-rso-in-line-section .form-section {
+  flex-grow: 1;
+}
+
+.rso-disclaimer {
+  font-weight: 500;
+}
+
+/* ===================================
+Styles for Rso.js
+=================================== */
+.rso-container {
+  margin: 2rem 4rem 1rem 4rem;
+}
+
+.rsos-heading-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5em;
+  margin-bottom: 2em;
+}
+
+.rso-main-heading {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.rso-heading {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 1em;
+}
+
+.my-rsos-content-container {
+  margin-bottom: 2rem;
+}
+
+.my-rsos-content-container .main-heading,
+.active-rsos-content-container .main-heading {
+  margin-bottom: 1rem;
+}
+
+.list-of-my-rsos,
+.list-of-active-rsos {
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto;
+  column-gap: 3em;
+  row-gap: 2em;
+}
+
+/* ===================================
+Styles for RSOCard.js
+=================================== */
+.rso-card-container {
+  color: black;
+  outline: 4px solid transparent;
+  background-color: white;
+  box-shadow: 0 5px 10px rgba(128, 128, 128, 0.416);
+  padding: 1em;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.rso-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rso-name {
+  font-size: 1.3em;
+  font-weight: 500;
+  color: var(--blue-color);
+}
+
+.rso-type {
+  padding: 0.5em 1em;
+  background-color: rgba(62, 62, 255, 0.196);
+  border-radius: 20px;
+}
+
+.rso-members span {
+  font-weight: 600;
+}
+
+.rso-members {
+  margin-bottom: 1em;
+}
+
+.rso-card-container:hover {
+  transform: scale(1.015);
+  outline: 4px solid rgba(74, 92, 255, 0.243);
+}
+
+.rso-card-container:hover .rso-name {
+  text-decoration: underline;
+}
+
+/* ===================================
+Styles for RSOInfoPage.js
+=================================== */
+
+.rso-info-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3em;
+}
+
+.rso-info-left-content {
+  flex-basis: 2000px;
+  padding-left: 4rem;
+  padding-top: 1rem;
+}
+
+.rso-info-heading {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.rso-info-name {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.rso-info-type {
+  padding: 0.5em 1em;
+  width: fit-content;
+  background-color: rgba(66, 66, 255, 0.207);
+  border-radius: 20px;
+}
+
+.rso-info-description {
+  margin-bottom: 1em;
+}
+
+.rso-info-right-content {
+  flex-basis: 1000px;
+  padding-right: 4rem;
+  padding-top: 1rem;
+}
+
+.rso-info-right-content hr,
+.rso-info-left-content hr {
+  border-radius: 5px;
+  border: none;
+  border-top: 2px solid var(--blue-color);
+  margin: 1em 0;
+}
+
+.rso-info-right-content h3 {
+  font-weight: 500;
+  margin-bottom: 0.3em;
+}
+
+.members-list {
+  list-style: none;
+}
+
+.join-rso-btn {
+  padding: 0.5em 1.5em;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--blue-color);
+  font-size: 1em;
+  color: white;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.join-rso-btn:hover {
+  cursor: pointer;
+  outline: 2px solid rgba(46, 46, 255, 0.329);
+  outline-offset: 0;
+  background-color: rgb(67, 67, 224);
+  box-shadow: 0 10px 10px rgba(73, 73, 255, 0.221);
+}
+
+
+/* ===================================
+Styles for EventInfo.js
+=================================== */
+.event-info-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3em;
+}
+
+.event-info-left-content {
+  flex-basis: 2000px;
+  padding-left: 4rem;
+  padding-top: 1rem;
+}
+
+.event-info-date-time {
+  margin-bottom: 1em;
+}
+
+.event-info-type-cat {
+  margin-bottom: 1em;
+}
+
+.event-info-description {
+  margin-bottom: 2em;
+}
+
+.event-info-right-content {
+  flex-basis: 1000px;
+  padding-right: 4rem;
+  padding-top: 1rem;
+}
+
+.event-info-right-content hr {
+  border-radius: 5px;
+  border: none;
+  border-top: 2px solid var(--blue-color);
+  margin: 1em 0;
+}
+
+.event-info-right-content h3 {
+  font-weight: 500;
+  margin-bottom: 0.3em;
+}
+
+.event-info-type-cat {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.event-info-category {
+  padding: 0.3em 1em;
+  border-radius: 20px;
+  background-color: var(--filter-hover-bg-color);
+}
+
+.stars {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.3em;
+  list-style: none;
+  background-color: var(--filter-hover-bg-color);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  width: fit-content;
+}
+
+.star-item svg{
+  padding: 0.1em;
+  pointer-events: none;
+}
+
+.star-item:hover {
+  cursor: pointer;
+}
+
+/* ===================================
+Styles for Comment.js
+=================================== */
+.comments-section h3 {
+  margin-bottom: 0.3em;
+}
+
+.leave-comment-section label {
+  display: block;
+  margin-bottom: 0.3em;
+}
+
+.leave-comment-section input {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  padding: 1em;
+  margin-bottom: 1em;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid var(--filter-hover-bg-color);
+  transition: all 0.3s ease;
+}
+
+.leave-comment-section input:focus {
+  border-bottom: 2px solid var(--blue-color);
+}
+
+.comments-list {
+  list-style: none;
+}
+
+.comment-container {
+  background-color: rgba(92, 141, 255, 0.119);
+  border-radius: 5px;
+  margin-bottom: 1.5em;
+  padding: 1em;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.comment-header ul {
+  list-style: none;
+}
+
+.comment-icons-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.comment-icon {
+  padding: 0.5em;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.comment-icon svg {
+  pointer-events: none;
+}
+
+.comment-icon:hover {
+  cursor: pointer;
+  background-color: rgba(76, 112, 255, 0.272);
+}
+
+.user-comment {
+  display: block;
+  width: 100%;
+  height: fit-content;
+}
+
+.comment-edit,
+.comment-delete {
+  font-size: 0.9em;
+  padding: 0.3em 0.5em;
+  border-radius: 10px;
+  border: 1px solid black;
+  transition: all 0.3s ease;
+}
+
+.comment-edit:hover,
+.comment-delete:hover {
+  cursor: pointer;
+  background-color: var(--filter-hover-bg-color);
+}
+
+.comment-username {
+  font-weight: 500;
+}
+
+/* ===================================
+Styles for MyEvents.js
+=================================== */
+.my-events-container {
+  margin: 2rem 4rem;
+}
+
+.my-events-container .main-heading {
+  margin-bottom: 1em;
+}
+
+.my-event-heading {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 1em;
+}
+
+.accepted-events-container,
+.pending-events-container,
+.denied-events-container {
+  margin-bottom: 2em;
+}
+
+/* ===================================
+Styles for MyEventInfo.js
+=================================== */
+.event-status-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em;
+}
+
+.my-event-info-heading {
+  font-size: 1.5em;
+  font-weight: 400;
+}
+
+.event-status {
+  padding: 0.5em 1em;
+  border-radius: 20px;
+}
+
+.event-status.accepted {
+  background-color: rgba(37, 156, 37, 0.323);
+  color: green;
+}
+
+.event-status.pending {
+  background-color: rgba(255, 255, 0, 0.406);
+  color: rgb(209, 209, 42);
+}
+
+.event-status.denied {
+  background-color: rgba(255, 0, 0, 0.393);
+  color: red;
+}
+
+/* ===================================
+Styles for RequestsPage.js
+=================================== */
+.requests-page-container {
+  margin: 2em 4em;
+}
+
+.request-heading {
+  font-size: 2em;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+}
+
+.event-requests-container {
+  margin-bottom: 2em;
+}
+
+.no-data {
+  font-size: 1em;
+  padding: 1em 2em;
+  text-align: center;
+  font-style: italic;
+  background-color: var(--filter-hover-bg-color);
+  border-radius: 5px;
+}
+
+/* ===================================
+Styles for RequestEventBox.js
+=================================== */
+.request-event-box-container {
+  padding: 1em 2em;
+  outline: 4px solid transparent;
+  box-shadow: 0 5px 10px rgba(128, 128, 128, 0.493);
+  border-radius: 10px;
+  margin-bottom: 2em;
+  transition: all 0.3s ease;
+}
+
+.request-event-box-container summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.request-event-box-container:hover {
+  cursor: pointer;
+  outline: 4px solid rgba(74, 92, 255, 0.243);
+}
+
+.request-event-box-container:hover .event-name {
+  text-decoration: underline;
+}
+
+.left-content-request-box {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.right-content-request-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.request-btn {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  font-family: inherit;
+  border-radius: 5px;
+}
+
+.request-btn.accept {
+  border: 2px solid green;
+  background-color: rgba(41, 165, 41, 0.353);
+  color: green;
+}
+
+.request-btn.deny {
+  border: 2px solid red;
+  background-color: rgba(255, 0, 0, 0.369);
+  color: red;
+}
+
+.request-btn:hover {
+  cursor: pointer;
+}
+
+.request-btn.accept:hover {
+  background-color: rgba(33, 136, 33, 0.353);
+}
+
+.request-btn.deny:hover {
+  background-color: rgba(183, 3, 3, 0.369);
+}
+
+.request-box-info-container {
+  margin-top: 1em;
+}
+
+.request-box-info-container span {
+  font-weight: 600;
+}
+
+.request-box-info-container p:first-child {
+  margin-bottom: 1em;
+}
+
+
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!! 
 Screen size smaller than 800px

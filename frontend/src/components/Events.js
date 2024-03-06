@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 
 import Nav from "./Nav"
 import DayFilters from "./DayFilters";
 import Filters from "./Filters";
 import EventBox from "./EventBox";
+import CreateEvent from "./CreateEvent";
 
 const Events = ({userLevel}) => {
     // temp date for styling
@@ -26,15 +27,23 @@ const Events = ({userLevel}) => {
         who uses the application to look up information about the various events.`
     }
 
-    const [events, setEvents] = useState([tempEvent, tempEvent, tempEvent]);
+    const [events, setEvents] = useState([]);
     const [uniName, setUniName] = useState("UCF");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
 
+    // open create event menu when create events is clicked
+    const EventClick = () => {
+        const createEvent = document.querySelector('.create-event-wrapper');
+        createEvent.classList.remove('hidden');
+    }
+
+    useEffect(() => {
+        setEvents(events => [...events, tempEvent]);
+    }, [])
+
     return (
         <div>
-            <Nav userLevel={userLevel}/>
-
             <div className="events-page-top">
                 <h2 className="main-heading">Events at {uniName}</h2>
                 <form>
@@ -48,7 +57,7 @@ const Events = ({userLevel}) => {
                         <DayFilters dayFilter={dayFilter} setDayFilter={setDayFilter} setDayFilterHeading={setDayFilterHeading}/>
                         
                         {/* user is not student, they can create event */}
-                        {userLevel !== 0 ? <button className="btn">Create Event</button> : ''}
+                        {userLevel !== 0 ? <button className="btn" onClick={EventClick}>Create Event</button> : ''}
                     </div>
                     <h3 className="day-filter-heading">{dayFilterHeading}</h3>
                     <ul className="list-of-events">
@@ -57,27 +66,19 @@ const Events = ({userLevel}) => {
                             // if no events found, display message
                             ? 
                             <li>
-                                <p className="no-events-found">No events found.</p>
+                                <p className="no-data">No events found.</p>
                             </li> 
                             // if events found, display all events
                             :
                             events.map((event, index) => {
+                                // format event name to be placed in URL
                                 const trimmedName = event.name.trim();
                                 const formattedName = trimmedName.replace(/\s+/g, '-');
 
                                 return (
                                     <li className="event-item">
                                         <Link to={`/events/${event.id}/${formattedName}`}>
-                                            <EventBox
-                                                index={index}
-                                                name={event.name} 
-                                                location={event.location}
-                                                time={event.time}
-                                                date={event.date}
-                                                type={event.type}
-                                                category={event.category}
-                                                description={event.description}
-                                            />
+                                            <EventBox event={event}/>
                                         </Link>
                                     </li>
                                 )
@@ -90,6 +91,7 @@ const Events = ({userLevel}) => {
                     <Filters />
                 </div>
             </div>
+            <CreateEvent />
         </div>
     )
 }
