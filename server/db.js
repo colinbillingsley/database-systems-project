@@ -2,19 +2,22 @@ const mysql = require('mysql');
 
 // Create MySQL connection
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'your_mysql_username',
-  password: 'your_mysql_password',
-  database: 'your_database_name'
+  host: 'eventdb.cpi0iouyqh2w.us-east-1.rds.amazonaws.com', // AWS RDS endpoint
+  port: 3306, // Port
+  user: 'admin', // Username
+  password: 'pineapple', // Password
+  database: 'eventdb'
 });
 
+// Connect to the database
 connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL database:', err);
-      return;
-    }
-    console.log('Connected to MySQL database');
-  });
+  if (err) {
+    console.error('Error connecting to database:', err);
+    return;
+  }
+  console.log('Connected to the database');
+});
 
-  
+// Export the connection for use in other modules
 module.exports = connection;
+

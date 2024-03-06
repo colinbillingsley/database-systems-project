@@ -1,10 +1,16 @@
+const express = require('express');
 const router = express.Router();
-const SuperAdmin = require("../../models/SuperAdmin");
+const SuperAdmin = require('./models/SuperAdmin');
+
 
 // finish api for super admin
-app.post("/api/super_admin", (req, res)=> {
-    res.json({
-     status: "success",
-     data: {},
-    })
-   });
+
+
+router.post("/api/super_admin", (req, res) => {
+    console.log("Route ran");
+    
+    return res.status(200).json({ Success: "Username and password received" });
+});
+
+
+   module.exports = router;

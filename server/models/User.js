@@ -1,4 +1,4 @@
-//const db = require('../db');
+const connection = require('../db');
 
 // Model for Users table
 class User {
@@ -8,7 +8,7 @@ class User {
   }
   
   // Method to create a new user
-  static create(username, password, callback) {
+  static async create(username, password, callback) {
     const query = 'INSERT INTO Users (username, password) VALUES (?, ?)';
     connection.query(query, [username, password], (error, results) => {
       if (error) {
@@ -20,7 +20,7 @@ class User {
   }
 
   // Method to find a user by username
-  static findByUsername(username, callback) {
+  static  async findByUsername(username, callback) {
     const query = 'SELECT * FROM Users WHERE username = ?';
     connection.query(query, [username], (error, results) => {
       if (error) {
@@ -35,7 +35,7 @@ class User {
     });
   }
 
-  // You can add more methods for updating, deleting, fetching users, etc.
+ 
 }
 
 // Export the User model

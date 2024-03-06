@@ -1,4 +1,4 @@
-const db = require('../db');
+//const db = require('../db');
 const User = require('./User');
 
 // Model for SuperAdmins table
@@ -14,7 +14,7 @@ class SuperAdmin {
       username,
       password
     } = newSuperAdmin;
-
+    /*
     try {
       // Insert user into Users table
       const result = await db.query('INSERT INTO Users (username, password) VALUES (?, ?)', [username, password]);
@@ -29,7 +29,7 @@ class SuperAdmin {
     } catch (error) {
       console.error('Error adding super admin:', error);
       throw error;
-    }
+    }*/
   }
 
   // add additional methods 
