@@ -35,7 +35,7 @@ router.get('/api/events', (req, res) => {
 
 // Route to find an event by ID
 router.get('/api/events/:eventId', (req, res) => {
-    const eventId = req.params.eventId;
+    const eventId = req.query.eventId;
 
     // Find the event by ID using the Event model
     Event.findById(eventId, (error, event) => {
