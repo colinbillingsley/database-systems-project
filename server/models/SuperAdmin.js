@@ -1,4 +1,4 @@
-//const db = require('../db');
+const db = require('../db');
 const User = require('./User');
 
 // Model for SuperAdmins table

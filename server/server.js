@@ -10,6 +10,7 @@ const port = process.env.PORT
 
 const user = require('./user');
 const superAdminRouter = require('./super_admin');
+const event = require('./event')
 
 const app = express();
 
@@ -21,7 +22,8 @@ app.use(passport.initialize());
 
 
 app.use('/user', user);
-//app.use('/super_admin', superAdminRouter);
+app.use('/super_admin', superAdminRouter);
+app.use('/event', event);
  
 /*
 app.get('*', (req, res) => {
