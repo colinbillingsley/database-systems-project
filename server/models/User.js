@@ -6,18 +6,32 @@ class User {
     this.username = username;
     this.password = password;
   }
-  
-  // Method to create a new user
-  static async create(username, password, callback) {
-    const query = 'INSERT INTO Users (username, password) VALUES (?, ?)';
-    connection.query(query, [username, password], (error, results) => {
+ 
+// Method to create a new user
+static async create(username, password, callback) {
+  // Check if the username already exists
+  User.findByUsername(username, async (error, existingUser) => {
       if (error) {
-        console.error('Error creating user:', error);
-        return callback(error);
+          // Error occurred while checking for existing username
+          return callback(error);
       }
-      callback(null, results.insertId); // Return the ID of the newly inserted user
-    });
-  }
+      if (existingUser) {
+          // Username already exists, reject the creation
+          return callback({ message: 'Username already exists' });
+      }
+      
+      // Proceed with creating the user if the username is unique
+      const query = 'INSERT INTO Users (username, password) VALUES (?, ?)';
+      connection.query(query, [username, password], (error, results) => {
+          if (error) {
+              console.error('User already exists', error);
+              return callback(error);
+          }
+          callback(null, results.insertId); // Return the ID of the newly inserted user
+      });
+  });
+}
+
 
   // Method to find a user by username
   static  async findByUsername(username, callback) {
