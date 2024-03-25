@@ -70,35 +70,7 @@ const CreateRSO = () => {
                         </div>
 
                         <div className="form-section">
-                            <p className="rso-disclaimer">Your RSO must have at least 4 registered students at the university. Please list their usernames below: </p>
-                        </div>
-
-                        <div className="create-rso-in-line-section">
-                            {/* member 1 */}
-                            <div className="form-section">
-                                <label htmlFor="rso-student1">Student1 Username</label>
-                                <input className="create-rso-text-field" type="text" name="rso-student1" id="rso-student1" placeholder="Enter username of student1" required/>
-                            </div>
-
-                            {/* member 2 */}
-                            <div className="form-section">
-                                <label htmlFor="rso-student2">Student2 Username</label>
-                                <input className="create-rso-text-field" type="text" name="rso-student2" id="rso-student2" placeholder="Enter username of student2" required/>
-                            </div>
-                        </div>
-
-                        <div className="create-rso-in-line-section">
-                            {/* member 3 */}
-                            <div className="form-section">
-                                <label htmlFor="rso-student3">Student3 Username</label>
-                                <input className="create-rso-text-field" type="text" name="rso-student3" id="rso-student3" placeholder="Enter username of student3" required/>
-                            </div>
-
-                            {/* member 4 */}
-                            <div className="form-section">
-                                <label htmlFor="rso-student4">Student4 Username</label>
-                                <input className="create-rso-text-field" type="text" name="rso-student4" id="rso-student4" placeholder="Enter username of student4" required/>
-                            </div>
+                            <p className="rso-disclaimer">Your RSO must have at least 4 registered students at the university to become active. Otherwise, the RSO will be listed as inactive. </p>
                         </div>
 
                         {/* create/cancel buttons */}

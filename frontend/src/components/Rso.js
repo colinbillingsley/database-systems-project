@@ -17,6 +17,7 @@ const tempRSO = {
 const Rso = ({userLevel}) => {
     const [myRsos, setMyRsos] = useState([]);
     const [activeRsos, setActiveRsos] = useState([]);
+    const [inactiveRsos, setInactiveRsos] = useState([]);
 
     // open create rso menu when create rso is clicked
     const RSOClick = () => {
@@ -83,6 +84,37 @@ const Rso = ({userLevel}) => {
                             // if rsos found, display all rsos
                             :
                             activeRsos.map((rso, index) => {
+                                // format rso name to be placed in URL
+                                const trimmedName = rso.name.trim();
+                                const formattedName = trimmedName.replace(/\s+/g, '-');
+
+                                return (
+                                    <li className="rso-item">
+                                        <Link to={`/rsos/${rso.id}/${formattedName}`}>
+                                            <RSOCard rso={rso}/>
+                                        </Link>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div className="inactive-rsos-content-container">
+                <h2 className="rso-heading">Inactive RSOs</h2>
+                <div className="inactive-rsos-cards-container">
+                    <ul className="list-of-active-rsos">
+                        {/* check if there's any events in database */}
+                        {(inactiveRsos.length === 0) 
+                            // if no rsos found, display message
+                            ? 
+                            <li>
+                                <p className="no-data">There are no inactive RSOs at your university at the moment.</p>
+                            </li> 
+                            // if rsos found, display all rsos
+                            :
+                            inactiveRsos.map((rso, index) => {
                                 // format rso name to be placed in URL
                                 const trimmedName = rso.name.trim();
                                 const formattedName = trimmedName.replace(/\s+/g, '-');

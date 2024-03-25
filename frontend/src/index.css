@@ -867,9 +867,8 @@ Styles for Rso.js
   margin-bottom: 2rem;
 }
 
-.my-rsos-content-container .main-heading,
-.active-rsos-content-container .main-heading {
-  margin-bottom: 1rem;
+.active-rsos-content-container {
+ margin-bottom: 2em;
 }
 
 .list-of-my-rsos,
