@@ -42,7 +42,7 @@ const LoginForm = () => {
             // unsuccessful login
             .catch((e) => {
                 console.log("error logging in: " + e.message);
-                loginError.innerHTML = e;
+                loginError.innerHTML = e.message;
             })
 
     }
