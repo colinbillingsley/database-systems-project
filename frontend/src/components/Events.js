@@ -6,31 +6,14 @@ import DayFilters from "./DayFilters";
 import Filters from "./Filters";
 import EventBox from "./EventBox";
 import CreateEvent from "./CreateEvent";
+import axios from "axios";
 
 const Events = ({userLevel}) => {
-    // temp date for styling
-    const date = new Date();
-
-    // temp event for styling
-    const tempEvent = {
-        id:'0',
-        name: 'UCF Database Project',
-        location: 'L3Harris Engineering Center Room 115',
-        category: 'Tech',
-        time: '3pm',
-        date: `${date.toDateString()}`,
-        type: 'Public',
-        description: `You are asked to implement a web-based application that solves the problems. Any student
-        (user) may register with the application to obtain a user ID and a password. There are three
-        user levels: super admin who creates a profile for a university (name, location, description,
-        number of students, pictures, etc.), admin who owns an RSO and may host events, and student
-        who uses the application to look up information about the various events.`
-    }
-
     const [events, setEvents] = useState([]);
     const [uniName, setUniName] = useState("UCF");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
+    const [filters, setFilters] = useState([]);
 
     // open create event menu when create events is clicked
     const EventClick = () => {
@@ -38,8 +21,33 @@ const Events = ({userLevel}) => {
         createEvent.classList.remove('hidden');
     }
 
+    const getEvents = async () => {
+        const getAllEventsUrl = 'http://localhost:3500/event/api/events';
+        axios.get(getAllEventsUrl)
+            .then((response) => {
+                const events = response.data.events;
+                const eventsArray = events.map(event => ({
+                    event_id: event.event_id,
+                    time: event.time?.trim(),
+                    desc: event.desc?.trim(),
+                    location: event.location?.trim(),
+                    date: event.date ? event.date.trim() : '', // Handle undefined date
+                    category: event.category ? event.category.trim() : '', // Handle undefined category
+                    event_type: event.event_type ? event.event_type.trim() : '', // Handle undefined category
+                    event_host: event.event_host?.trim(),
+                    event_phone: event.event_phone?.trim(),
+                    event_email: event.event_email?.trim(),
+                    event_name: typeof event.event_name === 'string' ? event.event_name.trim() : ''
+                        }));
+                setEvents(eventsArray);
+            })
+            .catch((error) => {
+                console.log("error getting events")
+            })
+    }
+
     useEffect(() => {
-        setEvents(events => [...events, tempEvent]);
+        getEvents();
     }, [])
 
     return (
@@ -72,12 +80,12 @@ const Events = ({userLevel}) => {
                             :
                             events.map((event, index) => {
                                 // format event name to be placed in URL
-                                const trimmedName = event.name.trim();
+                                const trimmedName = event.event_name.trim();
                                 const formattedName = trimmedName.replace(/\s+/g, '-');
 
                                 return (
                                     <li className="event-item">
-                                        <Link to={`/events/${event.id}/${formattedName}`}>
+                                        <Link to={`/events/${event.event_id}/${formattedName}`}>
                                             <EventBox event={event}/>
                                         </Link>
                                     </li>
@@ -88,7 +96,7 @@ const Events = ({userLevel}) => {
                 </div>
 
                 <div className="events-side-content">
-                    <Filters />
+                    <Filters filters={filters} setFilters={setFilters}/>
                 </div>
             </div>
             <CreateEvent />

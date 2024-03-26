@@ -3,25 +3,6 @@ import { Link } from "react-router-dom";
 
 import EventBox from "../components/EventBox";
 
-// temp date for styling
-const date = new Date();
-
-// temp event for styling
-const tempEvent = {
-    id:'0',
-    name: 'UCF Database Project',
-    location: 'L3Harris Engineering Center Room 115',
-    category: 'Tech',
-    time: '3pm',
-    date: `${date.toDateString()}`,
-    type: 'Public',
-    description: `You are asked to implement a web-based application that solves the problems. Any student
-    (user) may register with the application to obtain a user ID and a password. There are three
-    user levels: super admin who creates a profile for a university (name, location, description,
-    number of students, pictures, etc.), admin who owns an RSO and may host events, and student
-    who uses the application to look up information about the various events.`
-}
-
 const MyEvents = () => {
     const [userLevel, setUserLevel] = useState(2);
     const [myEvents, setMyEvents] = useState([]);
@@ -30,7 +11,7 @@ const MyEvents = () => {
     const [myDeniedEvents, setMyDeniedEvents] = useState([]);
 
     useEffect(() => {
-        setMyAcceptedEvents(myAcceptedEvents => [...myAcceptedEvents, tempEvent])
+        
     }, [])
 
     return (

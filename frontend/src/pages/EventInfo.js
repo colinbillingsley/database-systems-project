@@ -1,52 +1,30 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 
 import Comments from "../components/Comments";
 import EventContent from "../components/EventContent";
-
-// temp date for styling
-const date = new Date();
-
-// temp event for styling
-const tempEvent = {
-    id:'0',
-    name: 'UCF Database Project',
-    host: 'UCF',
-    location: 'L3Harris Engineering Center Room 115',
-    category: 'Tech',
-    time: '3pm',
-    date: `${date.toDateString()}`,
-    type: 'Public',
-    email: 'example@gmail.com',
-    phone: '123-123-4567',
-    description: `You are asked to implement a web-based application that solves the problems. Any student
-    (user) may register with the application to obtain a user ID and a password. There are three
-    user levels: super admin who creates a profile for a university (name, location, description,
-    number of students, pictures, etc.), admin who owns an RSO and may host events, and student
-    who uses the application to look up information about the various events.`
-}
-
-const tempComment = {
-    id: 0,
-    username: 'colinbillingsley',
-    comment: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit nesciunt voluptates voluptatibus enim praesentium deserunt quidem, consequuntur magni, laboriosam dolorem fuga explicabo. Nesciunt qui accusantium amet eaque voluptas dolorem dolorum!`
-}
+import axios from "axios";
 
 let tempRating = 0
 
 const EventInfo = () => {
-    const [eventInfo, setEventInfo] = useState('');
+    const [eventInfo, setEventInfo] = useState({});
     const [eventComments, setEventComments] = useState([]);
-    const [userLevel, setUserLevel] = useState(2);
     const [eventRating, setEventRating] = useState(tempRating);
+    const { event_id: eventId } = useParams();
+
+    const getEvent = async () => {
+        axios.get(`http://localhost:3500/event/api/events/${parseInt(eventId)}`)
+            .then((response) => {
+                const event = response.data.event;
+                setEventInfo(event);
+            })
+    }
 
     useEffect(() => {
-        // get event data and set to eventInfo
-        setEventInfo(tempEvent);
-        // get comment data and set to eventComments
-        setEventComments(eventComments => [...eventComments, tempComment]);
-        // set rating based on current rating of event by user
+        getEvent();
         setStarRating();
     }, [])
 
@@ -341,8 +319,8 @@ const EventInfo = () => {
         <div className="event-info">
             <div className="event-info-container">
                 <div className="event-info-left-content">
-                    <EventContent eventInfo={eventInfo}/>
-                    <Comments eventComments={eventComments}/>
+                    {eventInfo && <EventContent eventInfo={eventInfo}/>}
+                    {eventComments && <Comments eventComments={eventComments}/>}
                 </div>
 
                 <div className="event-info-right-content">
@@ -353,9 +331,9 @@ const EventInfo = () => {
                     <hr />
                     <div className="contact-section">
                         <h3>Contact Info</h3>
-                        <p>{eventInfo.host}</p>
-                        <p>{eventInfo.email}</p>
-                        <p>{eventInfo.phone}</p>
+                        <p>{eventInfo.event_host}</p>
+                        <p>{eventInfo.event_email}</p>
+                        <p>{eventInfo.event_phone}</p>
                     </div>
                     <hr />
                     <div className="rate-section">

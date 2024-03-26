@@ -45,11 +45,11 @@ const router = createBrowserRouter([
         element: <MyEvents />,
       },
       {
-        path: "/events/:event-id/:event-name",
+        path: "/events/:event_id/:event_name",
         element: <EventInfo />,
       },
       {
-        path: "/my-events/:event-id/:event-name",
+        path: "/my-events/:event_id/:event_name",
         element: <MyEventInfo />,
       },
       {
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
         element: <RsoPage />,
       },
       {
-        path: "/rsos/:rso-id/:rso-name",
+        path: "/rsos/:rso_id/:rso_name",
         element: <RSOInfoPage />,
       },
       {

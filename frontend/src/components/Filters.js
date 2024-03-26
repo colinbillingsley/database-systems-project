@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-const Filters = () => {
-    const [filters, setFilters] = useState([]);
+const Filters = ({filters, setFilters}) => {
 
     // add or remove filters when clicked on
     const handleFilterClick = (e) => {
