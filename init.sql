@@ -6,7 +6,8 @@ USE `eventdb`;
   `uid` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255),
   `password` varchar(255),
-  -- THINKING ABT LISTING ROLE HERE
+  `role` varchar(255),
+  `email` varchar(255),
   PRIMARY KEY (`uid`)
   )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -31,6 +32,13 @@ USE `eventdb`;
   `time` time(6) , 
   `desc` varchar(255) ,
   `location` varchar(255),
+  `date` DATE,
+  `category` varchar(255),
+  `event_host` varchar(255),
+  `event_phone` varchar(25),
+  `event_email` varchar(255),
+  `event_name` varchar(255),
+  
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
  
@@ -38,6 +46,11 @@ USE `eventdb`;
   `rso_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255),
   `created_by` int,
+  `type` varchar(255),
+  `desc` varchar(10000),
+  `email` varchar(255),
+  `number` varchar(25),
+  `status` varchar(255),
   PRIMARY KEY (`rso_id`),
   FOREIGN KEY (created_by) references Admins(uid) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
