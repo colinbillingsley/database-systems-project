@@ -1,4 +1,5 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { useAuthContext } from './hooks/useAuthContext';
 
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
@@ -16,72 +17,81 @@ import RequestsPage from './pages/RequestsPage';
 import Layout from './components/Layout';
 import CreateAdminAccount from './pages/CreateAdminAccount';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/account-type",
-        element: <AccountType />,
-      },
-      {
-        path: "/create-account-student",
-        element: <CreateStudentAccount />,
-      },
-      {
-        path: "/create-account-admin",
-        element: <CreateAdminAccount />,
-      },
-      {
-        path: "/create-account-super",
-        element: <CreateSuperAccount />,
-      },
-      {
-        path: "/",
-        element: <AllEvents />,
-      },
-      {
-        path: "/my-events",
-        element: <MyEvents />,
-      },
-      {
-        path: "/events/:event_id/:event_name",
-        element: <EventInfo />,
-      },
-      {
-        path: "/my-events/:event_id/:event_name",
-        element: <MyEventInfo />,
-      },
-      {
-        path: "/my-account",
-        element: <MyAccount />,
-      },
-      {
-        path: "/rsos",
-        element: <RsoPage />,
-      },
-      {
-        path: "/rsos/:rso_id/:rso_name",
-        element: <RSOInfoPage />,
-      },
-      {
-        path: "/requests",
-        element: <RequestsPage />,
-      },
-    ]
-  },
-  {
-    path: "/welcome",
-    element: <Welcome />,
-  },
-]);
-
 function App() {
+  
+  // Access the state (user) provided by AuthContext
+  const { user } = useAuthContext();
+
+  // determine if user is logged in
+  const isLoggedIn = () => {
+    return !!user;
+  };
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/login",
+          element: !isLoggedIn() ? <Login /> : <Navigate to="/" />,
+        },
+        {
+          path: "/account-type",
+          element: !isLoggedIn() ? <AccountType /> : <Navigate to="/" />,
+        },
+        {
+          path: "/create-account-student",
+          element: !isLoggedIn() ? <CreateStudentAccount /> : <Navigate to="/" />,
+        },
+        {
+          path: "/create-account-admin",
+          element: !isLoggedIn() ? <CreateAdminAccount /> : <Navigate to="/" />,
+        },
+        {
+          path: "/create-account-super",
+          element: !isLoggedIn() ? <CreateSuperAccount /> : <Navigate to="/" />,
+        },
+        // Guard the protected routes using the `isLoggedIn` function
+        {
+          path: "/",
+          element: isLoggedIn() ? <AllEvents /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/my-events",
+          element: isLoggedIn() ? <MyEvents /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/events/:event_id/:event_name",
+          element: isLoggedIn() ? <EventInfo /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/my-events/:event_id/:event_name",
+          element: isLoggedIn() ? <MyEventInfo /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/my-account",
+          element: isLoggedIn() ? <MyAccount /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/rsos",
+          element: isLoggedIn() ? <RsoPage /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/rsos/:rso_id/:rso_name",
+          element: isLoggedIn() ? <RSOInfoPage /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/requests",
+          element: isLoggedIn() ? <RequestsPage /> : <Navigate to="/login" />,
+        },
+      ]
+    },
+    {
+      path: "/welcome",
+      element: <Welcome />,
+    },
+  ]);
 
   return (
     <div className="app">

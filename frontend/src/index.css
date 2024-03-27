@@ -126,34 +126,22 @@ Styles for Nav.js
   right: 20px;
 }
 
-.user-profile-dropdown li a,
-.events-dropdown li a {
-  padding: 0.5em 1em;
+.user-profile-dropdown li,
+.events-dropdown li {
   border-radius: 5px;
+}
+
+.user-profile-dropdown li a,
+.user-profile-dropdown li span,
+.events-dropdown li a {
+  display: block;
+  padding: 0.5em 1em;
 }
 
 .user-profile-dropdown li:hover,
 .events-dropdown li:hover {
-  background-color: var(--filter-hover-bg-color);
-  border-radius: 5px;
-}
-
-.user-profile-dropdown li a:hover,
-.events-dropdown li a:hover {
-  background-color: var(--filter-hover-bg-color);
-}
-
-.user-profile-dropdown input[type="submit"] {
-  border: none;
-  font-family: inherit;
-  font-size: 1em;
-  background-color: transparent;
-  padding: 0.5em 1em;
-  border-radius: 5px;
-}
-
-.user-profile-dropdown input[type="submit"]:hover {
   cursor: pointer;
+  background-color: var(--filter-hover-bg-color);
 }
 
 /* ===================================

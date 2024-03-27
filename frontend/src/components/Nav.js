@@ -2,12 +2,23 @@ import { Link } from "react-router-dom";
 import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { useLogout } from '../hooks/useLogout'
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Nav = ({userLevel}) => {
-    const [loggedIn, setLoggedIn] = useState(true);
     const userDropdown = document.getElementsByClassName('user-profile-dropdown');
     const eventDropdown = document.getElementsByClassName('events-dropdown');
     const caret = document.getElementsByClassName('caret');
+    // brings our logout function from useLogout
+    const { logout } = useLogout()
+    // Access the state (user) provided by AuthContext
+    const { user } = useAuthContext(); 
+
+    // function calls logout to logout user
+    const handleLogout = (e) => { 
+        e.preventDefault();
+        logout()
+    }
 
     const mouseOverEvents = () => {
         changeCaretColorBlue();
@@ -53,15 +64,15 @@ const Nav = ({userLevel}) => {
         caret[0].style.color = "black";
     }
     
-    // if user logged in display nav links (temp solution for testing)
-    if (loggedIn) {
+    // if user logged in display nav links dependant on role
+    if (!!user) {
 
         // user is super admin
-        if (userLevel === 2) {
+        if (parseInt(user.role) === 2) {
             return (
                 <header>
                     <nav className="navbar-container">
-                        <Link to="/welcome" className="univents">UNIVENTS</Link>
+                        <Link to="/" className="univents">UNIVENTS</Link>
                         
                         <ul className="nav-links-list">
                             <li>
@@ -89,10 +100,8 @@ const Nav = ({userLevel}) => {
                                     <li>
                                         <Link to="/my-account">My Account</Link>
                                     </li>
-                                    <li>
-                                        <form action="" method="POST">
-                                            <input type="submit" value="Logout"/>
-                                        </form>
+                                    <li onClick={handleLogout}>
+                                        <span>Logout</span>
                                     </li>
                                 </ul>
                             </li>
@@ -103,11 +112,11 @@ const Nav = ({userLevel}) => {
         }
 
         // user is admin
-        else if (userLevel === 1) {
+        else if (parseInt(user.role) === 1) {
             return (
                 <header>
                     <nav className="navbar-container">
-                        <Link to="/welcome" className="univents">UNIVENTS</Link>
+                        <Link to="/" className="univents">UNIVENTS</Link>
                         
                         <ul className="nav-links-list">
                             <li>
@@ -132,8 +141,8 @@ const Nav = ({userLevel}) => {
                                     <li>
                                         <Link to="/my-account">My Account</Link>
                                     </li>
-                                    <li>
-                                        <form action="" method="POST">
+                                    <li onClick={handleLogout}>
+                                        <form>
                                             <input type="submit" value="Logout"/>
                                         </form>
                                     </li>
@@ -146,11 +155,11 @@ const Nav = ({userLevel}) => {
         }
 
         // user is student
-        else if (userLevel === 0){
+        else if (parseInt(user.role) === 0){
             return (
                 <header>
                     <nav className="navbar-container">
-                        <Link to="/welcome" className="univents">UNIVENTS</Link>
+                        <Link to="/" className="univents">UNIVENTS</Link>
                         <ul className="nav-links-list">
                             <li>
                                 <Link className="nav-link-item" to="/rsos">RSOs</Link>
@@ -164,8 +173,8 @@ const Nav = ({userLevel}) => {
                                     <li>
                                         <Link to="/my-account">My Account</Link>
                                     </li>
-                                    <li>
-                                        <form action="" method="POST">
+                                    <li onClick={handleLogout}>
+                                        <form>
                                             <input type="submit" value="Logout"/>
                                         </form>
                                     </li>
@@ -193,7 +202,7 @@ const Nav = ({userLevel}) => {
         return (
             <header>
                 <nav className="navbar-container">
-                <Link to="/welcome" className="univents">UNIVENTS</Link>
+                <Link to="/" className="univents">UNIVENTS</Link>
                 </nav>
             </header>
         )

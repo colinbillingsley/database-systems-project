@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios';
-import AuthContext from "../context/AuthProvider";
+import { useLogin } from '../hooks/useLogin'
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { setAuth } = useContext(AuthContext);
-
+    const { login } = useLogin();
+    const navigate = useNavigate()
 
     // set the username value and reset error text
     const handleUsernameChange = (e) => {
@@ -27,22 +27,13 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        // get the error element
-        const loginError = document.querySelector('.error');
+        // attempt to login the user via inputs
+        const loginResult = await login(username, password);
 
-        // call the login api
-       await axios.post('http://localhost:3500/user/api/users/login', {username, password})
-            // successful login
-            .then((response) => {
-                console.log("successful login");
-                const user = response.data.user;
-                console.log(user);
-            })
-            // unsuccessful login
-            .catch((error) => {
-                loginError.innerHTML = error.response.data.error;
-            })
-
+        // if successful, navigate to home page
+        if (loginResult) {
+            navigate('/');
+        }
     }
 
     return (
@@ -62,14 +53,14 @@ const LoginForm = () => {
                     {/* username input */}
                     <div className="form-section">
                         <label htmlFor="username">Username</label>
-                        <input type="text" name="username" id="username" placeholder="Enter username" required
+                        <input type="text" name="username" id="username" placeholder="Enter username"
                         onChange={handleUsernameChange}/>
                     </div>
 
                     {/* password input */}
                     <div className="form-section">
                         <label htmlFor="password1">Password</label>
-                        <input type="password" name="password1" id="password1" placeholder="Enter password" required
+                        <input type="password" name="password1" id="password1" placeholder="Enter password"
                         onChange={handlePasswordChange}/>
                     </div>
 

@@ -1,9 +1,26 @@
 import { Link } from "react-router-dom"
+import { useState } from "react";
 
 const CreateSuperForm = () => {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [university, setUniversity] = useState('');
+    const [uniAddress, setUniAddress] = useState('');
+    const [studentPop, setStudentPop] = useState('');
+    const [uniDesc, setUniDesc] = useState('');
+
+    const handleSubmit = async (e) => {
+        const role = 2;
+
+        e.preventDefault();
+
+        console.log(`Role: ${role} (Super Admin)\nUsername: ${username}\nEmail: ${email}\nPassword: ${password}\nUniversity: ${university}\nUniversity Address: ${uniAddress}\nPopulation: ${studentPop}\nUniversity Description: ${uniDesc}\n`)
+    }
+
     return (
         <div className="form-container">
-            <form action="" method="POST">
+            <form onSubmit={handleSubmit} method="POST">
                 {/* Form header */}
                 <div className="form-header">
                     <h3 className="form-heading">Create Account - Super Admin</h3>
@@ -17,37 +34,37 @@ const CreateSuperForm = () => {
                         {/* username input */}
                         <div className="form-section">
                             <label htmlFor="username">Username</label>
-                            <input type="text" name="username" id="username" placeholder="Enter username" required/>
+                            <input type="text" name="username" id="username" placeholder="Enter username" onChange={(e) => {setUsername(e.target.value)}}/>
                         </div>
 
                         {/* email input */}
                         <div className="form-section">
                             <label htmlFor="email">School Email</label>
-                            <input type="text" name="email" id="email" placeholder="Enter school email" required/>
+                            <input type="text" name="email" id="email" placeholder="Enter school email" onChange={(e) => {setEmail(e.target.value)}}/>
                         </div>
 
                         {/* password input */}
                         <div className="form-section">
                             <label htmlFor="password1">Password</label>
-                            <input type="password" name="password1" id="password1" placeholder="Enter password" required/>
+                            <input type="password" name="password1" id="password1" placeholder="Enter password" onChange={(e) => {setPassword(e.target.value)}}/>
                         </div>
 
                         {/* university input */}
                         <div className="form-section">
                             <label htmlFor="university">University</label>
-                            <input type="text" name="university" id="university" placeholder="Enter university name" required/>
+                            <input type="text" name="university" id="university" placeholder="Enter university name" onChange={(e) => {setUniversity(e.target.value)}}/>
                         </div>
 
                         {/* address input */}
                         <div className="form-section">
                             <label htmlFor="address">University Address</label>
-                            <input type="text" name="address" id="address" placeholder="Enter university address" required/>
+                            <input type="text" name="address" id="address" placeholder="Enter university address" onChange={(e) => {setUniAddress(e.target.value)}}/>
                         </div>
 
                         {/* student population input */}
                         <div className="form-section">
                             <label htmlFor="population">Student Population</label>
-                            <input type="text" name="population" id="population" placeholder="Enter student population" required/>
+                            <input type="text" name="population" id="population" placeholder="Enter student population" onChange={(e) => {setStudentPop(e.target.value)}}/>
                         </div>
                     </div>
 
@@ -55,7 +72,7 @@ const CreateSuperForm = () => {
                             {/* university description */}
                             <div className="form-section">
                                 <label htmlFor="description">University Description</label>
-                                <textarea className="super-textarea" name="description" id="description" rows="26" placeholder="Enter a description of the university..." required></textarea>
+                                <textarea className="super-textarea" name="description" id="description" rows="26" placeholder="Enter a description of the university..." onChange={(e) => {setUniDesc(e.target.value)}}></textarea>
                             </div>
                         </div>
                 </div>
