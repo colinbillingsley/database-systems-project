@@ -142,9 +142,7 @@ const Nav = ({userLevel}) => {
                                         <Link to="/my-account">My Account</Link>
                                     </li>
                                     <li onClick={handleLogout}>
-                                        <form>
-                                            <input type="submit" value="Logout"/>
-                                        </form>
+                                        <span>Logout</span>
                                     </li>
                                 </ul>
                             </li>
@@ -174,9 +172,7 @@ const Nav = ({userLevel}) => {
                                         <Link to="/my-account">My Account</Link>
                                     </li>
                                     <li onClick={handleLogout}>
-                                        <form>
-                                            <input type="submit" value="Logout"/>
-                                        </form>
+                                        <span>Logout</span>
                                     </li>
                                 </ul>
                             </li>
