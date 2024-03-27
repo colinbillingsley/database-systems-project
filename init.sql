@@ -98,3 +98,11 @@ USE `eventdb`;
   FOREIGN KEY (`uid`) references Users(uid) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+   CREATE TABLE `universities` (
+  `uni_id` int NOT NULL AUTO_INCREMENT,
+  `desc` varchar(10000) ,
+  `location` varchar(255),
+  `NOstudents` int,
+  `domain` varchar(255),
+  PRIMARY KEY (`uni_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
