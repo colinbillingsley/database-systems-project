@@ -7,7 +7,7 @@ class User {
     this.password = password;
   }
  
-  static async create(username, password, email, access, callback) {
+  static async create(username, password, callback) {
     // Check if the username already exists
     User.findByUsername(username, async (error, existingUser) => {
         if (error) {
@@ -20,8 +20,8 @@ class User {
         }
         
         // Proceed with creating the user if the username is unique
-        const query = 'INSERT INTO Users (username, password, email, access) VALUES (?, ?, ?, ?)';
-        connection.query(query, [username, password, email, access], (error, results) => {
+        const query = 'INSERT INTO Users (username, password) VALUES (?, ?, ?, ?)';
+        connection.query(query, [username, password], (error, results) => {
             if (error) {
                 console.error('Error creating user:', error);
                 return callback(error);
@@ -29,7 +29,7 @@ class User {
             callback(null, results.insertId); // Return the ID of the newly inserted user
         });
     });
-  }
+}
   
 
 
