@@ -1,17 +1,30 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const Comments = ({eventComments}) => {
+const Comments = ({eventComments, eventID}) => {
+    const [comment, setComment] = useState('')
+
+    // set the comment based on input
+    const handleCommentChange = (e) => {
+        setComment(e.target.value);
+    }
+
+    const handleComment = (e) => {
+        e.preventDefault();
+        console.log(comment);
+    }
 
     return (
         <div className="comments-section">
             <h3 className="main-heading">Comments</h3>
             <div className="leave-comment-section">
-                <p>
-                    <label htmlFor="comment">Leave a comment?</label>
-                    <input type="text" name="comment" id="comment" placeholder="Add a comment about the event..."/>
-                </p>
+                <form onSubmit={handleComment}>
+                    <div>
+                        <label htmlFor="comment">Leave a comment?</label>
+                        <input type="text" name="comment" id="comment" placeholder="Add a comment about the event..." onChange={handleCommentChange}/>
+                    </div>
+                </form>
             </div>
             <ul className="comments-list">
                 {eventComments.length === 0

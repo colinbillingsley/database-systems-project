@@ -320,7 +320,7 @@ const EventInfo = () => {
             <div className="event-info-container">
                 <div className="event-info-left-content">
                     {eventInfo && <EventContent eventInfo={eventInfo}/>}
-                    {eventComments && <Comments eventComments={eventComments}/>}
+                    {eventComments && <Comments eventComments={eventComments} eventID={eventInfo.event_id}/>}
                 </div>
 
                 <div className="event-info-right-content">

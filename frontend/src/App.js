@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import AccountType from './pages/AccountType';
-import CreateAdStAccount from './pages/CreateAdStAccount';
+import CreateStudentAccount from './pages/CreateStudentAccount';
 import CreateSuperAccount from './pages/CreateSuperAccount';
 import AllEvents from './pages/AllEvents';
 import EventInfo from './pages/EventInfo';
@@ -14,6 +14,7 @@ import MyEventInfo from './pages/MyEventInfo';
 import RSOInfoPage from './pages/RSOInfoPage';
 import RequestsPage from './pages/RequestsPage';
 import Layout from './components/Layout';
+import CreateAdminAccount from './pages/CreateAdminAccount';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +30,12 @@ const router = createBrowserRouter([
         element: <AccountType />,
       },
       {
-        path: "/create-account-adst",
-        element: <CreateAdStAccount />,
+        path: "/create-account-student",
+        element: <CreateStudentAccount />,
+      },
+      {
+        path: "/create-account-admin",
+        element: <CreateAdminAccount />,
       },
       {
         path: "/create-account-super",

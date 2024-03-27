@@ -1,14 +1,14 @@
-import CreateAdStForm from "../components/CreateAdStForm"
+import CreateAdminForm from "../components/CreateAdminForm"
 
-const CreateAdStAccount = () => {
+const CreateAdminAccount = () => {
     return (
         <div className="create-adst-account">
             {/* Create Account Form */}
             <div className="create-adst-form-container">
-                <CreateAdStForm />
+                <CreateAdminForm />
             </div>
         </div>
     )
 }
 
-export default CreateAdStAccount
+export default CreateAdminAccount

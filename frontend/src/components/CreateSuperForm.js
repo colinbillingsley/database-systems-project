@@ -6,7 +6,7 @@ const CreateSuperForm = () => {
             <form action="" method="POST">
                 {/* Form header */}
                 <div className="form-header">
-                    <h3 className="form-heading">Create Account</h3>
+                    <h3 className="form-heading">Create Account - Super Admin</h3>
                     <p className="form-heading-text">Please fill out the information below to create an account.</p>
                     <hr />
                 </div>
@@ -20,16 +20,16 @@ const CreateSuperForm = () => {
                             <input type="text" name="username" id="username" placeholder="Enter username" required/>
                         </div>
 
+                        {/* email input */}
+                        <div className="form-section">
+                            <label htmlFor="email">School Email</label>
+                            <input type="text" name="email" id="email" placeholder="Enter school email" required/>
+                        </div>
+
                         {/* password input */}
                         <div className="form-section">
                             <label htmlFor="password1">Password</label>
                             <input type="password" name="password1" id="password1" placeholder="Enter password" required/>
-                        </div>
-
-                        {/* re-enter password */}
-                        <div className="form-section">
-                            <label htmlFor="password2">Re-enter Password</label>
-                            <input type="password" name="password2" id="password2" placeholder="Re-enter password" required/>
                         </div>
 
                         {/* university input */}

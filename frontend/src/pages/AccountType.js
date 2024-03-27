@@ -20,10 +20,10 @@ const AccountType = () => {
                             <Link to="/create-account-super">Super Admin</Link>
                         </li>
                         <li>
-                            <Link to="/create-account-adst">Admin</Link>
+                            <Link to="/create-account-admin">Admin</Link>
                         </li>
                         <li>
-                            <Link to="/create-account-adst">Student</Link>
+                            <Link to="/create-account-student">Student</Link>
                         </li>
                     </ul>
 

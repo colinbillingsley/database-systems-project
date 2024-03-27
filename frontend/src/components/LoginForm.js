@@ -6,7 +6,6 @@ import AuthContext from "../context/AuthProvider";
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const { setAuth } = useContext(AuthContext);
 
 
@@ -40,9 +39,8 @@ const LoginForm = () => {
                 console.log(user);
             })
             // unsuccessful login
-            .catch((e) => {
-                console.log("error logging in: " + e.message);
-                loginError.innerHTML = e.message;
+            .catch((error) => {
+                loginError.innerHTML = error.response.data.error;
             })
 
     }
