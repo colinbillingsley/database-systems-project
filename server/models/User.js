@@ -20,7 +20,7 @@ class User {
         }
         
         // Proceed with creating the user if the username is unique
-        const query = 'INSERT INTO Users (username, password) VALUES (?, ?, ?, ?)';
+        const query = 'INSERT INTO Users (username, password) VALUES (?, ?)';
         connection.query(query, [username, password], (error, results) => {
             if (error) {
                 console.error('Error creating user:', error);

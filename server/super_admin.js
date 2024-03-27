@@ -4,7 +4,7 @@ const SuperAdmin = require('./models/SuperAdmin');
 
 
 // Route to register a new super admin
-router.post('/api/super_admin/register', (req, res) => {
+router.post('/api/register', (req, res) => {
     const { username, password } = req.body;
     console.log("Route ran");
     // Validate input
