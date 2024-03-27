@@ -42,28 +42,28 @@ router.get('/api/users/finduser', (req, res) => {
   //login
   // Route for user login
 router.post('/api/users/login', (req, res) => {
-  const { username, password } = req.body;
+    const { username, password } = req.body;
 
-  // Check if both username and password are provided
-  if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required" });
-  }
+    // Check if both username and password are provided
+    if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+    }
 
-  // Find a user by username using the User model
-  User.findByUsername(username, (error, user) => {
-      if (error) {
-          return res.status(500).json({ error: "Error finding user by username" });
-      }
-      if (!user) {
-          return res.status(404).json({ error: "User not found" });
-      }
-      // Check if the password matches
-      if (user.password === password) {
-          res.status(200).json({ message: "Login successful", user });
-      } else {
-          res.status(401).json({ error: "Invalid password" });
-      }
-  });
+    // Find a user by username using the User model
+    User.findByUsername(username, (error, user) => {
+        if (error) {
+            return res.status(500).json({ error: "Error finding user by username" });
+        }
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        // Check if the password matches
+        if (user.password === password) {
+            res.status(200).json({ message: "Login successful", user });
+        } else {
+            res.status(401).json({ error: "Invalid password" });
+        }
+    });
 });
 
 module.exports = router;

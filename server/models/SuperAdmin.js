@@ -1,39 +1,24 @@
 const db = require('../db');
 const User = require('./User');
 
-// Model for SuperAdmins table
 class SuperAdmin {
-  constructor(username, password) {
-    this.username = username;
-    this.password = password;
-  }
-
-  // Method to add a new super admin
-  static async add(newSuperAdmin) {
-    const {
-      username,
-      password
-    } = newSuperAdmin;
-    /*
+  static async create(username, password, callback) {
     try {
-      // Insert user into Users table
-      const result = await db.query('INSERT INTO Users (username, password) VALUES (?, ?)', [username, password]);
-      
-      // Retrieve the auto-generated UID from the insert result
-      const uid = result.insertId;
+      // First, create a user in the Users table
+      const userId = await User.create(username, password);
 
-      // Insert user's UID into SuperAdmins table
-      await db.query('INSERT INTO SuperAdmins (uid) VALUES (?)', [uid]);
-
-      return { success: true };
+      // Then, create a SuperAdmin entry in the SuperAdmins table
+      const query = 'INSERT INTO SuperAdmins (uid) VALUES (?)';
+      db.query(query, [userId], (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        callback(null, results.insertId); // Return the ID of the newly inserted super admin
+      });
     } catch (error) {
-      console.error('Error adding super admin:', error);
-      throw error;
-    }*/
+      callback(error);
+    }
   }
-
-  // add additional methods 
 }
 
-// Export the SuperAdmin model
 module.exports = SuperAdmin;

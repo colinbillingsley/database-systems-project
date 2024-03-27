@@ -7,30 +7,31 @@ class User {
     this.password = password;
   }
  
-// Method to create a new user
-static async create(username, password, callback) {
-  // Check if the username already exists
-  User.findByUsername(username, async (error, existingUser) => {
-      if (error) {
-          // Error occurred while checking for existing username
-          return callback(error);
-      }
-      if (existingUser) {
-          // Username already exists, reject the creation
-          return callback({ message: 'Username already exists' });
-      }
-      
-      // Proceed with creating the user if the username is unique
-      const query = 'INSERT INTO Users (username, password) VALUES (?, ?)';
-      connection.query(query, [username, password], (error, results) => {
-          if (error) {
-              console.error('User already exists', error);
-              return callback(error);
-          }
-          callback(null, results.insertId); // Return the ID of the newly inserted user
-      });
-  });
-}
+  static async create(username, password, email, access, callback) {
+    // Check if the username already exists
+    User.findByUsername(username, async (error, existingUser) => {
+        if (error) {
+            // Error occurred while checking for existing username
+            return callback(error);
+        }
+        if (existingUser) {
+            // Username already exists, reject the creation
+            return callback({ message: 'Username already exists' });
+        }
+        
+        // Proceed with creating the user if the username is unique
+        const query = 'INSERT INTO Users (username, password, email, access) VALUES (?, ?, ?, ?)';
+        connection.query(query, [username, password, email, access], (error, results) => {
+            if (error) {
+                console.error('Error creating user:', error);
+                return callback(error);
+            }
+            callback(null, results.insertId); // Return the ID of the newly inserted user
+        });
+    });
+  }
+  
+
 
 
   // Method to find a user by username
