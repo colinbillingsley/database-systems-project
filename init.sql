@@ -1,5 +1,5 @@
 -- DROP schema `eventdb`; for testing purposes
-CREATE DATABASE `eventdb`; 
+CREATE DATABASE `eventdb`;
 USE `eventdb`;
 
   CREATE TABLE `Users` (
