@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Events = ({userLevel}) => {
     const [events, setEvents] = useState([]);
-    const [uniName, setUniName] = useState("UCF");
+    const [uniName, setUniName] = useState("[No University Found]");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
     const [filters, setFilters] = useState([]);

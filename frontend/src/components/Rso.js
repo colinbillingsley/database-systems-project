@@ -3,17 +3,6 @@ import { Link } from "react-router-dom";
 
 import RSOCard from "./RSOCard";
 
-const tempRSO = {
-    id: 0,
-    name: 'UCF Soccer',
-    type: 'Club',
-    numMembers: 4,
-    members: ['Colin Billingsley', 'Joshua Easterling', 'Jordan Morillo', 'Guest User'],
-    email: 'abc_example@gmail.com',
-    phone: '123-456-7890',
-    description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa quidem nesciunt eligendi, suscipit vel corrupti unde, inventore placeat possimus quas necessitatibus aperiam. Expedita, perspiciatis? Qui, natus! Eius commodi nemo cum.`
-}
-
 const Rso = ({userLevel}) => {
     const [myRsos, setMyRsos] = useState([]);
     const [activeRsos, setActiveRsos] = useState([]);
@@ -26,9 +15,7 @@ const Rso = ({userLevel}) => {
     }
 
     useEffect(() => {
-        setActiveRsos(myRsos => [...myRsos, tempRSO])
-        setActiveRsos(myRsos => [...myRsos, tempRSO])
-        setActiveRsos(myRsos => [...myRsos, tempRSO])
+
     },[])
 
     return (

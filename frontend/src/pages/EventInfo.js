@@ -1,22 +1,26 @@
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 
 import Comments from "../components/Comments";
 import EventContent from "../components/EventContent";
 import axios from "axios";
 
-let tempRating = 0
+const tempComment = {
+    uid: 4,
+    text: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. At ipsam provident dicta amet fugiat. Quaerat maxime eligendi eveniet, nam similique modi inventore est placeat culpa molestias, fugiat dolores. Maiores, nihil!
+    Voluptas, quasi saepe? Magnam modi velit unde eaque distinctio sit blanditiis voluptate voluptas hic, doloremque consectetur vitae cum sed nobis quae cumque, repellat ratione nostrum fugit quos totam facere minus.`,
+    rating: 3,
+    timestamp: '2024-03-02 03:14:07'
+}
 
 const EventInfo = () => {
     const [eventInfo, setEventInfo] = useState({});
-    const [eventComments, setEventComments] = useState([]);
-    const [eventRating, setEventRating] = useState(tempRating);
+    const [eventComments, setEventComments] = useState([tempComment]);
+    const [eventRating, setEventRating] = useState(0);
     const { event_id: eventId } = useParams();
 
     const getEvent = async () => {
-        axios.get(`http://localhost:3500/event/api/events/${parseInt(eventId)}`)
+        await axios.get(`http://localhost:3500/event/api/events/${parseInt(eventId)}`)
             .then((response) => {
                 const event = response.data.event;
                 setEventInfo(event);
@@ -246,8 +250,7 @@ const EventInfo = () => {
         if (e.target.id === "star1") {
             const star1 = document.querySelector("#star1");
             star1.style.color = 'gold';
-            tempRating = 1;
-            setEventRating(tempRating);
+            setEventRating(1);
             const star2 = document.querySelector("#star2");
             star2.style.color = 'white';
             const star3 = document.querySelector("#star3");
@@ -262,8 +265,7 @@ const EventInfo = () => {
             star1.style.color = 'gold';
             const star2 = document.querySelector("#star2");
             star2.style.color = 'gold';
-            tempRating = 2;
-            setEventRating(tempRating);
+            setEventRating(2);
             const star3 = document.querySelector("#star3");
             star3.style.color = 'white';
             const star4 = document.querySelector("#star4");
@@ -278,8 +280,7 @@ const EventInfo = () => {
             star2.style.color = 'gold';
             const star3 = document.querySelector("#star3");
             star3.style.color = 'gold';
-            tempRating = 3;
-            setEventRating(tempRating);
+            setEventRating(3);
             const star4 = document.querySelector("#star4");
             star4.style.color = 'white';
             const star5 = document.querySelector("#star5");
@@ -294,8 +295,7 @@ const EventInfo = () => {
             star3.style.color = 'gold';
             const star4 = document.querySelector("#star4");
             star4.style.color = 'gold';
-            tempRating = 4;
-            setEventRating(tempRating);
+            setEventRating(4);
             const star5 = document.querySelector("#star5");
             star5.style.color = 'white';
         }
@@ -310,8 +310,7 @@ const EventInfo = () => {
             star4.style.color = 'gold';
             const star5 = document.querySelector("#star5");
             star5.style.color = 'gold';
-            tempRating = 5;
-            setEventRating(tempRating);
+            setEventRating(5);
         }
     } 
 
@@ -320,7 +319,17 @@ const EventInfo = () => {
             <div className="event-info-container">
                 <div className="event-info-left-content">
                     {eventInfo && <EventContent eventInfo={eventInfo}/>}
-                    {eventComments && <Comments eventComments={eventComments} eventID={eventInfo.event_id}/>}
+                    {eventComments && <Comments 
+                    eventComments={eventComments} 
+                    setEventComments={setEventComments}
+                    eventID={eventInfo.event_id}
+                    eventRating={eventRating}
+                    setEventRating={setEventRating}
+                    setStarRating={setStarRating}
+                    mouseOverStars={mouseOverStars}
+                    mouseLeaveStars={mouseLeaveStars}
+                    onStarClick={onStarClick}
+                    />}
                 </div>
 
                 <div className="event-info-right-content">
@@ -334,17 +343,6 @@ const EventInfo = () => {
                         <p>{eventInfo.event_host}</p>
                         <p>{eventInfo.event_email}</p>
                         <p>{eventInfo.event_phone}</p>
-                    </div>
-                    <hr />
-                    <div className="rate-section">
-                        <h3>Rate Event</h3>
-                        <ul className="stars" onMouseLeave={mouseLeaveStars}>
-                            <li id="star1" className="star-item white" onMouseOver={mouseOverStars} onClick={onStarClick}><FontAwesomeIcon icon={faStar} size="xl" /></li>
-                            <li id="star2" className="star-item white" onMouseOver={mouseOverStars} onClick={onStarClick}><FontAwesomeIcon icon={faStar} size="xl" /></li>
-                            <li id="star3" className="star-item white" onMouseOver={mouseOverStars} onClick={onStarClick}><FontAwesomeIcon icon={faStar} size="xl" /></li>
-                            <li id="star4" className="star-item white" onMouseOver={mouseOverStars} onClick={onStarClick}><FontAwesomeIcon icon={faStar} size="xl" /></li>
-                            <li id="star5" className="star-item white" onMouseOver={mouseOverStars} onClick={onStarClick}><FontAwesomeIcon icon={faStar} size="xl" /></li>
-                        </ul>
                     </div>
                 </div>
             </div>
