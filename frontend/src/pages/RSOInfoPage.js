@@ -12,35 +12,34 @@ const RSOInfoPage = () => {
 
     // get usernames for each member of RSO and set to rsoMembers
     const getUsernameFromMembers = async (uid) => {
-        await axios.get(`http://localhost:3500/user/api/user/${uid}`)
-            .then((response) => {
-                // get the username from response
-                const username = response.data.user.username;
-                // add the username to the rsoMembers list if not already in it
-                if (!rsoMembers.includes(username))
-                    setRsoMembers(rsoMembers => [...rsoMembers, username]);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        try {
+            const response = await axios.get(`http://localhost:3500/user/api/user/${uid}`);
+            const username = response.data.user.username;
+            return username;
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
     }
 
     // get all the RSOs members
     const getRsoMembers = async () => {
-        const baseUrl = 'http://localhost:3500/rso/api/rso/members';
-        await axios.get(`${baseUrl}/${rsoId}`)
-            .then((response) => {
-                // get all the members from response
-                const members = response.data.members;
-                
-                // go through each memeber and get their username
-                members.map((member) => {
-                    getUsernameFromMembers(member.uid);
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        try {
+            const baseUrl = 'http://localhost:3500/rso/api/rso/members';
+            // get the response/members from call to get get members of the RSO
+            const response = await axios.get(`${baseUrl}/${rsoId}`);
+            const members = response.data.members;
+
+            // get all the usernames from the gethered members
+            const usernamePromises = members.map((member) => getUsernameFromMembers(member.uid));
+
+            // wait until all data is gathered before setting
+            const usernames = await Promise.all(usernamePromises);
+            setRsoMembers(usernames.filter((username) => username));
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
     }
 
     // join RSO
@@ -52,7 +51,8 @@ const RSOInfoPage = () => {
                 getRsoMembers();
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error);
+                return null;
             })
     }
 
@@ -68,6 +68,7 @@ const RSOInfoPage = () => {
             })
             .catch((error) => {
                 console.log(error);
+                return null;
             })
     }
 
@@ -81,13 +82,14 @@ const RSOInfoPage = () => {
             })
             .catch((error) => {
                 console.log(error);
+                return null;
             })
     }
 
     useEffect(() => {
         getRso();
         getRsoMembers();
-    }, [rsoId])
+    }, [])
 
     return (
         <div className="rso-info">

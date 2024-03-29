@@ -27,7 +27,6 @@ const Rso = ({userLevel}) => {
                     status: rso.status.trim(),
                         }));
                 setRsos(rsosArray);
-                console.log(rsos)
             })
             .catch((error) => {
                 console.log("error getting RSOs")
