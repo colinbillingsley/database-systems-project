@@ -39,6 +39,22 @@ router.get('/api/users/finduser', (req, res) => {
     
   });
 
+  // Route to get a username by uid
+  router.get('/api/user/:userId', (req, res) => {
+    const { userId } = req.params;
+
+    // get the username via the User model
+    User.getUsername(userId, (error, user) => {
+      if (error) {
+        return res.status(500).json({ error: "Error finding user by uid" });
+      }
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.status(200).json({ user });
+    });
+  });
+
   //login
   // Route for user login
 router.post('/api/users/login', (req, res) => {

@@ -1,18 +1,61 @@
 const express = require('express');
 const router = express.Router();
-const RSO = require('../models/RSO');
+const RSO = require('./models/RSO');
+
+// Route to get all RSOs
+router.get('/api/rsos', (req, res) => {
+    // Retrieve all rsos using the RSO model
+    RSO.getAll((error, rsos) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching rsos" });
+        }
+        res.status(200).json({ rsos });
+    });
+});
+
+// Route to find an RSO by ID
+router.get('/api/rso/:rsoId', (req, res) => {
+    const rsoId = req.params.rsoId;
+
+    // Find the RSO by ID using the RSO model
+    RSO.findById(rsoId, (error, rso) => {
+        if (error) {
+            return res.status(500).json({ error: "Error finding RSO by ID" });
+        }
+        if (!rso) {
+            return res.status(404).json({ error: "RSO not found" });
+        }
+        res.status(200).json({ rso });
+    });
+});
+
+// Route to get members of RSO
+router.get('/api/rso/members/:rsoId', (req, res) => {
+    const { rsoId } = req.params;
+
+    // get the members via the RSO model
+    RSO.getRsoMembers(rsoId, (error, members) => {
+        if (error) {
+            return res.status(500).json({ error: "Error finding members from RSO" });
+        }
+        if (!members) {
+            return res.status(404).json({ error: "No members found" });
+        }
+        res.status(200).json({ members });
+    })
+});
 
 // Route to create a new RSO
-router.post('/api/rso', (req, res) => {
-    const { name, createdBy } = req.body;
+router.post('/api/rso/create', (req, res) => {
+    const { name, createdBy, type, email, number, status } = req.body;
 
     // Check if all required fields are provided
-    if (!name || !createdBy) {
-        return res.status(400).json({ error: "Name and createdBy are required" });
+    if (!name || !createdBy || !type || !email || !number || !status) {
+        return res.status(400).json({ error: "All fields are required" });
     }
 
     // Create a new RSO using the RSO model
-    RSO.create(name, createdBy, (error, rsoId) => {
+    RSO.create(name, createdBy, type, email, number, status, (error, rsoId) => {
         if (error) {
             return res.status(500).json({ error: "Error creating RSO" });
         }
@@ -21,21 +64,59 @@ router.post('/api/rso', (req, res) => {
 });
 
 // Route to join an RSO
-router.post('/api/rso/join', (req, res) => {
-    const { rsoId, userId } = req.body;
+router.post('/api/rso/join/:rso_id/:uid', (req, res) => {
+    const { rso_id, uid } = req.params;
 
-    // Check if all required fields are provided
-    if (!rsoId || !userId) {
-        return res.status(400).json({ error: "rsoId and userId are required" });
-    }
-
-    // Join an RSO using the RSO model
-    RSO.joinRSO(rsoId, userId, (error, result) => {
+    // check and see if the user has already joined the RSO
+    RSO.determineUserJoinedRSO(rso_id, uid, (error, userJoinedRSO) => {
+        // error trying to look up in db
         if (error) {
-            return res.status(500).json({ error: "Error joining RSO" });
+            return res.status(500).json({ error: "Error finding user and rso" });
         }
-        res.status(200).json({ message: "Joined RSO successfully", result });
-    });
+
+        // user has already joined, display error message
+        if (userJoinedRSO) {
+            return res.status(409).json({error: "User has already joined the RSO"});
+        } 
+
+        // user has not joined, proceed with joining process
+        else {
+            // join an RSO using the RSO model
+            RSO.joinRSO(rso_id, uid, (error, result) => {
+                if (error) {
+                    return res.status(500).json({ error: "Error joining RSO" });
+                }
+                res.status(200).json({ message: "Joined RSO successfully", result });
+            });
+        }
+    })
+});
+
+router.delete('/api/rso/leave/:rsoId/:userId', (req, res) => {
+    const { rsoId, userId } = req.params;
+
+    // check and see if the user has even joined the RSO
+    RSO.determineUserJoinedRSO(rsoId, userId, (error, userJoinedRSO) => {
+        // error trying to look up in db
+        if (error) {
+            return res.status(500).json({ error: "Error finding user and rso" });
+        }
+
+        // user is a part of the rso, proceed with removal
+        if (userJoinedRSO) {
+            RSO.leaveRSO(rsoId, userId, (error, result) => {
+                if (error) {
+                    return res.status(500).json({ error: "Error leaving RSO" });
+                }
+                res.status(200).json({ message: "Left RSO successfully", });
+            });
+        } 
+
+        // user is not a part of the rso, error
+        else {
+            return res.status(409).json({error: "User is not a part of the RSO"});
+        }
+    })
 });
 
 module.exports = router;

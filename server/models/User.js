@@ -29,11 +29,8 @@ class User {
             callback(null, results.insertId); // Return the ID of the newly inserted user
         });
     });
-}
+  }
   
-
-
-
   // Method to find a user by username
   static  async findByUsername(username, callback) {
     const query = 'SELECT * FROM Users WHERE username = ?';
@@ -50,7 +47,20 @@ class User {
     });
   }
 
- 
+  static async getUsername(uid, callback) {
+    const query = 'SELECT username FROM Users Where uid = ?';
+    connection.query(query, [uid], (error, results) => {
+      if (error) {
+        console.error('Error finding user by uid:', error);
+        return callback(error);
+      }
+      if (results.length === 0) {
+        return callback(null, null); // User not found
+      }
+      const user = results[0];
+      callback(null, user);
+    });
+  }
 }
 
 // Export the User model

@@ -4,6 +4,7 @@ import { faPenToSquare, faTrash, faStar, faXmark, faCheck } from "@fortawesome/f
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import Rating from "./Rating";
+import axios from "axios";
 
 const Comments = ({eventComments, setEventComments, eventID, eventRating, setEventRating, setStarRating, mouseOverStars, mouseLeaveStars, onStarClick}) => {
     const [comment, setComment] = useState(``);
@@ -34,9 +35,15 @@ const Comments = ({eventComments, setEventComments, eventID, eventRating, setEve
     }
 
     // function to get the username from uid of each comment
-    const getUsername = async () => {
-
-    }
+    // const getUsername = async (userId) => {
+    //     await axios.get(`http://localhost:3500/user/api/user/${userId}`)
+    //         .then((response) => {
+    //             console.log(response);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         })
+    // }
 
     // set the comment based on input
     const handleCommentChange = (e) => {

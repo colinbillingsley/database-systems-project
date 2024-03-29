@@ -1,12 +1,39 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
+import axios from "axios";
 import RSOCard from "./RSOCard";
 
 const Rso = ({userLevel}) => {
+    const [rsos, setRsos] = useState([]);
     const [myRsos, setMyRsos] = useState([]);
     const [activeRsos, setActiveRsos] = useState([]);
     const [inactiveRsos, setInactiveRsos] = useState([]);
+
+    // call api route to get all the RSOs from the db
+    const getAllRSOs = () => {
+        const getAllRSOsUrl = 'http://localhost:3500/rso/api/rsos';
+        axios.get(getAllRSOsUrl)
+            .then((response) => {
+                const rsos = response.data.rsos;
+                const rsosArray = rsos.map(rso => ({
+                    rso_id: rso.rso_id,
+                    name: rso.name?.trim(),
+                    created_by: rso.created_by,
+                    type: rso.type.trim(),
+                    desc: rso.desc,
+                    number: rso.number?.trim(),
+                    email: rso.email?.trim(),
+                    status: rso.status.trim(),
+                        }));
+                setRsos(rsosArray);
+                console.log(rsos)
+            })
+            .catch((error) => {
+                console.log("error getting RSOs")
+                console.log(error)
+            })
+    }
 
     // open create rso menu when create rso is clicked
     const RSOClick = () => {
@@ -15,7 +42,7 @@ const Rso = ({userLevel}) => {
     }
 
     useEffect(() => {
-
+        getAllRSOs();
     },[])
 
     return (
@@ -56,59 +83,28 @@ const Rso = ({userLevel}) => {
                         </ul>
                 </div>
             </div>
-            
-            <div className="active-rsos-content-container">
-                <h2 className="rso-heading">Active RSOs</h2>
-                <div className="active-rsos-cards-container">
-                    <ul className="list-of-active-rsos">
+
+            <div className="my-rsos-content-container">
+                <h2 className="rso-heading">All RSOs</h2>
+                <div className="my-rsos-cards-container">
+                    <ul className="list-of-my-rsos">
                         {/* check if there's any events in database */}
-                        {(activeRsos.length === 0) 
+                        {(rsos.length === 0) 
                             // if no rsos found, display message
                             ? 
                             <li>
-                                <p className="no-data">There are no active RSOs at your university at the moment.</p>
+                                <p className="no-data">There are no RSOs at your university at the moment.</p>
                             </li> 
                             // if rsos found, display all rsos
                             :
-                            activeRsos.map((rso, index) => {
+                            rsos.map((rso, index) => {
                                 // format rso name to be placed in URL
                                 const trimmedName = rso.name.trim();
                                 const formattedName = trimmedName.replace(/\s+/g, '-');
 
                                 return (
                                     <li className="rso-item">
-                                        <Link to={`/rsos/${rso.id}/${formattedName}`}>
-                                            <RSOCard rso={rso}/>
-                                        </Link>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
-                </div>
-            </div>
-
-            <div className="inactive-rsos-content-container">
-                <h2 className="rso-heading">Inactive RSOs</h2>
-                <div className="inactive-rsos-cards-container">
-                    <ul className="list-of-active-rsos">
-                        {/* check if there's any events in database */}
-                        {(inactiveRsos.length === 0) 
-                            // if no rsos found, display message
-                            ? 
-                            <li>
-                                <p className="no-data">There are no inactive RSOs at your university at the moment.</p>
-                            </li> 
-                            // if rsos found, display all rsos
-                            :
-                            inactiveRsos.map((rso, index) => {
-                                // format rso name to be placed in URL
-                                const trimmedName = rso.name.trim();
-                                const formattedName = trimmedName.replace(/\s+/g, '-');
-
-                                return (
-                                    <li className="rso-item">
-                                        <Link to={`/rsos/${rso.id}/${formattedName}`}>
+                                        <Link to={`/rsos/${rso.rso_id}/${formattedName}`}>
                                             <RSOCard rso={rso}/>
                                         </Link>
                                     </li>
