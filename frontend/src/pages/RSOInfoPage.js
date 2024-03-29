@@ -10,23 +10,30 @@ const RSOInfoPage = () => {
     const { user } = useAuthContext();
     const { rso_id: rsoId } = useParams();
 
+    // get usernames for each member of RSO and set to rsoMembers
     const getUsernameFromMembers = async (uid) => {
         await axios.get(`http://localhost:3500/user/api/user/${uid}`)
             .then((response) => {
+                // get the username from response
                 const username = response.data.user.username;
-                setRsoMembers(rsoMembers => [...rsoMembers, username]);
+                // add the username to the rsoMembers list if not already in it
+                if (!rsoMembers.includes(username))
+                    setRsoMembers(rsoMembers => [...rsoMembers, username]);
             })
             .catch((error) => {
                 console.log(error);
             })
     }
 
+    // get all the RSOs members
     const getRsoMembers = async () => {
         const baseUrl = 'http://localhost:3500/rso/api/rso/members';
         await axios.get(`${baseUrl}/${rsoId}`)
             .then((response) => {
+                // get all the members from response
                 const members = response.data.members;
                 
+                // go through each memeber and get their username
                 members.map((member) => {
                     getUsernameFromMembers(member.uid);
                 })
@@ -41,6 +48,7 @@ const RSOInfoPage = () => {
         const baseUrl = 'http://localhost:3500/rso/api/rso/join';
         await axios.post(`${baseUrl}/${rsoId}/${user.uid}`)
             .then((response) => {
+                // request members from db and set username into rsoMembers
                 getRsoMembers();
             })
             .catch((error) => {
@@ -48,11 +56,14 @@ const RSOInfoPage = () => {
             })
     }
 
+    // leave the RSO
     const leaveRSO = async () => {
         const baseUrl = 'http://localhost:3500/rso/api/rso/leave';
         await axios.delete(`${baseUrl}/${rsoId}/${user.uid}`)
             .then((response) => {
+                // update the members list to exclude user
                 const updatedMembers = rsoMembers.filter(member => member !== user.username);
+                // set the new members of RSOxs
                 setRsoMembers(updatedMembers);
             })
             .catch((error) => {
