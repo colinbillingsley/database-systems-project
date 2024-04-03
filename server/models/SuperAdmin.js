@@ -2,10 +2,14 @@ const db = require('../db');
 const User = require('./User');
 
 class SuperAdmin {
-  static async create(username, password, callback) {
+  constructor(uid) {
+    this.uid = uid;
+  }
+
+  static async create(username, password, role, email, uni_id, callback) {
     try {
       // First, create a user in the Users table
-      User.create(username, password, (error, userId) => {
+      User.create(username, password, role, email, uni_id, (error, userId) => {
         if (error) {
           return callback(error);
         }

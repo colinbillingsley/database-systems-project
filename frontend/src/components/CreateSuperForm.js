@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
+import axios from "axios";
 
 const CreateSuperForm = () => {
     const [username, setUsername] = useState('');
@@ -9,13 +10,87 @@ const CreateSuperForm = () => {
     const [uniAddress, setUniAddress] = useState('');
     const [studentPop, setStudentPop] = useState('');
     const [uniDesc, setUniDesc] = useState('');
+    const role = '2';
+    const navigate = useNavigate();
 
+    let createError;
+
+    // Function to set createError variable when component mounts
+    const setCreateError = (element) => {
+        createError = element;
+    }
+ 
+    // call api to create university based on inputs
+    const createUni = async () => {
+        // get the domain from the email input
+        const domain = email.substring(email.indexOf('@'));
+
+        const baseUrl = 'http://localhost:3500/university/api/create';
+
+        const NOstudents = parseInt(studentPop);
+        const uni_name = university;
+        const desc = uniDesc;
+        const location = uniAddress;
+
+        try {
+            // call the api to insert the university into the db
+            const response = await axios.post(`${baseUrl}`, {uni_name, desc, location, NOstudents, domain});
+            console.log("university created");
+            return true;
+        } catch (error) {
+            console.log("error creating university")
+            return false;
+        }
+    }
+
+    // call api to get uni_id from university created
+    const getUniId = async () => {
+        const baseUrl = 'http://localhost:3500/university/api';
+        try {
+            // call the api to get the uni_id
+            const response = await axios.get(`${baseUrl}/${university}`);
+
+            // get the id and return it
+            const uniId = response.data.uni_id;
+            return uniId;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    // call api to create user with inputs and uni_id
+    const createUser = async () => {
+        const baseUrl = 'http://localhost:3500/super_admin/api/register';
+        try {
+            // get the university id from input
+            const uni_id = await getUniId();
+
+            // call the api to insert user into db
+            const response = await axios.post(`${baseUrl}`, {username, password, role, email, uni_id});
+            console.log("success creating user");
+            return true;
+        } catch (error) {
+            console.log("error creating user");
+            if (createError) {
+                createError.innerHTML = error.response.data.error;
+            }
+            return false;
+        }
+    }
+
+    // create the university and user
     const handleSubmit = async (e) => {
-        const role = 2;
-
         e.preventDefault();
 
-        console.log(`Role: ${role} (Super Admin)\nUsername: ${username}\nEmail: ${email}\nPassword: ${password}\nUniversity: ${university}\nUniversity Address: ${uniAddress}\nPopulation: ${studentPop}\nUniversity Description: ${uniDesc}\n`)
+        // insert the input for university in db
+        const uniCreated = await createUni();
+        // insert the input for user in db
+        const userCreated = await createUser();
+
+        // if university and user were successfully inserted in db, go to login
+        if (uniCreated && userCreated) {
+            navigate('/login');
+        }
     }
 
     return (
@@ -45,37 +120,39 @@ const CreateSuperForm = () => {
 
                         {/* password input */}
                         <div className="form-section">
-                            <label htmlFor="password1">Password</label>
-                            <input type="password" name="password1" id="password1" placeholder="Enter password" onChange={(e) => {setPassword(e.target.value)}}/>
+                            <label htmlFor="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Enter password" onChange={(e) => {setPassword(e.target.value)}}/>
                         </div>
 
                         {/* university input */}
                         <div className="form-section">
-                            <label htmlFor="university">University</label>
-                            <input type="text" name="university" id="university" placeholder="Enter university name" onChange={(e) => {setUniversity(e.target.value)}}/>
+                            <label htmlFor="uni_name">University</label>
+                            <input type="text" name="uni_name" id="uni_name" placeholder="Enter university name" onChange={(e) => {setUniversity(e.target.value)}}/>
                         </div>
 
                         {/* address input */}
                         <div className="form-section">
-                            <label htmlFor="address">University Address</label>
-                            <input type="text" name="address" id="address" placeholder="Enter university address" onChange={(e) => {setUniAddress(e.target.value)}}/>
+                            <label htmlFor="location">University Address</label>
+                            <input type="text" name="location" id="location" placeholder="Enter university address" onChange={(e) => {setUniAddress(e.target.value)}}/>
                         </div>
 
                         {/* student population input */}
                         <div className="form-section">
-                            <label htmlFor="population">Student Population</label>
-                            <input type="text" name="population" id="population" placeholder="Enter student population" onChange={(e) => {setStudentPop(e.target.value)}}/>
+                            <label htmlFor="NOstudents">Student Population</label>
+                            <input type="text" name="NOstudents" id="NOstudents" placeholder="Enter student population" onChange={(e) => {setStudentPop(e.target.value)}}/>
                         </div>
                     </div>
 
                     <div className="super-descr-container">
                             {/* university description */}
                             <div className="form-section">
-                                <label htmlFor="description">University Description</label>
-                                <textarea className="super-textarea" name="description" id="description" rows="26" placeholder="Enter a description of the university..." onChange={(e) => {setUniDesc(e.target.value)}}></textarea>
+                                <label htmlFor="desc">University Description</label>
+                                <textarea className="super-textarea" name="desc" id="desc" rows="26" placeholder="Enter a description of the university..." onChange={(e) => {setUniDesc(e.target.value)}}></textarea>
                             </div>
                         </div>
                 </div>
+
+                <p className="error" ref={setCreateError}></p>
 
                 {/* create account button */}
                 <div className="form-section">

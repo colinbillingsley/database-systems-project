@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const University = require('./University');
+const University = require('./models/University');
 
 // Get all universities
-router.get('/universities', async (req, res) => {
+router.get('/api/all', async (req, res) => {
   University.getAll((error, universities) => {
     if (error) {
       return res.status(500).json({ message: 'Server Error' });
@@ -12,10 +12,27 @@ router.get('/universities', async (req, res) => {
   });
 });
 
+// Get single university by name
+router.get('/api/:uni_name', async (req, res) => {
+  const { uni_name } = req.params;
+
+  University.getUniByName(uni_name, (error, university) => {
+    if (error) {
+      return res.status(500).json({ message: 'Server Error' });
+    }
+    res.json(university);
+  });
+});
+
 // Create a new university
-router.post('/universities', async (req, res) => {
-  const { desc, location, NOstudents, domain } = req.body;
-  University.create(desc, location, NOstudents, domain, (error, uni_id) => {
+router.post('/api/create', async (req, res) => {
+  const { uni_name, desc, location, NOstudents, domain } = req.body;
+
+  if (!uni_name || !desc || !location || !NOstudents || !domain) {
+    return res.status(400).json({ error: "All fields are required!" });
+  }
+  
+  University.create(uni_name, desc, location, NOstudents, domain, (error, uni_id) => {
     if (error) {
       return res.status(500).json({ message: 'Server Error' });
     }

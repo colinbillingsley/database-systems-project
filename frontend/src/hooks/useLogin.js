@@ -7,7 +7,7 @@ export const useLogin = () => {
     // login user
     const login = async (username, password) => {
 
-        /// get the error element
+        // get the error element
         const loginError = document.querySelector('.error');
 
         try {

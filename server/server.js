@@ -10,8 +10,9 @@ const port = process.env.PORT
 
 const user = require('./user');
 const superAdminRouter = require('./super_admin');
-const event = require('./event')
-const rso = require('./rso')
+const event = require('./event');
+const rso = require('./rso');
+const university = require('./university');
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use('/user', user);
 app.use('/super_admin', superAdminRouter);
 app.use('/event', event);
 app.use('/rso', rso);
+app.use('/university', university);
  
 /*
 app.get('*', (req, res) => {

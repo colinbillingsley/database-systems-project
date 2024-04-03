@@ -5,15 +5,15 @@ const User = require('./models/User');
 
 router.post("/api/users/create", (req, res) => {
     console.log("Route ran");
-  const { username, password } = req.body;
+  const { username, password, role, email, uni_id } = req.body;
 
   // Check if both username and password are provided
-  if (!username || !password) {
-    return res.status(400).json({ error: "Username and password are required" });
+  if (!username || !email || !password || !role || !uni_id) {
+    return res.status(400).json({ error: "All fields are required!" });
   }
   
   // Create a new user using the User model
-  User.create(username, password, (error, userId) => {
+  User.create(username, password, role, email, uni_id, (error, userId) => {
     if (error) {
       return res.status(500).json({ error: "Error creating user" });
     }

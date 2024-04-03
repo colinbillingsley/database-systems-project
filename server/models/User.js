@@ -1,13 +1,16 @@
-const connection = require('../db');
+const connection = require('../db'); 
 
 // Model for Users table
 class User {
-  constructor(username, password) {
+  constructor(username, password, role, email, uni_id) {
     this.username = username;
     this.password = password;
+    this.role = role;
+    this.email = email;
+    this.uni_id = uni_id;
   }
  
-  static async create(username, password, callback) {
+  static async create(username, password, role, email, uni_id, callback) {
     // Check if the username already exists
     User.findByUsername(username, async (error, existingUser) => {
         if (error) {
@@ -20,8 +23,8 @@ class User {
         }
         
         // Proceed with creating the user if the username is unique
-        const query = 'INSERT INTO Users (username, password) VALUES (?, ?)';
-        connection.query(query, [username, password], (error, results) => {
+        const query = 'INSERT INTO Users (username, password, role, email, uni_id) VALUES (?, ?, ?, ?, ?)';
+        connection.query(query, [username, password, role, email, uni_id], (error, results) => {
             if (error) {
                 console.error('Error creating user:', error);
                 return callback(error);
