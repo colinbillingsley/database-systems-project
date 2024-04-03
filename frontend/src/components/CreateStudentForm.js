@@ -36,7 +36,7 @@ const CreateStudentForm = () => {
 
             // if university exists, create student user
             const response = await axios.post(`${baseUrl}`, {username, password, role, email, uni_id});
-            console.log("success creating admin");
+            console.log("success creating student");
             return true;
                 } catch (error) {
             console.log("error creating student");
