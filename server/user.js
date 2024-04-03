@@ -8,8 +8,12 @@ router.post("/api/users/create", (req, res) => {
   const { username, password, role, email, uni_id } = req.body;
 
   // Check if both username and password are provided
-  if (!username || !email || !password || !role || !uni_id) {
+  if (!username || !email || !password || !role) {
     return res.status(400).json({ error: "All fields are required!" });
+  }
+
+  if (!uni_id) {
+    return res.status(400).json({ error: "University inputted does not exist!" });
   }
   
   // Create a new user using the User model

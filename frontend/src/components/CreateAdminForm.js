@@ -19,7 +19,6 @@ const CreateAdminForm = () => {
 
             // get the id and return it
             const uniId = response.data.uni_id;
-            console.log("university exists");
             return uniId;
         } catch (error) {
             console.log("error finding university");
