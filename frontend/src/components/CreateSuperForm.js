@@ -12,13 +12,6 @@ const CreateSuperForm = () => {
     const [uniDesc, setUniDesc] = useState('');
     const role = '2';
     const navigate = useNavigate();
-
-    let createError;
-
-    // Function to set createError variable when component mounts
-    const setCreateError = (element) => {
-        createError = element;
-    }
  
     // call api to create university based on inputs
     const createUni = async () => {
@@ -61,6 +54,7 @@ const CreateSuperForm = () => {
     // call api to create user with inputs and uni_id
     const createUser = async () => {
         const baseUrl = 'http://localhost:3500/super_admin/api/register';
+        const createError = document.querySelector('.error');
         try {
             // get the university id from input
             const uni_id = await getUniId();
@@ -93,6 +87,55 @@ const CreateSuperForm = () => {
         }
     }
 
+    // set the username value and reset error text
+    const handleUsernameChange = (e) => {
+        const createError = document.querySelector('.error');
+        setUsername(e.target.value);
+        createError.innerHTML = '';
+    }
+
+    // set the password value and reset error text
+    const handlePasswordChange = (e) => {
+        const createError = document.querySelector('.error');
+        setPassword(e.target.value);
+        createError.innerHTML = '';
+    }
+
+    // set the email value and reset error text
+    const handleEmailChange = (e) => {
+        const createError = document.querySelector('.error');
+        setEmail(e.target.value);
+        createError.innerHTML = '';
+    }
+
+    // set the university value and reset error text
+    const handleUniversityChange = (e) => {
+        const createError = document.querySelector('.error');
+        setUniversity(e.target.value);
+        createError.innerHTML = '';
+    }
+
+    // set the university address value and reset error text
+    const handleUniAddressChange = (e) => {
+        const createError = document.querySelector('.error');
+        setUniAddress(e.target.value);
+        createError.innerHTML = '';
+    }
+
+    // set the university description value and reset error text
+    const handleUniDescChange = (e) => {
+        const createError = document.querySelector('.error');
+        setUniDesc(e.target.value);
+        createError.innerHTML = '';
+    }
+
+    // set the student population value and reset error text
+    const handleStudentPopChange = (e) => {
+        const createError = document.querySelector('.error');
+        setStudentPop(e.target.value);
+        createError.innerHTML = '';
+    }
+
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit} method="POST">
@@ -109,37 +152,37 @@ const CreateSuperForm = () => {
                         {/* username input */}
                         <div className="form-section">
                             <label htmlFor="username">Username</label>
-                            <input type="text" name="username" id="username" placeholder="Enter username" onChange={(e) => {setUsername(e.target.value)}}/>
+                            <input type="text" name="username" id="username" placeholder="Enter username" onChange={handleUsernameChange}/>
                         </div>
 
                         {/* email input */}
                         <div className="form-section">
                             <label htmlFor="email">School Email</label>
-                            <input type="text" name="email" id="email" placeholder="Enter school email" onChange={(e) => {setEmail(e.target.value)}}/>
+                            <input type="text" name="email" id="email" placeholder="Enter school email" onChange={handleEmailChange}/>
                         </div>
 
                         {/* password input */}
                         <div className="form-section">
                             <label htmlFor="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder="Enter password" onChange={(e) => {setPassword(e.target.value)}}/>
+                            <input type="password" name="password" id="password" placeholder="Enter password" onChange={handlePasswordChange}/>
                         </div>
 
                         {/* university input */}
                         <div className="form-section">
                             <label htmlFor="uni_name">University</label>
-                            <input type="text" name="uni_name" id="uni_name" placeholder="Enter university name" onChange={(e) => {setUniversity(e.target.value)}}/>
+                            <input type="text" name="uni_name" id="uni_name" placeholder="Enter university name" onChange={handleUniversityChange}/>
                         </div>
 
                         {/* address input */}
                         <div className="form-section">
                             <label htmlFor="location">University Address</label>
-                            <input type="text" name="location" id="location" placeholder="Enter university address" onChange={(e) => {setUniAddress(e.target.value)}}/>
+                            <input type="text" name="location" id="location" placeholder="Enter university address" onChange={handleUniAddressChange}/>
                         </div>
 
                         {/* student population input */}
                         <div className="form-section">
                             <label htmlFor="NOstudents">Student Population</label>
-                            <input type="text" name="NOstudents" id="NOstudents" placeholder="Enter student population" onChange={(e) => {setStudentPop(e.target.value)}}/>
+                            <input type="text" name="NOstudents" id="NOstudents" placeholder="Enter student population" onChange={handleStudentPopChange}/>
                         </div>
                     </div>
 
@@ -147,12 +190,12 @@ const CreateSuperForm = () => {
                             {/* university description */}
                             <div className="form-section">
                                 <label htmlFor="desc">University Description</label>
-                                <textarea className="super-textarea" name="desc" id="desc" rows="26" placeholder="Enter a description of the university..." onChange={(e) => {setUniDesc(e.target.value)}}></textarea>
+                                <textarea className="super-textarea" name="desc" id="desc" rows="26" placeholder="Enter a description of the university..." onChange={handleUniDescChange}></textarea>
                             </div>
                         </div>
                 </div>
 
-                <p className="error" ref={setCreateError}></p>
+                <p className="error"></p>
 
                 {/* create account button */}
                 <div className="form-section">
