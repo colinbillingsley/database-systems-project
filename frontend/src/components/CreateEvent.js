@@ -1,6 +1,23 @@
-import GoogleMap from "./GoogleMap";
+import { useEffect, useState } from "react";
+import GoogleMaps from "./GoogleMap";
 
 const CreateEvent = () => {
+    const [event_name, setEvent_Name] = useState('');
+    const [event_host, setEvent_Host] = useState('');
+    const [event_phone, setEvent_Phone] = useState('');
+    const [event_email, setEvent_Email] = useState('');
+    const [event_type, setEvent_Type] = useState('');
+    const [category, setCategory] = useState('');
+    const [date, setDate] = useState('');
+    const [desc, setDesc] = useState('');
+    const [time, setTime] = useState('');
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
+
+    useEffect(() => {
+        console.log(latitude);
+        console.log(longitude);
+    })
 
     const HandleCancelClick = (e) => {
         e.preventDefault();
@@ -142,7 +159,12 @@ const CreateEvent = () => {
                         {/* select location (not sure if we cant get location data from current implementation of google map)*/}
                         <div className="form-section">
                             <label htmlFor="event-location">Event location</label>
-                            <GoogleMap />
+                            <GoogleMaps 
+                                latitude={latitude}
+                                setLatitude={setLatitude}
+                                longitude={longitude}
+                                setLongitude={setLongitude}
+                            />
                         </div>
 
                         {/* create/cancel buttons */}

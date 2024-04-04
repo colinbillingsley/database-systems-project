@@ -70,7 +70,7 @@ const CreateRSO = () => {
                         </div>
 
                         <div className="form-section">
-                            <p className="rso-disclaimer">Your RSO must have at least 4 registered students at the university to become active. Otherwise, the RSO will be listed as inactive. </p>
+                            <p className="rso-disclaimer">Your RSO must have at least 5 registered students at the university to become active. Otherwise, the RSO will be listed as inactive. </p>
                         </div>
 
                         {/* create/cancel buttons */}
