@@ -1,6 +1,17 @@
 -- DROP schema `eventdb`; for testing purposes
 CREATE DATABASE `eventdb`;
+
 USE `eventdb`;
+
+   CREATE TABLE `Universities` (
+  `uni_id` int NOT NULL AUTO_INCREMENT,
+  `uni_name` varchar(255),
+  `desc` varchar(10000) ,
+  `location` varchar(255),
+  `NOstudents` int,
+  `domain` varchar(255),  
+  PRIMARY KEY (`uni_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
   CREATE TABLE `Users` (
   `uid` int NOT NULL AUTO_INCREMENT,
@@ -8,7 +19,9 @@ USE `eventdb`;
   `password` varchar(255),
   `role` varchar(255),
   `email` varchar(255),
-  PRIMARY KEY (`uid`)
+  `uni_id` int,
+  PRIMARY KEY (`uid`),
+  FOREIGN KEY (uni_id) references Universities(uni_id) ON DELETE CASCADE
   )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -98,12 +111,4 @@ USE `eventdb`;
   FOREIGN KEY (`uid`) references Users(uid) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-   CREATE TABLE `Universities` (
-  `uni_id` int NOT NULL AUTO_INCREMENT,
-  `uni_name` varchar(255),
-  `desc` varchar(10000) ,
-  `location` varchar(255),
-  `NOstudents` int,
-  `domain` varchar(255),  
-  PRIMARY KEY (`uni_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
