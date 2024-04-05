@@ -1199,6 +1199,41 @@ Styles for Comment.js
   color: gray;
 }
 
+.review-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.review-buttons button {
+  padding: 0.8em 1em;
+  border-radius: 2em;
+  border: none;
+  font-size: 0.9em;
+}
+
+.review-buttons button:hover {
+  cursor: pointer;
+}
+
+.review-buttons button:first-child {
+  background-color: rgba(224, 224, 224, 0.457);
+}
+
+.review-buttons button:nth-child(2) {
+  background-color: var(--blue-color);
+  color: white;
+}
+
+.review-buttons button:first-child:hover {
+  background-color: rgb(224, 224, 224);
+}
+
+.review-buttons button:nth-child(2):hover {
+  background-color: #374eff;
+}
+
 /* ===================================
 Styles for Rating.js
 =================================== */

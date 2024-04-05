@@ -2,7 +2,7 @@ import { useAuthContext } from "./useAuthContext";
 import axios from "axios";
 
 export const useLogin = () => {
-    const { dispatch } = useAuthContext()
+    const { dispatch } = useAuthContext();
 
     // login user
     const login = async (username, password) => {

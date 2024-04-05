@@ -10,7 +10,7 @@ class Comment {
     }
 
     // Method to create a comment
-    static async create(event_id, uid, text, rating, timestamp) {
+    static async create(event_id, uid, text, rating, timestamp, callback) {
         const query = 'INSERT INTO Comments (event_id, uid, text, rating, timestamp) VALUES(?, ?, ?, ?, ?)';
         connection.query(query, [event_id, uid, text, rating, timestamp], (error, results) => {
             if (error) {
@@ -23,7 +23,7 @@ class Comment {
 
 
     // Method to get all the comments associated with an event
-    static async getComments(event_id) {
+    static async getComments(event_id, callback) {
         const query = 'SELECT * FROM Comments WHERE event_id = ?';
         connection.query(query, [event_id], (error, results) => {
             if (error) {
@@ -33,4 +33,19 @@ class Comment {
             callback(null, results); // Return all comments
         });
     }
+
+    // Method to delete a comment from an event
+    static async deleteComment(uid, event_id, callback) {
+        const query = 'DELETE FROM Comments WHERE uid = ? AND event_id = ?';
+        connection.query(query, [uid, event_id], (error, result) => {
+            if (error) {
+                console.error('Error deleting comment:', error);
+                return callback(error);
+            }
+            callback(null, result); // Return result
+        })
+    }
 }
+
+// Export the Event model
+module.exports = Comment;

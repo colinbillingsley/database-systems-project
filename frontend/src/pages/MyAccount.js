@@ -7,38 +7,34 @@ import axios from "axios";
 const MyAccount = () => {
     const { user } = useAuthContext();
 
-    const getUserInformation = () => {
-        const baseUrl = 'http://localhost:3500/user/api/users/findUser';
-        axios.get(`${baseUrl}` + `?username=${user.username}`)
-            .then((response) => {
-                // get the text boxes for uni, username, and email
-                const uniValue = document.querySelector('#university');
-                const userValue = document.querySelector('#username');
-                const emailValue = document.querySelector('#email');
+    const setUserValues = async () => {
 
-                // get the user information
-                const user = response.data.user;
+        // get the text box for university
+        const username = document.querySelector('#username');
+        const email = document.querySelector('#email');
 
-                // if username exists
-                if (!!user.username) {
-                    // set the value of username box to user's username
-                    userValue.value = user.username;
-                }
+        username.value = user.username;
+        email.value = user.email;
 
-                // if email exists
-                if (!!user.email) {
-                    // set the value of email box to user's email
-                    emailValue.value = user.email;
-                }
+        await getUserUniversity();
+    }
 
-            })
-            .catch((error) => {
+    const getUserUniversity = async () => {
+        const baseUrl = `http://localhost:3500/university/api/university/${user.uni_id}`;
+        try {
+            const response = await axios.get(`${baseUrl}`);
+            // get the text box for university
+            const uniValue = document.querySelector('#university');
 
-            })
+            uniValue.value = response.data.uni_name;
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
     }
 
     useEffect(() => {
-        getUserInformation();
+        setUserValues();
     },[])
 
     return (

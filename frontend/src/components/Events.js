@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
-import Nav from "./Nav"
 import DayFilters from "./DayFilters";
 import Filters from "./Filters";
 import EventBox from "./EventBox";
@@ -9,8 +9,9 @@ import CreateEvent from "./CreateEvent";
 import axios from "axios";
 
 const Events = ({userLevel}) => {
+    const { user } = useAuthContext();
     const [events, setEvents] = useState([]);
-    const [uniName, setUniName] = useState("[No University Found]");
+    const [uniName, setUniName] = useState("");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
     const [filters, setFilters] = useState([]);
@@ -19,6 +20,17 @@ const Events = ({userLevel}) => {
     const EventClick = () => {
         const createEvent = document.querySelector('.create-event-wrapper');
         createEvent.classList.remove('hidden');
+    }
+
+    const getUserUniversity = async () => {
+        const baseUrl = `http://localhost:3500/university/api/university/${user.uni_id}`;
+        try {
+            const response = await axios.get(`${baseUrl}`);
+            setUniName(response.data.uni_name);
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
     }
 
     const getEvents = async () => {
@@ -47,8 +59,9 @@ const Events = ({userLevel}) => {
     }
 
     useEffect(() => {
+        getUserUniversity();
         getEvents();
-    }, [])
+    }, []);
 
     return (
         <div>

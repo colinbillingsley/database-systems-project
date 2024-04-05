@@ -12,13 +12,28 @@ router.get('/api/all', async (req, res) => {
   });
 });
 
-// Get single university by name
+// Get single university id by name
 router.get('/api/:uni_name', async (req, res) => {
   const { uni_name } = req.params;
 
   University.getUniByName(uni_name, (error, university) => {
     if (error) {
       return res.status(500).json({ message: 'Server Error' });
+    }
+    res.json(university);
+  });
+});
+
+// Get single university by id
+router.get('/api/university/:uni_id', async (req, res) => {
+  const { uni_id } = req.params;
+
+  University.getUniById(uni_id, (error, university) => {
+    if (error) {
+      return res.status(500).json({ message: 'Server Error' });
+    }
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
     }
     res.json(university);
   });

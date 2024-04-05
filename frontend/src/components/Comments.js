@@ -1,22 +1,58 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrash, faStar, faXmark, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { formatDistanceToNow } from 'date-fns';
 
 import Rating from "./Rating";
 import axios from "axios";
 
-const Comments = ({eventComments, setEventComments, eventID, eventRating, setEventRating, setStarRating, mouseOverStars, mouseLeaveStars, onStarClick}) => {
-    const [comment, setComment] = useState(``);
+const Comments = ({eventComments, setEventComments, setComments, eventId, eventRating, setEventRating, setStarRating, mouseOverStars, mouseLeaveStars, onStarClick}) => {
+    const [text, setText] = useState(``);
     const [isEditing, setIsEditing] = useState(false);
     const { user } = useAuthContext();
+    const [usernames, setUsernames] = useState({});
+
+    // fetch all the usernames for each comment from event
+    const fetchUsernames = async () => {
+        const usernamesMap = {};
+        // go through all the event comments
+        for (const comment of eventComments) {
+            try {
+                // call the api to get the username via uid
+                const response = await axios.get(`http://localhost:3500/user/api/user/${comment.uid}`);
+                // set the map of usernames by having the key be the uid and value as username
+                usernamesMap[comment.uid] = response.data.user.username;
+            } catch (error) {
+                console.log("Error fetching username:", error);
+            }
+        }
+        setUsernames(usernamesMap);
+    };
+
+    // handle cancel creating a comment
+    const handleCancel = (e) => {
+        e.preventDefault();
+        // reset input
+        const input = document.querySelector('#comment');
+        input.value = '';
+
+        // reset other fields
+        setText('');
+        setEventRating(0);
+        setStarRating();
+
+        // reset error if shown
+        const commentError = document.querySelector('.error');
+        commentError.innerHTML = '';
+    }
 
     // handle accept comment changes click
     const handleAcceptChanges = () => {
         setIsEditing(false);
 
         // send new changes to db
-        console.log(comment);
+        console.log(text);
     }
 
     // handle cancel comment changes click
@@ -30,87 +66,121 @@ const Comments = ({eventComments, setEventComments, eventID, eventRating, setEve
     }
 
     // delete the user's comment
-    const handleDeleteClick = () => {
-        console.log("delete clicked")
-    }
+    const handleDeleteClick = async (e) => {
+        e.preventDefault();
 
-    // function to get the username from uid of each comment
-    // const getUsername = async (userId) => {
-    //     await axios.get(`http://localhost:3500/user/api/user/${userId}`)
-    //         .then((response) => {
-    //             console.log(response);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         })
-    // }
+        const baseUrl = `http://localhost:3500/comment/api/delete/${user.uid}/${eventId}`;
+        try {
+            const response = await axios.delete(`${baseUrl}`);
+            console.log("comment deleted");
+            // update the comments for the events to remove users comment
+            const updatedComments = eventComments.filter(comment => comment.uid !== user.uid);
+
+            // set the new comments of event
+            setEventComments(updatedComments);
+
+            // reset values in case
+            setEventRating(0);
+            setStarRating();
+            setText("");
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     // set the comment based on input
     const handleCommentChange = (e) => {
-        setComment(e.target.value);
+        setText(e.target.value);
+        const commentError = document.querySelector('.error');
+        commentError.innerHTML = '';
     }
 
-    // (eventually will submit the comment and rating to the database)
-    const handleCommentSubmit = (e) => {
+    // submit new comment for event o the database
+    const handleCommentSubmit = async (e) => {
         e.preventDefault();
-        console.log("rating: " + eventRating);
-        console.log("comment: " + comment);
-    }
 
-    // format the timestamp to display how long ago it was created
-    const timeAgo = (timestamp) => {
-        const seconds = Math.floor((new Date() - new Date(timestamp)) / 1000);
-        let interval = Math.floor(seconds / 31536000);
-
-        if (interval > 1) {
-            return interval + " years ago";
-        }
-        interval = Math.floor(seconds / 2592000);
-
-        if (interval > 1) {
-            return interval + " months ago";
-        }
-        interval = Math.floor(seconds / 86400);
-
-        if (interval > 1) {
-            return interval + " days ago";
-        }
-        interval = Math.floor(seconds / 3600);
-
-        if (interval > 1) {
-            return interval + " hours ago";
-        }
-        interval = Math.floor(seconds / 60);
+        // get each field
+        const uid = user.uid;
+        const event_id = parseInt(eventId);
+        const rating = eventRating;
+        const timestamp = new Date();
+        const commentError = document.querySelector('.error');
         
-        if (interval > 1) {
-            return interval + " minutes ago";
+        // define the url
+        const baseUrl = `http://localhost:3500/comment/api/create`;
+
+        try {
+            // call the api to insert new comment
+            const response = await axios.post(`${baseUrl}`, {event_id, uid, text, rating, timestamp});
+            console.log("success creating comment");
+            
+            // create new comment object with same inputs inserted in db
+            const newComment = {
+                event_id: event_id,
+                uid: uid,
+                text: text,
+                rating: rating,
+                timestamp: timestamp,
+            };
+
+            // insert the new comment into the event comments
+            const updatedComments = [...eventComments, newComment];
+            setEventComments(updatedComments);
+
+            // reset review fields
+            setText("");
+            setEventRating(0);
+        } catch (error) {
+            console.log("error making comment")
+            console.log(error);
+            commentError.innerHTML = error.response.data.error;
+            return null;
         }
-        return Math.floor(seconds) + " seconds ago";
     }
+
+    // format the timestamp to display how long ago the comment was created
+    const timeAgo = (timestamp) => {
+        const distance = formatDistanceToNow(new Date(timestamp));
+        return `${distance} ago`;
+    }
+
+    useEffect(() => {
+        fetchUsernames();
+    }, [eventComments, usernames])
 
     return (
         <div className="comments-section">
             <h3 className="main-heading">Reviews</h3>
-            <div className="leave-comment-section">
-                <form onSubmit={handleCommentSubmit}>
-                    <div>
-                        <label htmlFor="comment">Leave a rating and comment?</label>
-                        <Rating
-                        eventRating={eventRating}
-                        setEventRating={setEventRating}
-                        setStarRating={setStarRating}
-                        mouseOverStars={mouseOverStars}
-                        mouseLeaveStars={mouseLeaveStars}
-                        onStarClick={onStarClick}
-                        />
-                        <input type="text" name="comment" id="comment" placeholder="Add a comment about the event..." onChange={handleCommentChange}/>
-                    </div>
-                </form>
-            </div>
+            {!eventComments.some(comment => comment.uid === user.uid)
+            ?   <div className="leave-comment-section">
+                    <form onSubmit={handleCommentSubmit}>
+                        <div>
+                            <label htmlFor="comment">Leave a rating and comment?</label>
+                            <Rating
+                            eventRating={eventRating}
+                            setEventRating={setEventRating}
+                            setStarRating={setStarRating}
+                            mouseOverStars={mouseOverStars}
+                            mouseLeaveStars={mouseLeaveStars}
+                            onStarClick={onStarClick}
+                            />
+                            <input type="text" name="comment" id="comment" placeholder="Add a comment about the event..." onChange={handleCommentChange}/>
+                            <div className="review-buttons">
+                                <button onClick={handleCancel}>Cancel</button>
+                                <button onClick={handleCommentSubmit} type="submit">Comment</button>
+                            </div>
+                            <p className="error"></p>
+                        </div>
+                    </form>
+                </div>
+            :''
+            }
+            
             <ul className="comments-list">
                 {eventComments.length === 0
                 ? <p className="no-data">No reviews for event found.</p>
                 : eventComments.map(comment => {
+                    
                     // Determine the number of stars based on the rating
                     const stars = [];
                     for (let i = 0; i < comment.rating; i++) {
@@ -124,7 +194,7 @@ const Comments = ({eventComments, setEventComments, eventID, eventRating, setEve
                             </div>
                             <div className="comment-header">
                                 <div className="user-time">
-                                    <p className="comment-username">@{comment.uid}</p>
+                                    <p className="comment-username">@{usernames[comment.uid]}</p>
                                     <p className="comment-time">{timeAgo(comment.timestamp)}</p>
                                 </div>
                                 {user.uid === comment.uid 

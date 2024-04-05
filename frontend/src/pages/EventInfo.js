@@ -5,19 +5,30 @@ import Comments from "../components/Comments";
 import EventContent from "../components/EventContent";
 import axios from "axios";
 
-const tempComment = {
-    uid: 4,
-    text: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. At ipsam provident dicta amet fugiat. Quaerat maxime eligendi eveniet, nam similique modi inventore est placeat culpa molestias, fugiat dolores. Maiores, nihil!
-    Voluptas, quasi saepe? Magnam modi velit unde eaque distinctio sit blanditiis voluptate voluptas hic, doloremque consectetur vitae cum sed nobis quae cumque, repellat ratione nostrum fugit quos totam facere minus.`,
-    rating: 3,
-    timestamp: '2024-03-02 03:14:07'
-}
-
 const EventInfo = () => {
     const [eventInfo, setEventInfo] = useState({});
-    const [eventComments, setEventComments] = useState([tempComment]);
+    const [eventComments, setEventComments] = useState([]);
     const [eventRating, setEventRating] = useState(0);
     const { event_id: eventId } = useParams();
+
+    const setComments = async () => {
+        const comments = await getComments();
+        comments.forEach(comment => {
+            setEventComments(eventComments => [...eventComments, comment]);
+        });
+    }
+
+    const getComments = async () => {
+        const baseUrl = `http://localhost:3500/comment/api/comments/${eventId}`;
+        try {
+            const response = await axios.get(`${baseUrl}`);
+            const comments = response.data.comments;
+            return comments;
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
 
     const getEvent = async () => {
         await axios.get(`http://localhost:3500/event/api/events/${parseInt(eventId)}`)
@@ -26,11 +37,6 @@ const EventInfo = () => {
                 setEventInfo(event);
             })
     }
-
-    useEffect(() => {
-        getEvent();
-        setStarRating();
-    }, [])
 
     // set the color of stars based on current rating when entering event page
     const setStarRating = () => {
@@ -314,6 +320,12 @@ const EventInfo = () => {
         }
     } 
 
+    useEffect(() => {
+        getEvent();
+        setStarRating();
+        setComments();
+    }, [])
+
     return (
         <div className="event-info">
             <div className="event-info-container">
@@ -322,7 +334,8 @@ const EventInfo = () => {
                     {eventComments && <Comments 
                     eventComments={eventComments} 
                     setEventComments={setEventComments}
-                    eventID={eventInfo.event_id}
+                    setComments={setComments}
+                    eventId={eventId}
                     eventRating={eventRating}
                     setEventRating={setEventRating}
                     setStarRating={setStarRating}

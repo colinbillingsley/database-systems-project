@@ -12,6 +12,7 @@ const user = require('./user');
 const superAdminRouter = require('./super_admin');
 const adminRouter = require('./admin');
 const event = require('./event');
+const comment = require('./comment');
 const rso = require('./rso');
 const university = require('./university');
 
@@ -37,6 +38,7 @@ app.use('/user', user);
 app.use('/super_admin', superAdminRouter);
 app.use('/admin', adminRouter);
 app.use('/event', event);
+app.use('/comment', comment);
 app.use('/rso', rso);
 app.use('/university', university);
  

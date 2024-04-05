@@ -34,10 +34,22 @@ class University {
   }
 
 
-  // method to get a single university
+  // method to get a single university id by name
   static async getUniByName(uni_name, callback) {
     const query = 'SELECT uni_id FROM Universities WHERE uni_name = ?';
     connection.query(query, [uni_name], (error, result) => {
+      if (error) {
+        console.error('Error getting university:', error);
+        return callback(error);
+      }
+      callback(null, result[0]);
+    });
+  }
+
+  // method to get a single university by id
+  static async getUniById(uni_id, callback) {
+    const query = 'SELECT * FROM Universities WHERE uni_id = ?';
+    connection.query(query, [uni_id], (error, result) => {
       if (error) {
         console.error('Error getting university:', error);
         return callback(error);
