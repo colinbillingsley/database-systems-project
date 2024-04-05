@@ -146,7 +146,7 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
 
     useEffect(() => {
         fetchUsernames();
-    }, [eventComments, usernames])
+    }, [eventComments])
 
     return (
         <div className="comments-section">
