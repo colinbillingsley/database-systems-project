@@ -66,6 +66,17 @@ const CreateEvent = () => {
                             <textarea className="create-event-text-field" name="event-description" id="event-description" rows="10" placeholder="Enter a description of the event..." required></textarea>
                         </div>
 
+                        {/* select location */}
+                        <div className="form-section">
+                            <label htmlFor="event-location">Event location</label>
+                            <GoogleMaps 
+                                latitude={latitude}
+                                setLatitude={setLatitude}
+                                longitude={longitude}
+                                setLongitude={setLongitude}
+                            />
+                        </div>
+
                         <div className="create-event-in-line-section">
                             {/* category selection */}
                             <div className="form-section">
@@ -154,17 +165,6 @@ const CreateEvent = () => {
                                 <label htmlFor="event-email">Contact email</label>
                                 <input className="create-event-text-field" type="text" name="event-email" id="event-email" placeholder="Example: abc@gmail.com" required/>
                             </div>
-                        </div>
-
-                        {/* select location (not sure if we cant get location data from current implementation of google map)*/}
-                        <div className="form-section">
-                            <label htmlFor="event-location">Event location</label>
-                            <GoogleMaps 
-                                latitude={latitude}
-                                setLatitude={setLatitude}
-                                longitude={longitude}
-                                setLongitude={setLongitude}
-                            />
                         </div>
 
                         {/* create/cancel buttons */}

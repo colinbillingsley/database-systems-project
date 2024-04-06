@@ -753,7 +753,7 @@ Styles for CreateEvent.js
   border-radius: 5px;
 }
 
-.create-event-main .create-event-in-line-section:nth-child(5) .form-section {
+.create-event-main .create-event-in-line-section:nth-child(7) .form-section {
   flex-grow: 1;
 }
 

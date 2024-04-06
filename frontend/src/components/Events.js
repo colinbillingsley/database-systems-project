@@ -80,7 +80,7 @@ const Events = ({userLevel}) => {
                         {/* user is not student, they can create event */}
                         {userLevel !== 0 ? <button className="btn" onClick={EventClick}>Create Event</button> : ''}
                     </div>
-                    <h3 className="day-filter-heading">{dayFilterHeading}</h3>
+                    <h3 className="day-filter-heading">{filters.length === 0 ? "All Events" : "Filtered Events"}</h3>
                     <ul className="list-of-events">
                         {/* check if there's any events in database */}
                         {(events.length === 0) 

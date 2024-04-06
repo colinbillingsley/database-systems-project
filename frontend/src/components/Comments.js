@@ -48,11 +48,32 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
     }
 
     // handle accept comment changes click
-    const handleAcceptChanges = () => {
+    const handleAcceptChanges = async (e) => {
+        e.preventDefault();
         setIsEditing(false);
 
         // send new changes to db
-        console.log(text);
+        const event_id = parseInt(eventId);
+        const uid = user.uid;
+        const baseUrl = `http://localhost:3500/comment/api/update`;
+        try {
+            const response = await axios.patch(`${baseUrl}`, {text, event_id, uid});
+            console.log("success updating comment");
+
+            // go through and find the users comment and update the text
+            const updatedComments = eventComments.map(comment => {
+            if (comment.uid === uid) {
+                return { ...comment, text };
+            }
+            return comment;
+            });
+
+            setEventComments(updatedComments);
+        } catch (error) {
+            console.log("error updating comment");
+            console.log(error);
+            return null;
+        }
     }
 
     // handle cancel comment changes click
@@ -89,10 +110,15 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
     }
 
     // set the comment based on input
-    const handleCommentChange = (e) => {
+    const handleReviewInputChange = (e) => {
         setText(e.target.value);
         const commentError = document.querySelector('.error');
         commentError.innerHTML = '';
+    }
+
+    // set the comment based on input
+    const handleCommentChange = (e) => {
+        setText(e.target.value);
     }
 
     // submit new comment for event o the database
@@ -164,7 +190,7 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
                             mouseLeaveStars={mouseLeaveStars}
                             onStarClick={onStarClick}
                             />
-                            <input type="text" name="comment" id="comment" placeholder="Add a comment about the event..." onChange={handleCommentChange}/>
+                            <input type="text" name="comment" id="comment" placeholder="Add a comment about the event..." onChange={handleReviewInputChange}/>
                             <div className="review-buttons">
                                 <button onClick={handleCancel}>Cancel</button>
                                 <button onClick={handleCommentSubmit} type="submit">Comment</button>

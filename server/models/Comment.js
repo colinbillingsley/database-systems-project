@@ -34,6 +34,18 @@ class Comment {
         });
     }
 
+    // Method to update a comment
+    static async updateComment(text, event_id, uid, callback) {
+        const query = 'UPDATE Comments SET `text` = ? WHERE event_id = ? AND uid = ?';
+        connection.query(query, [text, event_id, uid], (error, result) => {
+            if (error) {
+                console.error('Error updating comment:', error);
+                return callback(error);
+            }
+            callback(null, result);
+        })
+    }
+
     // Method to delete a comment from an event
     static async deleteComment(uid, event_id, callback) {
         const query = 'DELETE FROM Comments WHERE uid = ? AND event_id = ?';

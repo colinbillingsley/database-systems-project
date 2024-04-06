@@ -42,6 +42,20 @@ router.get('/api/comments/:event_id', (req, res) => {
     });
 });
 
+router.patch('/api/update', (req, res) => {
+    const { text, event_id, uid } = req.body;
+    console.log("updating route ran");
+    console.log(`${event_id}, ${uid}, ${text}`)
+
+    // Update comment
+    Comment.updateComment(text, event_id, uid, (error, result) => {
+        if (error) {
+            return res.status(500).json({ error: "Error deleting comment" });
+        }
+        res.status(200).json({ message: "comment updated" });
+    })
+})
+
 router.delete('/api/delete/:uid/:event_id', (req, res) => {
     const { uid, event_id } = req.params;
 
