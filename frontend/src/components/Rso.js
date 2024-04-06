@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 import axios from "axios";
 import RSOCard from "./RSOCard";
@@ -9,6 +10,19 @@ const Rso = ({userLevel}) => {
     const [myRsos, setMyRsos] = useState([]);
     const [activeRsos, setActiveRsos] = useState([]);
     const [inactiveRsos, setInactiveRsos] = useState([]);
+    const [uniName, setUniName] = useState('');
+    const { user } = useAuthContext();
+
+    const getUserUniversity = async () => {
+        const baseUrl = `http://localhost:3500/university/api/university/${user.uni_id}`;
+        try {
+            const response = await axios.get(`${baseUrl}`);
+            setUniName(response.data.uni_name);
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
 
     // call api route to get all the RSOs from the db
     const getAllRSOs = () => {
@@ -41,13 +55,14 @@ const Rso = ({userLevel}) => {
     }
 
     useEffect(() => {
+        getUserUniversity();
         getAllRSOs();
     },[])
 
     return (
         <div className="rso-container">
             <div className="rsos-heading-container">
-                <h2 className="rso-main-heading">RSOs at [my University]</h2>
+                <h2 className="rso-main-heading">RSOs at {uniName}</h2>
                 {/* user is not student, they can create rso */}
                 {userLevel !== 0 ? <button className="btn" onClick={RSOClick}>Create RSO</button> : ''}
             </div>
