@@ -59,4 +59,18 @@ router.get('/api/events/:eventId', (req, res) => {
     });
 });
 
+// Route to get all events specific to a university
+router.get('/api/events/:universityId', (req, res) => {
+    const universityId = req.params.universityId;
+
+    // Retrieve all events specific to the university using the Event model
+    Event.getAll(universityId, (error, events) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching events" });
+        }
+        res.status(200).json({ events });
+    });
+});
+
+
 module.exports = router;

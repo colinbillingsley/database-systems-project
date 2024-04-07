@@ -25,22 +25,27 @@ class Event {
                 return callback(error);
             }
     
-            callback(null, results.insertId); // Return the ID of the newly inserted event
+            callback(null, results.insertId);
         });
         
     }
 
-    // Method to retrieve all events
-    static getAll(callback) {
-        const query = 'SELECT * FROM Events';
-        connection.query(query, (error, results) => {
-            if (error) {
-                console.error('Error fetching events:', error);
-                return callback(error);
-            }
-            callback(null, results); // Return all events
-        });
-    }
+// Method to retrieve all events specific to a university (when event is not public)
+static getAll(universityId, callback) {
+    const query = `
+        SELECT * 
+        FROM Events 
+        WHERE university_id = ? AND is_public = 0;
+    `;
+    connection.query(query, [universityId], (error, results) => {
+        if (error) {
+            console.error('Error fetching events:', error);
+            return callback(error);
+        }
+        callback(null, results); // Return events specific to the university
+    });
+}
+
 
     // Method to find an event by ID
     static findById(eventId, callback) {
