@@ -106,6 +106,28 @@ class RSO {
             callback(null, members);
         })
     }
+
+    // method to get all rso's a user is part of 
+    static getRSOsByUserId(userId, callback) {
+        const query = `
+            SELECT RSO.*
+            FROM RSO
+            INNER JOIN RSO_Users_Joined ON RSO.rso_id = RSO_Users_Joined.rso_id
+            WHERE RSO_Users_Joined.uid = ?
+        `;
+        connection.query(query, [userId], (error, results) => {
+            if (error) {
+                console.error('Error fetching RSOs by user ID:', error);
+                return callback(error);
+            }
+            callback(null, results);
+        });
+    }
+
+   
+
+
+
 }
 
 module.exports = RSO;

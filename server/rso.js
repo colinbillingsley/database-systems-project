@@ -92,6 +92,24 @@ router.post('/api/rso/join/:rso_id/:uid', (req, res) => {
     })
 });
 
+
+// route for getting all rso's that a user is part of 
+router.get('/api/user/rsos/:userId', (req, res) => {
+    const { userId } = req.params;
+
+    // Retrieve RSOs by user ID using the RSO model
+    RSO.getRSOsByUserId(userId, (error, rsos) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching RSOs by user ID" });
+        }
+        if (!rsos || rsos.length === 0) {
+            return res.status(404).json({ error: "User is not part of any RSOs" });
+        }
+        res.status(200).json({ rsos });
+    });
+});
+
+
 router.delete('/api/rso/leave/:rsoId/:userId', (req, res) => {
     const { rsoId, userId } = req.params;
 
