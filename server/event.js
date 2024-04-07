@@ -6,15 +6,25 @@ const Event = require('./models/Event');
 // Route to create a new event
 router.post('/api/events', (req, res) => {
     console.log("Route ran");
-    const { time, desc, location } = req.body;
+    const { time, desc, location, date, category, event_host, event_phone, event_email, event_name } = req.body;
 
     // Check if all required fields are provided
-    if (!time || !desc || !location) {
-        return res.status(400).json({ error: "Time, description, and location are required" });
+    if (!time || !desc || !location || !date || !category || !event_host || !event_phone || !event_email || !event_name) {
+        return res.status(400).json({ error: "All fields are required" });
     }
 
     // Create a new event using the Event model
-    Event.create(time, desc, location, (error, eventId) => {
+    Event.create({
+        time,
+        desc,
+        location,
+        date,
+        category,
+        event_host,
+        event_phone,
+        event_email,
+        event_name
+    }, (error, eventId) => {
         if (error) {
             return res.status(500).json({ error: "Error creating event" });
         }

@@ -2,23 +2,32 @@
 const connection = require('../db');
 
 class Event {
-    constructor(event_id, time, desc, location) {
+    constructor(event_id, time, desc, location, date, category, event_host, event_phone, event_email, event_name) {
         this.event_id = event_id;
         this.time = time;
         this.desc = desc;
         this.location = location;
+        this.date = date;
+        this.category = category;
+        this.event_host = event_host;
+        this.event_phone = event_phone;
+        this.event_email = event_email;
+        this.event_name = event_name;
     }
 
     // Method to create a new event
-    static create(time, desc, location, callback) {
-        const query = 'INSERT INTO Events (time, `desc`, location) VALUES (?, ?, ?)';
-        connection.query(query, [time, desc, location], (error, results) => {
+    static create(time, desc, location, date, category, event_host, event_phone, event_email, event_name, callback) {
+        
+        const query = 'INSERT INTO Events (time, `desc`, location, date, category, event_host, event_phone, event_email, event_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        connection.query(query, [time, desc, location, date, category, event_host, event_phone, event_email, event_name], (error, results) => {
             if (error) {
                 console.error('Error creating event:', error);
                 return callback(error);
             }
+    
             callback(null, results.insertId); // Return the ID of the newly inserted event
         });
+        
     }
 
     // Method to retrieve all events
