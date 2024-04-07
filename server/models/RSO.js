@@ -45,17 +45,24 @@ class RSO {
         });
     }
 
-    // Method to retrieve all rsos
-    static getAll(callback) {
-        const query = 'SELECT * FROM RSO';
-        connection.query(query, (error, results) => {
-            if (error) {
-                console.error('Error fetching rsos:', error);
-                return callback(error);
-            }
-            callback(null, results); // Return all rsos
-        });
-    }
+    // Method to retrieve all RSOs in a specific university
+    static getAll(universityId, callback) {
+        const query = `
+            SELECT RSO.*
+            FROM RSO
+            INNER JOIN RSO_University ON RSO.rso_id = RSO_University.rso_id
+            WHERE RSO_University.university_id = ?
+             `;
+        connection.query(query, [universityId], (error, results) => {
+             if (error) {
+                 console.error('Error fetching RSOs by university ID:', error);
+            return callback(error);
+        }
+        callback(null, results);
+    });
+
+}
+
 
     // Method to find an RSO by ID
     static findById(rsoId, callback) {

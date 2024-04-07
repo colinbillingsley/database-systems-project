@@ -13,6 +13,23 @@ router.get('/api/rsos', (req, res) => {
     });
 });
 
+// Route to get all RSOs in a specific university
+router.get('/api/rsos/:universityId', (req, res) => {
+    const { universityId } = req.params;
+
+    // Retrieve all RSOs in the specified university using the RSO model
+    RSO.getAllByUniversity(universityId, (error, rsos) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching RSOs by university ID" });
+        }
+        if (!rsos || rsos.length === 0) {
+            return res.status(404).json({ error: "No RSOs found in the specified university" });
+        }
+        res.status(200).json({ rsos });
+    });
+});
+
+
 // Route to find an RSO by ID
 router.get('/api/rso/:rsoId', (req, res) => {
     const rsoId = req.params.rsoId;
