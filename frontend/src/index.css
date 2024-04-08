@@ -34,6 +34,13 @@ a {
   padding: 0.5em 0 1em 0;
 }
 
+.success {
+  color: rgb(0, 183, 0);
+  background-color: rgba(0, 187, 0, 0.21);
+  padding: 1em 1em;
+  border-radius: 1em;
+}
+
 /* ===================================
 Styles for Nav.js
 =================================== */

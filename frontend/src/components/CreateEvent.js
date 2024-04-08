@@ -3,7 +3,8 @@ import GoogleMaps from "./GoogleMap";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-const CreateEvent = () => {
+const CreateEvent = ({getEvents}) => {
+    const [success, setSuccess] = useState(false);
     const [event_name, setEvent_Name] = useState('');
     const [event_host, setEvent_Host] = useState('');
     const [event_phone, setEvent_Phone] = useState('');
@@ -20,6 +21,23 @@ const CreateEvent = () => {
 
     useEffect(() => {
     })
+
+    const resetFields = () => {
+        const createEvent = document.querySelector('.create-event-wrapper');
+        const textFields = document.querySelectorAll('.create-event-text-field');
+        const selectFields = document.querySelectorAll('.create-event-select-field');
+
+        // reset text fields
+        textFields.forEach(field => {
+            field.value = "";
+        });
+
+        selectFields.forEach(field => {
+            field.value = field.options[0].value;
+        });
+        // hide the event menu
+        createEvent.classList.add('hidden');
+    }
 
     const getRsoId = async () => {
         const baseUrl = `http://localhost:3500/rso/api/rsos/name/${event_host}`;
@@ -50,6 +68,7 @@ const CreateEvent = () => {
 
             // Format the date as 'YYYY-MM-DD'
             var formattedDateString = formattedDate.toISOString().slice(0, 10);
+            setEventDate(formattedDateString);
         }
 
         try {
@@ -78,20 +97,7 @@ const CreateEvent = () => {
     // clears all the input
     const handleCancelClick = (e) => {
         e.preventDefault();
-        const createEvent = document.querySelector('.create-event-wrapper');
-        const textFields = document.querySelectorAll('.create-event-text-field');
-        const selectFields = document.querySelectorAll('.create-event-select-field');
-
-        // reset text fields
-        textFields.forEach(field => {
-            field.value = "";
-        });
-
-        selectFields.forEach(field => {
-            field.value = field.options[0].value;
-        });
-        // hide the event menu
-        createEvent.classList.add('hidden');
+        resetFields();
     }
 
     // method to activate process of inserting a new event into the db
@@ -107,6 +113,16 @@ const CreateEvent = () => {
                     const event_id = await insertEvent();
                     // use the id and event type to insert into the correct event type table
                     await insertEventByType(event_id, event_type, rso_id);
+
+                    // event sucessfully added
+                    setSuccess(true);
+
+                    // hide menu and clear input after 2 seconds
+                    setTimeout(() => {
+                        resetFields();
+                        setSuccess(false);
+                        getEvents();
+                    }, 2000)
                 }
             }
 
@@ -116,6 +132,16 @@ const CreateEvent = () => {
                 const event_id = await insertEvent();
                 // use the id and event type to insert into the correct event type table
                 await insertEventByType(event_id, event_type, null);
+
+                // event sucessfully added
+                setSuccess(true);
+
+                // hide menu and clear input after 2 seconds
+                setTimeout(() => {
+                    resetFields();
+                    setSuccess(false);
+                    getEvents();
+                }, 2000)
             }
         } catch (error) {
             console.log("error inserting event into db via both Events Table and type Table");
@@ -318,11 +344,24 @@ const CreateEvent = () => {
                         </div>
 
                         <p className="error"></p>
+                        {success
+                            ? event_type === 'RSO'
+                                ? <p className="success">Event created successfully! It has been sent for approval</p>
+                                : <p className="success">Event created successfully!</p>
+                            : ''
+                        }
 
                         {/* create/cancel buttons */}
                         <div className="form-section btn-section">
-                            <button className="cancel-btn" onClick={handleCancelClick}>Cancel</button>
-                            <button className="create-btn" type="submit" onClick={handleCreateClick}>Create Event</button>
+                            {success
+                            ?
+                                ''
+                            :
+                                <>
+                                    <button className="cancel-btn" onClick={handleCancelClick}>Cancel</button>
+                                    <button className="create-btn" type="submit" onClick={handleCreateClick}>Create Event</button>
+                                </>
+                            }
                         </div>
                     </form>
                 </div>

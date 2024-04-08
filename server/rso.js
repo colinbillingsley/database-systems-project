@@ -130,7 +130,7 @@ router.get('/api/user/rsos/:userId', (req, res) => {
 // route for getting rso from given RSO name
 router.get('/api/rsos/name/:name', (req, res) => {
     const { name } = req.params;
-    
+
     if (!name) {
         return res.status(400).json({ error: "name not passed correctly" });
     }
@@ -151,6 +151,8 @@ router.get('/api/rsos/name/:name', (req, res) => {
 router.delete('/api/rso/leave/:rsoId/:userId', (req, res) => {
     const { rsoId, userId } = req.params;
 
+    console.log(rsoId, userId)
+
     // check and see if the user has even joined the RSO
     RSO.determineUserJoinedRSO(rsoId, userId, (error, userJoinedRSO) => {
         // error trying to look up in db
@@ -160,6 +162,7 @@ router.delete('/api/rso/leave/:rsoId/:userId', (req, res) => {
 
         // user is a part of the rso, proceed with removal
         if (userJoinedRSO) {
+            console.log("user is a member of RSO")
             RSO.leaveRSO(rsoId, userId, (error, result) => {
                 if (error) {
                     return res.status(500).json({ error: "Error leaving RSO" });

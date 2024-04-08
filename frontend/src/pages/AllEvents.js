@@ -5,7 +5,7 @@ const AllEvents = () => {
     const [userLevel, setUserLevel] = useState(2);
 
     return (
-        <div className="All-events-container">
+        <div className="all-events-container">
             <Events userLevel={userLevel}/>
         </div>
     )

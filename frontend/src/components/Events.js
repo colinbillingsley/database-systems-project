@@ -13,6 +13,7 @@ const Events = ({userLevel}) => {
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [uniName, setUniName] = useState("");
+    const [search, setSearch] = useState("");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
     const [filters, setFilters] = useState([]);
@@ -89,6 +90,10 @@ const Events = ({userLevel}) => {
         }
     }
 
+    const searchChange = (e) => {
+        setSearch(e.target.value)
+    }
+
     useEffect(() => {
         getUserUniversity();
         getEvents();
@@ -103,7 +108,7 @@ const Events = ({userLevel}) => {
             <div className="events-page-top">
                 <h2 className="main-heading">Events at {uniName}</h2>
                 <form>
-                    <input type="text" name="searchbar" id="searchbar" placeholder="Search..."/>
+                    <input onChange={searchChange} type="text" name="searchbar" id="searchbar" placeholder="Search..."/>
                 </form>
             </div>
             
@@ -169,7 +174,7 @@ const Events = ({userLevel}) => {
                     <Filters filters={filters} setFilters={setFilters} filteredEvents={filteredEvents} setFilteredEvents={setFilteredEvents}/>
                 </div>
             </div>
-            <CreateEvent />
+            <CreateEvent getEvents={getEvents}/>
         </div>
     )
 }
