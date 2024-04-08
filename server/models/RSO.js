@@ -81,6 +81,22 @@ class RSO {
         });
     }
 
+    // Method to find an RSO by name
+    static findByName(name, callback) {
+        const query = 'SELECT rso_id FROM RSO WHERE name = ?';
+        connection.query(query, [name], (error, results) => {
+            if (error) {
+                console.error('Error finding RSO by name:', error);
+                return callback(error);
+            }
+            if (results.length === 0) {
+                return callback(null, null); // RSO not found
+            }
+            const rso = results[0].rso_id;
+            callback(null, rso);
+        });
+    }
+
     // Method to check and see if the user has already joined the RSO
     static determineUserJoinedRSO(rso_id, uid, callback) {
         const query = 'SELECT * FROM RSO_Users_Joined WHERE rso_id = ? AND uid = ?';

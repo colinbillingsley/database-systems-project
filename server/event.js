@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('./models/Event');
-
+const PublicEvent = require('./models/PublicEvent');
+const PrivateEvent = require('./models/PrivateEvent');
+const RsoEvent = require('./models/RsoEvent');
 
 // Route to create a new event
 router.post('/api/events', (req, res) => {
@@ -13,8 +15,9 @@ router.post('/api/events', (req, res) => {
         return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Create a new event using the Event model
-    Event.create(
+    else {
+        // Create a new event using the Event model
+        Event.create(
         time,
         desc,
         location_name,
@@ -32,7 +35,52 @@ router.post('/api/events', (req, res) => {
         }
         res.status(200).json({ message: "Event created successfully", eventId });
     });
+    }
 });
+
+// Route to insert newly created event into the DB via its type
+router.post('/api/event/type', (req, res) => {
+    const { event_id, created_by, event_type, rso_id } = req.body;
+
+    // make sure all fields are correctly passed
+    if (!event_id || !created_by || !event_type) {
+        return res.status(400).json({ error: "event_id, created_by, or event_type was not passed correctly" });
+    }
+
+    if (event_type === 'RSO' && !rso_id) {
+        return res.status(400).json({ error: "rso_id was not passed correctly" });
+    }
+
+    else {
+        if (event_type === 'Private') {
+            // insert event into the Public_Events table
+            PrivateEvent.add(event_id, created_by, (error, result) => {
+                if (error) {
+                    return res.status(500).json({ error: "Error inserting event via Private" });
+                }
+                res.status(200).json({ result });
+            })
+        }
+        else if (event_type === 'RSO') {
+            // insert event into the Public_Events table
+            RsoEvent.add(event_id, rso_id, (error, result) => {
+                if (error) {
+                    return res.status(500).json({ error: "Error inserting event via RSO" });
+                }
+                res.status(200).json({ result });
+            })
+        }
+        else {
+            // insert event into the Public_Events table
+            PublicEvent.add(event_id, created_by, (error, result) => {
+                if (error) {
+                    return res.status(500).json({ error: "Error inserting event via Public" });
+                }
+                res.status(200).json({ result });
+            })
+        }
+    }
+})
 
 // Route to get all events
 router.get('/api/events', (req, res) => {

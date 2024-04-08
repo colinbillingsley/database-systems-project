@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import GoogleMaps from "./GoogleMap";
 import axios from "axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreateEvent = () => {
     const [event_name, setEvent_Name] = useState('');
@@ -15,30 +16,24 @@ const CreateEvent = () => {
     const [location_name, setLocation_Name] = useState('');
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
+    const {user} = useAuthContext();
 
     useEffect(() => {
     })
 
-    const handleCancelClick = (e) => {
-        e.preventDefault();
-        const createEvent = document.querySelector('.create-event-wrapper');
-        const textFields = document.querySelectorAll('.create-event-text-field');
-        const selectFields = document.querySelectorAll('.create-event-select-field');
-
-        // reset text fields
-        textFields.forEach(field => {
-            field.value = "";
-        });
-
-        selectFields.forEach(field => {
-            field.value = field.options[0].value;
-        });
-        // hide the event menu
-        createEvent.classList.add('hidden');
+    const getRsoId = async () => {
+        const baseUrl = `http://localhost:3500/rso/api/rsos/name/${event_host}`;
+        try {
+            const response = await axios.get(baseUrl);
+            return response.data.rsoId;
+        } catch (error) {
+            const createError = document.querySelector('.error');
+            createError.innerHTML = error.response.data.error;
+        }
     }
 
-    const handleCreateClick = async (e) => {
-        e.preventDefault();
+    // method to handle inserting a new event
+    const insertEvent = async () => {
         const baseUrl = `http://localhost:3500/event/api/events`;
 
         if (eventDate.length > 0) {
@@ -59,15 +54,72 @@ const CreateEvent = () => {
 
         try {
             const response = await axios.post(baseUrl, {time, desc, location_name, date: formattedDateString, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude});
-
-            console.log("success creating event");
-            console.log(response);
+            console.log("success inserting event");
+            return response.data.eventId;
         } catch (error) {
-            console.log("error creating event");
-            console.log(error);
-
             const createError = document.querySelector('.error');
             createError.innerHTML = error.response.data.error;
+        }
+    }
+
+    const insertEventByType = async (event_id, event_type, rso_id) => {
+        const baseUrl = `http://localhost:3500/event/api/event/type`;
+        const created_by = user.uid;
+        try {
+            const response = await axios.post(baseUrl, {event_id, created_by, event_type, rso_id});
+            console.log("Event type successfully inserted into DB")
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+
+    // method to handle when user cancels creating event
+    // clears all the input
+    const handleCancelClick = (e) => {
+        e.preventDefault();
+        const createEvent = document.querySelector('.create-event-wrapper');
+        const textFields = document.querySelectorAll('.create-event-text-field');
+        const selectFields = document.querySelectorAll('.create-event-select-field');
+
+        // reset text fields
+        textFields.forEach(field => {
+            field.value = "";
+        });
+
+        selectFields.forEach(field => {
+            field.value = field.options[0].value;
+        });
+        // hide the event menu
+        createEvent.classList.add('hidden');
+    }
+
+    // method to activate process of inserting a new event into the db
+    const handleCreateClick = async (e) => {
+        e.preventDefault();
+
+        try {
+            // if RSO event
+            if (event_type === 'RSO') {
+                const rso_id = await getRsoId();
+                // insert new event into Event table, and get the id
+                if (rso_id) {
+                    const event_id = await insertEvent();
+                    // use the id and event type to insert into the correct event type table
+                    await insertEventByType(event_id, event_type, rso_id);
+                }
+            }
+
+            // if Public or Private
+            else {
+                // insert new event into Event table, and get the id
+                const event_id = await insertEvent();
+                // use the id and event type to insert into the correct event type table
+                await insertEventByType(event_id, event_type, null);
+            }
+        } catch (error) {
+            console.log("error inserting event into db via both Events Table and type Table");
+            console.log(error);
         }
     }
 

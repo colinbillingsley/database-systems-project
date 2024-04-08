@@ -8,11 +8,10 @@ import RSOCard from "./RSOCard";
 const Rso = ({userLevel}) => {
     const [rsos, setRsos] = useState([]);
     const [myRsos, setMyRsos] = useState([]);
-    const [activeRsos, setActiveRsos] = useState([]);
-    const [inactiveRsos, setInactiveRsos] = useState([]);
     const [uniName, setUniName] = useState('');
     const { user } = useAuthContext();
 
+    // method to get the user's university
     const getUserUniversity = async () => {
         const baseUrl = `http://localhost:3500/university/api/university/${user.uni_id}`;
         try {
@@ -24,21 +23,44 @@ const Rso = ({userLevel}) => {
         }
     }
 
+    // method to get the RSOs the user is a part of
+    const getUserRSOs = async () => {
+        const baseUrl = `http://localhost:3500/rso/api/user/rsos/${user.uid}`;
+        try {
+            const response = await axios.get(baseUrl);
+            const rsos = response.data.rsos;
+                const rsosArray = rsos.map(rso => ({
+                    rso_id: rso.rso_id,
+                    name: rso.name?.trim(),
+                    created_by: rso.created_by,
+                    type: rso.type?.trim(),
+                    desc: rso.desc?.trim(),
+                    number: rso.number?.trim(),
+                    email: rso.email?.trim(),
+                    status: rso.status?.trim(),
+                        }));
+                setMyRsos(rsosArray);
+        } catch (error) {
+            console.log("error getting my RSOs")
+            console.log(error)
+        }
+    }
+
     // call api route to get all the RSOs from the db
-    const getAllRSOs = () => {
+    const getAllRSOs = async () => {
         const getAllRSOsUrl = 'http://localhost:3500/rso/api/rsos';
-        axios.get(getAllRSOsUrl)
+        await axios.get(getAllRSOsUrl)
             .then((response) => {
                 const rsos = response.data.rsos;
                 const rsosArray = rsos.map(rso => ({
                     rso_id: rso.rso_id,
                     name: rso.name?.trim(),
                     created_by: rso.created_by,
-                    type: rso.type.trim(),
-                    desc: rso.desc,
+                    type: rso.type?.trim(),
+                    desc: rso.desc?.trim(),
                     number: rso.number?.trim(),
                     email: rso.email?.trim(),
-                    status: rso.status.trim(),
+                    status: rso.status?.trim(),
                         }));
                 setRsos(rsosArray);
             })
@@ -55,6 +77,7 @@ const Rso = ({userLevel}) => {
     }
 
     useEffect(() => {
+        getUserRSOs();
         getUserUniversity();
         getAllRSOs();
     },[])
@@ -87,7 +110,7 @@ const Rso = ({userLevel}) => {
 
                                     return (
                                         <li className="rso-item">
-                                            <Link to={`/rsos/${rso.id}/${formattedName}`}>
+                                            <Link to={`/rsos/${rso.rso_id}/${formattedName}`}>
                                                 <RSOCard rso={rso}/>
                                             </Link>
                                         </li>

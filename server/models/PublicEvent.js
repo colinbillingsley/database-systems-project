@@ -1,8 +1,13 @@
-const db = require('../db');
+const connection = require('../db');
 
 class PublicEvent {
+  constructor(event_id, created_by) {
+    this.event_id = event_id;
+    this.created_by = created_by;
+  }
+
   static async findByEventId(eventId) {
-    return db.query(
+    return connection.query(
       `SELECT * FROM Public_Events WHERE event_id = ?`,
       [eventId]
     )
@@ -11,7 +16,7 @@ class PublicEvent {
   }
 
   static async findByCreatedBy(createdBy) {
-    return db.query(
+    return connection.query(
       `SELECT * FROM Public_Events WHERE created_by = ?`,
       [createdBy]
     )
@@ -19,17 +24,15 @@ class PublicEvent {
     .catch(err => console.log(err));
   }
 
-  static async add(event) {
-    const { event_id, created_by } = event;
-    return db.query(
-      `INSERT INTO Public_Events (event_id, created_by) VALUES (?, ?)`,
-      [event_id, created_by]
-    )
-    .then(() => event_id)
-    .catch(err => {
-      console.log(err);
-      throw err;
-    });
+  static async add(event_id, created_by, callback) {
+    const query = `INSERT INTO Public_Events (event_id, created_by) VALUES (?, ?)`;
+    connection.query(query, [event_id, created_by], (error, result) => {
+      if (error) {
+        console.error('Error inserting event into Public_Events:', error);
+        return callback(error);
+      }
+      callback(null, result.insertId);
+      });
   }
 }
 
