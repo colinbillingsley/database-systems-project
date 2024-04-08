@@ -11,10 +11,12 @@ import axios from "axios";
 const Events = ({userLevel}) => {
     const { user } = useAuthContext();
     const [events, setEvents] = useState([]);
+    const [filteredEvents, setFilteredEvents] = useState([]);
     const [uniName, setUniName] = useState("");
     const [dayFilter, setDayFilter] = useState("Day");
     const [dayFilterHeading, setDayFilterHeading] = useState("Today's Events");
     const [filters, setFilters] = useState([]);
+    const [showFiltered, setShowFiltered] = useState(false);
 
     // open create event menu when create events is clicked
     const EventClick = () => {
@@ -60,10 +62,41 @@ const Events = ({userLevel}) => {
             })
     }
 
+    const filterEvents = () => {
+        if (filters.length > 0) {
+            setShowFiltered(true);
+
+            let tempFilteredEvents = [];
+
+            // go through each filter
+            filters.forEach(filter => {
+                // go through each event
+                events.forEach(event => {
+                    // if that event has one of the filters in its values, set it to filtered events
+                    if ((event.category === filter.value || event.event_type === filter.value)
+                        && !(tempFilteredEvents.some(e => e.event_id === event.event_id))) {
+                        tempFilteredEvents.push(event);
+                    }
+                });
+            });
+            setFilteredEvents(tempFilteredEvents);
+        }
+        else {
+            // no filters, so set show filtered to false
+            setShowFiltered(false);
+            // empty the filtered events
+            setFilteredEvents([]);
+        }
+    }
+
     useEffect(() => {
         getUserUniversity();
         getEvents();
     }, []);
+
+    useEffect(() => {
+        filterEvents();
+    },[filters])
 
     return (
         <div>
@@ -85,7 +118,8 @@ const Events = ({userLevel}) => {
                     <h3 className="day-filter-heading">{filters.length === 0 ? "All Events" : "Filtered Events"}</h3>
                     <ul className="list-of-events">
                         {/* check if there's any events in database */}
-                        {(events.length === 0) 
+                        {!showFiltered
+                        ? (events.length === 0) 
                             // if no events found, display message
                             ? 
                             <li>
@@ -106,12 +140,33 @@ const Events = ({userLevel}) => {
                                     </li>
                                 )
                             })
+                        : (filteredEvents.length === 0) 
+                            // if no events found, display message
+                            ? 
+                            <li>
+                                <p className="no-data">No events found.</p>
+                            </li> 
+                            // if events found, display all events
+                            :
+                            filteredEvents.map((event, index) => {
+                                // format event name to be placed in URL
+                                const trimmedName = event.event_name.trim();
+                                const formattedName = trimmedName.replace(/\s+/g, '-');
+
+                                return (
+                                    <li className="event-item">
+                                        <Link to={`/events/${event.event_id}/${formattedName}`}>
+                                            <EventBox event={event}/>
+                                        </Link>
+                                    </li>
+                                )
+                            })
                         }
                     </ul>
                 </div>
 
                 <div className="events-side-content">
-                    <Filters filters={filters} setFilters={setFilters}/>
+                    <Filters filters={filters} setFilters={setFilters} filteredEvents={filteredEvents} setFilteredEvents={setFilteredEvents}/>
                 </div>
             </div>
             <CreateEvent />

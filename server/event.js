@@ -85,7 +85,7 @@ router.post('/api/event/type', (req, res) => {
 // Route to get all events
 router.get('/api/events', (req, res) => {
     // Retrieve all events using the Event model
-    Event.getAll((error, events) => {
+    Event.getEvents((error, events) => {
         if (error) {
             return res.status(500).json({ error: "Error fetching events" });
         }

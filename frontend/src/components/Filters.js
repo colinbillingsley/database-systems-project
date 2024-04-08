@@ -1,17 +1,26 @@
 import { useState } from "react"
 
-const Filters = ({filters, setFilters}) => {
+const Filters = ({filters, setFilters, filteredEvents, setFilteredEvents}) => {
 
     // add or remove filters when clicked on
     const handleFilterClick = (e) => {
         const id = document.getElementById(e.target.id);
 
+        const isFilterInArray = filters.some(filter => filter.id === e.target.id);
         // add id to filters array if not in array already
-        if (!filters.includes(e.target.id)) {
+        if (!isFilterInArray) {
             // add active class to id
             id.classList.add('active');
-            // add id to filters array
-            setFilters([...filters, e.target.id]);
+
+            // add id and value to filters array
+            const tempObject = {
+                id: null,
+                value: null
+            };
+            tempObject.id = e.target.id;
+            tempObject.value = e.target.textContent;
+
+            setFilters([...filters, tempObject]);
         }
         
         // if filter already in array
@@ -19,15 +28,16 @@ const Filters = ({filters, setFilters}) => {
             // remove the active class of id
             id.classList.remove('active');
             // remove id from filters array
-            setFilters(filters.filter((item) => item !== e.target.id));
+            setFilters(filters.filter(filter => filter.id !== e.target.id));
+            setFilteredEvents(filteredEvents.filter(event => event.category !== e.target.textContent || event.event_type !== e.target.textContent ))
         }
     };
 
     // clear all filters that are active
     const handleClearFilterClick = () => {
         // get every if in filters array and remove active class
-        filters.forEach(element => {
-            document.getElementById(element).classList.remove('active');
+        filters.forEach(filter => {
+            document.getElementById(filter.id).classList.remove('active');
         });
         // set filters to empty array
         setFilters([])

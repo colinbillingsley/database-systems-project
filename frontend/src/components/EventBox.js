@@ -19,7 +19,6 @@ const EventBox = ({event}) => {
         const timeOptions = { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' };
         setFormattedTime(time.toLocaleTimeString('en-US', timeOptions));
 
-        console.log(event)
     }, [event])
     
     return (
