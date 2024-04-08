@@ -348,7 +348,9 @@ const EventInfo = () => {
                 <div className="event-info-right-content">
                     <div className="location-section">
                         <h3>Location</h3>
-                        <p>{eventInfo.location}</p>
+                        <p>Address: {eventInfo.location_name}</p>
+                        <p>Latitude: {eventInfo.latitude}</p>
+                        <p>Longitude: {eventInfo.longitude}</p>
                     </div>
                     <hr />
                     <div className="contact-section">

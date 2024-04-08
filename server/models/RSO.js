@@ -1,18 +1,19 @@
 const connection = require('../db');
 
 class RSO {
-    constructor(name, createdBy, type, email, number, status) {
+    constructor(name, createdBy, type, desc, email, number, status) {
         this.name = name;
         this.createdBy = createdBy;
         this.type = type;
+        this.desc = desc;
         this.email = email;
         this.number = number;
         this.status = status;
     }
 
-    static create(name, createdBy, type, email, number, status, callback) {
-        const query = 'INSERT INTO RSO (name, created_by) VALUES (?, ?, ?, ?, ?, ?)';
-        connection.query(query, [name, createdBy, type, email, number, status], (error, results) => {
+    static create(name, created_by, type, desc, email, number, status, callback) {
+        const query = 'INSERT INTO RSO (name, created_by, type, `desc`, email, number, status) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        connection.query(query, [name, created_by, type, desc, email, number, status], (error, results) => {
             if (error) {
                 console.error('Error creating RSO:', error);
                 return callback(error);

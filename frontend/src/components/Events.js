@@ -42,14 +42,16 @@ const Events = ({userLevel}) => {
                     event_id: event.event_id,
                     time: event.time?.trim(),
                     desc: event.desc?.trim(),
-                    location: event.location?.trim(),
+                    location_name: event.location_name?.trim(),
                     date: event.date ? event.date.trim() : '', // Handle undefined date
                     category: event.category ? event.category.trim() : '', // Handle undefined category
                     event_type: event.event_type ? event.event_type.trim() : '', // Handle undefined category
                     event_host: event.event_host?.trim(),
                     event_phone: event.event_phone?.trim(),
                     event_email: event.event_email?.trim(),
-                    event_name: typeof event.event_name === 'string' ? event.event_name.trim() : ''
+                    event_name: typeof event.event_name === 'string' ? event.event_name.trim() : '',
+                    longitude: event.longitude,
+                    latitude: event.latitude
                         }));
                 setEvents(eventsArray);
             })

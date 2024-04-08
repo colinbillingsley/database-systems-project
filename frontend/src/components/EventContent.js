@@ -30,7 +30,7 @@ const EventContent = ({eventInfo}) => {
             <h2 className="main-heading">{eventInfo.event_name}</h2>
             <p className="event-info-date-time">{`${formattedDate} @ ${formattedTime}`}</p>
             <div className="event-info-type-cat">
-                <span className={`event-type + ${eventInfo.event_type === 'Public' ? 'public' : eventInfo.event_type === 'RSO' ? 'rso' : eventInfo.event_type === 'Private' ? 'private' : ''}`}>Public</span>
+                <span className={`event-type + ${eventInfo.event_type === 'Public' ? 'public' : eventInfo.event_type === 'RSO' ? 'rso' : eventInfo.event_type === 'Private' ? 'private' : ''}`}>{eventInfo.event_type}</span>
                 <span className={`event-info-category`}>{eventInfo.category}</span>
             </div>
             <p className="event-info-description">{eventInfo.desc}</p>

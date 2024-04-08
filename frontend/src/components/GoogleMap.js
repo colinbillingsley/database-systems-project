@@ -9,7 +9,7 @@ const center = {
   lng: -81.2005, // default longitude
 };
 
-const GoogleMaps = ({latitude, setLatitude, longitude, setLongitude}) => {
+const GoogleMaps = ({latitude, setLatitude, longitude, setLongitude, location_name, setLocation_Name, handleEventLocationChange}) => {
 
     const markerPos = {
         lat: latitude,
@@ -29,10 +29,34 @@ const GoogleMaps = ({latitude, setLatitude, longitude, setLongitude}) => {
     return <div>Loading maps</div>;
     }
 
-    const handleClick = (e) => {
-        // Get latitude and longitude from the clicked location
+    const handleClick = async (e) => {
+        handleEventLocationChange();
+        const google = window.google;
+
+        // Initialize the geocoder
+        var geocoder = new google.maps.Geocoder();
+
+        // Assuming latitude and longitude are obtained from the click event
+        var latlng = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+
+        // set latitude and longitude from the clicked location
         setLatitude(e.latLng.lat());
         setLongitude(e.latLng.lng());
+
+        // Perform reverse geocoding
+        geocoder.geocode({ 'location': latlng }, function(results, status) {
+        if (status === 'OK') {
+            if (results[0]) {
+            // Address found, you can access it from the first result
+            var address = results[0].formatted_address;
+            setLocation_Name(address);
+            } else {
+            console.log('No results found');
+            }
+        } else {
+            console.log('Geocoder failed due to:', status);
+        }
+        });
     }
     
     return (
@@ -42,6 +66,7 @@ const GoogleMaps = ({latitude, setLatitude, longitude, setLongitude}) => {
             zoom={15}
             center={center}
             onClick={handleClick}
+            id='map'
             >
             <Marker position={markerPos}/>
             </GoogleMap>

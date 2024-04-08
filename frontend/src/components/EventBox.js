@@ -18,6 +18,8 @@ const EventBox = ({event}) => {
         // Format time
         const timeOptions = { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' };
         setFormattedTime(time.toLocaleTimeString('en-US', timeOptions));
+
+        console.log(event)
     }, [event])
     
     return (
@@ -31,7 +33,7 @@ const EventBox = ({event}) => {
                 </div>
             </div>
             <p className="event-date-time">{formattedDate} @ {formattedTime}</p>
-            <p className="event-location"><span>Location</span> {event.location}</p>
+            <p className="event-location"><span>Location</span> {event.location_name}</p>
             <p className="event-description">
                 {/* display full description if less than 500 chars, else add elipses after 500 chars */}
                 {event.desc && event.desc.length > 500 ? event.desc.substr(0, 500) + '...' : event.desc}

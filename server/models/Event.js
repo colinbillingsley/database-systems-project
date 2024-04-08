@@ -2,24 +2,27 @@
 const connection = require('../db');
 
 class Event {
-    constructor(event_id, time, desc, location, date, category, event_host, event_phone, event_email, event_name) {
+    constructor(event_id, time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude) {
         this.event_id = event_id;
         this.time = time;
         this.desc = desc;
-        this.location = location;
+        this.location_name = location_name;
         this.date = date;
         this.category = category;
         this.event_host = event_host;
         this.event_phone = event_phone;
         this.event_email = event_email;
+        this.event_type = event_type;
         this.event_name = event_name;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     // Method to create a new event
-    static create(time, desc, location, date, category, event_host, event_phone, event_email, event_name, callback) {
+    static create(time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude, callback) {
         
-        const query = 'INSERT INTO Events (time, `desc`, location, date, category, event_host, event_phone, event_email, event_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        connection.query(query, [time, desc, location, date, category, event_host, event_phone, event_email, event_name], (error, results) => {
+        const query = 'INSERT INTO Events (`time`, `desc`, location_name, `date`, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        connection.query(query, [time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude], (error, results) => {
             if (error) {
                 console.error('Error creating event:', error);
                 return callback(error);
@@ -27,7 +30,6 @@ class Event {
     
             callback(null, results.insertId);
         });
-        
     }
 
 // Method to retrieve all events specific to a university (when event is not public)
@@ -43,6 +45,18 @@ static getAll(universityId, callback) {
             return callback(error);
         }
         callback(null, results); // Return events specific to the university
+    });
+}
+
+// Method to retrieve all events
+static getEvents(callback) {
+    const query = 'SELECT * FROM Events';
+    connection.query(query, (error, results) => {
+        if (error) {
+            console.error('Error fetching events:', error);
+            return callback(error);
+        }
+        callback(null, results); // Return all events
     });
 }
 
