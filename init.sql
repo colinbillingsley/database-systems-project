@@ -44,14 +44,15 @@ USE `eventdb`;
   `event_id` int NOT NULL AUTO_INCREMENT,
   `time` time(6) , 
   `desc` varchar(255) ,
-  `location` varchar(255),
+  `location_name` varchar(255),
   `date` DATE,
   `category` varchar(255),
   `event_host` varchar(255),
   `event_phone` varchar(25),
   `event_email` varchar(255),
   `event_name` varchar(255),
-  
+  `longitude` varchar(255),
+  `latitude` varchar(255),
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
  
@@ -87,7 +88,7 @@ USE `eventdb`;
   `event_id` int NOT NULL,
   `created_by` int,
   PRIMARY KEY (event_id, created_by),
-  FOREIGN KEY (created_by) references SuperAdmins(uid) ON DELETE CASCADE,
+  FOREIGN KEY (created_by) references Admins(uid) ON DELETE CASCADE,
   FOREIGN KEY (event_id) references Events(event_id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -95,7 +96,7 @@ USE `eventdb`;
   `event_id` int NOT NULL,
   `created_by` int,
   PRIMARY KEY (event_id, created_by),
-  FOREIGN KEY (created_by) references SuperAdmins(uid) ON DELETE CASCADE,
+  FOREIGN KEY (created_by) references Admins(uid) ON DELETE CASCADE,
   FOREIGN KEY (event_id) references Events(event_id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
