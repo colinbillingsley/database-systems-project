@@ -77,6 +77,7 @@ static getEvents(callback) {
         });
     }
 
+    // Method to get RSO event creations for super admin to approve/deny
     static async getEventRequests(callback) {
         const query = `SELECT E.* 
         FROM Events E, RSO_Events R
@@ -91,6 +92,20 @@ static getEvents(callback) {
                 return callback(null, null); // no event requests
             }
             callback(null, results);
+        })
+    }
+
+    // Method to see if an event occurs during a timeframe at a location already
+    static async determineEventTimeTaken(time, date, location_name, longitude, latitude, callback) {
+        const query = `SELECT COUNT(*)
+        FROM Events WHERE (time = ? && date = ?) AND (location_name = ? && latitude = ? && longitude = ?)`;
+        connection.query(query, [time, date, location_name, latitude, longitude], (error, result) => {
+            if (error) {
+                console.error('Error determining if event occurs at this place, on this date, at this time:', error);
+                return callback(error);
+            }
+            const count = result[0]['COUNT(*)'];
+            callback(null, count);
         })
     }
 }

@@ -94,7 +94,7 @@ class RSO {
 
     // Method to find an RSO by name
     static findByName(name, callback) {
-        const query = 'SELECT rso_id FROM RSO WHERE name = ?';
+        const query = 'SELECT * FROM RSO WHERE name = ?';
         connection.query(query, [name], (error, results) => {
             if (error) {
                 console.error('Error finding RSO by name:', error);
@@ -103,7 +103,7 @@ class RSO {
             if (results.length === 0) {
                 return callback(null, null); // RSO not found
             }
-            const rso = results[0].rso_id;
+            const rso = results[0];
             callback(null, rso);
         });
     }
@@ -159,6 +159,7 @@ class RSO {
         });
     }
 
+    // Method to get RSO creations for super admin to approve/deny
    static async getRsoRequests(callback) {
     const query = 'SELECT * FROM RSO WHERE approved = 1';
     connection.query(query, (error, results) => {
@@ -194,6 +195,18 @@ class RSO {
         return callback(error);
       }
       callback(null, result);
+    })
+  }
+
+  // method to delete an RSO
+  static async deleteRSO(rso_id, callback) {
+    const query = 'DELETE FROM RSO WHERE rso_id = ?';
+    connection.query(query, [rso_id], (error, result) => {
+        if (error) {
+            console.error('Error deleting RSO', error);
+            return callback(error);
+          }
+          callback(null, result);
     })
   }
 

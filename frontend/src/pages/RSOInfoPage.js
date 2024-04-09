@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import axios from "axios";
@@ -9,6 +9,7 @@ const RSOInfoPage = () => {
     const [rsoMembers, setRsoMembers] = useState([]);
     const { user } = useAuthContext();
     const { rso_id: rsoId } = useParams();
+    const navigate = useNavigate();
 
     // get usernames for each member of RSO and set to rsoMembers
     const getUsernameFromMembers = async (uid) => {
@@ -72,6 +73,18 @@ const RSOInfoPage = () => {
             })
     }
 
+    const deleteRSO = async () => {
+        try {
+            const baseUrl = `http://localhost:3500/rso/api/delete/rso/${rsoInfo.rso_id}`;
+            const response = await axios.delete(baseUrl);
+
+            navigate('/rsos');
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+
     // get the RSO information
     const getRso = async () => {
         const baseUrl = 'http://localhost:3500/rso/api/rso';
@@ -120,15 +133,22 @@ const RSOInfoPage = () => {
                     </div>
                     <hr />
                     <div className="join-section">
-                        {rsoMembers.includes(user.username)
-                        ?   <div>
-                                <h3>Want to leave the RSO?</h3>
-                                <button onClick={leaveRSO} className="join-rso-btn">Leave RSO</button>
-                            </div>
-                        :   <div>
-                                <h3>Want to join the RSO?</h3>
-                                <button onClick={joinRSO} className="join-rso-btn">Join RSO</button>
-                            </div>
+                        {rsoInfo.created_by === user.uid
+                        ?   <>
+                                <div>
+                                    <h3>Want to delete the RSO?</h3>
+                                    <button onClick={deleteRSO} className="delete-rso-btn">Delete RSO</button>
+                                </div>
+                            </>
+                        :   rsoMembers.includes(user.username)
+                            ?   <div>
+                                    <h3>Want to leave the RSO?</h3>
+                                    <button onClick={leaveRSO} className="join-rso-btn">Leave RSO</button>
+                                </div>
+                            :   <div>
+                                    <h3>Want to join the RSO?</h3>
+                                    <button onClick={joinRSO} className="join-rso-btn">Join RSO</button>
+                                </div>
                         }
                     </div>
                 </div>

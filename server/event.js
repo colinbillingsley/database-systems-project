@@ -16,25 +16,38 @@ router.post('/api/events', (req, res) => {
     }
 
     else {
-        // Create a new event using the Event model
-        Event.create(
-        time,
-        desc,
-        location_name,
-        date,
-        category,
-        event_host,
-        event_phone,
-        event_email,
-        event_type,
-        event_name,
-        longitude,
-        latitude, (error, eventId) => {
-        if (error) {
-            return res.status(500).json({ error: "Error creating event" });
-        }
-        res.status(200).json({ message: "Event created successfully", eventId });
-    });
+        // check and see if an event takes place during the timeframe inputted at the location selected
+        Event.determineEventTimeTaken(time, date, location_name, longitude, latitude, (error, count) => {
+            if (error) {
+                return res.status(500).json({ error: "Error determining if event occurs at this location during the timeframe" });
+            }
+            // if there is a count, an event already occurs at the location during the timeframe
+            if (count > 0) {
+                return res.status(400).json({ error: "Event occurs at this location during the inputted timeframe. Please select another date or time" });
+            } 
+            // no event occurs at the location during the timeframe
+            else {
+                // Create a new event using the Event model
+                Event.create(
+                    time,
+                    desc,
+                    location_name,
+                    date,
+                    category,
+                    event_host,
+                    event_phone,
+                    event_email,
+                    event_type,
+                    event_name,
+                    longitude,
+                    latitude, (error, eventId) => {
+                    if (error) {
+                        return res.status(500).json({ error: "Error creating event" });
+                    }
+                    res.status(200).json({ message: "Event created successfully", eventId });
+                });
+            }
+        })
     }
 });
 
@@ -133,6 +146,5 @@ router.get('/api/requests', (req, res) => {
         res.status(200).json({ requests });
     })
 })
-
 
 module.exports = router;

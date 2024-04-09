@@ -20,7 +20,7 @@ const CreateEvent = ({getEvents}) => {
     const {user} = useAuthContext();
 
     useEffect(() => {
-    })
+    }, [])
 
     const resetFields = () => {
         const createEvent = document.querySelector('.create-event-wrapper');
@@ -40,7 +40,7 @@ const CreateEvent = ({getEvents}) => {
     }
 
     const getRsoId = async () => {
-        const baseUrl = `http://localhost:3500/rso/api/rsos/name/${event_host}`;
+        const baseUrl = `http://localhost:3500/rso/api/rsos/name/${event_host}/${user.uid}`;
         try {
             const response = await axios.get(baseUrl);
             return response.data.rsoId;
@@ -111,8 +111,30 @@ const CreateEvent = ({getEvents}) => {
                 // insert new event into Event table, and get the id
                 if (rso_id) {
                     const event_id = await insertEvent();
+                    if (event_id) {
+                        // use the id and event type to insert into the correct event type table
+                        await insertEventByType(event_id, event_type, rso_id);
+
+                        // event sucessfully added
+                        setSuccess(true);
+
+                        // hide menu and clear input after 2 seconds
+                        setTimeout(() => {
+                            resetFields();
+                            setSuccess(false);
+                            getEvents();
+                        }, 2000)
+                    }
+                }
+            }
+
+            // if Public or Private
+            else {
+                // insert new event into Event table, and get the id
+                const event_id = await insertEvent();
+                if (event_id) {
                     // use the id and event type to insert into the correct event type table
-                    await insertEventByType(event_id, event_type, rso_id);
+                    await insertEventByType(event_id, event_type, null);
 
                     // event sucessfully added
                     setSuccess(true);
@@ -124,24 +146,6 @@ const CreateEvent = ({getEvents}) => {
                         getEvents();
                     }, 2000)
                 }
-            }
-
-            // if Public or Private
-            else {
-                // insert new event into Event table, and get the id
-                const event_id = await insertEvent();
-                // use the id and event type to insert into the correct event type table
-                await insertEventByType(event_id, event_type, null);
-
-                // event sucessfully added
-                setSuccess(true);
-
-                // hide menu and clear input after 2 seconds
-                setTimeout(() => {
-                    resetFields();
-                    setSuccess(false);
-                    getEvents();
-                }, 2000)
             }
         } catch (error) {
             console.log("error inserting event into db via both Events Table and type Table");

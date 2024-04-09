@@ -128,21 +128,29 @@ router.get('/api/user/rsos/:userId', (req, res) => {
 });
 
 // route for getting rso from given RSO name
-router.get('/api/rsos/name/:name', (req, res) => {
-    const { name } = req.params;
+router.get('/api/rsos/name/:name/:uid', (req, res) => {
+    const { name, uid } = req.params;
 
     if (!name) {
         return res.status(400).json({ error: "name not passed correctly" });
     }
 
-    // Retrieve RSOs by name using the RSO model
-    RSO.findByName(name, (error, rsoId) => {
+    // Retrieve RSO by name using the RSO model
+    RSO.findByName(name, (error, rso) => {
         if (error) {
             return res.status(500).json({ error: "Error fetching RSOs by user name" });
         }
-        if (!rsoId) {
-            return res.status(404).json({ error: "No RSO found by given host name " });
+        // rso not found by name
+        if (!rso) {
+            return res.status(404).json({ error: "No RSO found by given host name" });
         }
+        // check and see if the creator of the rso is the one creating the event
+        if (rso.created_by !== parseInt(uid)) {
+            console.log(rso.created_by, uid)
+            return res.status(404).json({ error: "You are not the owner of the given RSO Host Name. You must be the owner to create this event!" });
+        }
+        // return the rso id
+        const rsoId = rso.rso_id
         res.status(200).json({ rsoId });
     });
 });
@@ -177,6 +185,20 @@ router.delete('/api/rso/leave/:rsoId/:userId', (req, res) => {
         }
     })
 });
+
+router.delete('/api/delete/rso/:rso_id', (req, res) => {
+    const { rso_id } = req.params;
+
+    RSO.deleteRSO(rso_id, (error, rso) => {
+        if (error) {
+            return res.status(500).json({ error: "Error deleting RSO" });
+        }
+        if (!rso) {
+            return res.status(404).json({ error: "RSO not found" });
+        }
+        res.status(200).json({ rso });
+    })
+})
 
 // Route to get RSO requests for Super Admin to approve
 router.get('/api/requests', (req, res) => {
