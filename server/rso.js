@@ -201,8 +201,10 @@ router.delete('/api/delete/rso/:rso_id', (req, res) => {
 })
 
 // Route to get RSO requests for Super Admin to approve
-router.get('/api/requests', (req, res) => {
-    RSO.getRsoRequests((error, requests) => {
+router.get('/api/requests/:uni_id', (req, res) => {
+    const { uni_id } = req.params;
+
+    RSO.getRsoRequests(uni_id, (error, requests) => {
         if (error) {
             return res.status(500).json({ error: "Error fetching RSO requests" });
         }

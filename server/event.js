@@ -124,11 +124,12 @@ router.get('/api/events/:eventId', (req, res) => {
 });
 
 // Route to get all events specific to a university
-router.get('/api/events/:universityId', (req, res) => {
+router.get('/api/events/university/:universityId', (req, res) => {
     const universityId = req.params.universityId;
+    console.log(universityId)
 
     // Retrieve all events specific to the university using the Event model
-    Event.getAll(universityId, (error, events) => {
+    Event.getAllByUniversity(universityId, (error, events) => {
         if (error) {
             return res.status(500).json({ error: "Error fetching events" });
         }
@@ -136,8 +137,11 @@ router.get('/api/events/:universityId', (req, res) => {
     });
 });
 
-router.get('/api/requests', (req, res) => {
-    Event.getEventRequests((error, requests) => {
+// route to get all RSO event requests for university
+router.get('/api/requests/:uni_id', (req, res) => {
+    const { uni_id } = req.params;
+
+    Event.getEventRequests(uni_id, (error, requests) => {
         if (error) {
             return res.status(500).json({ error: "Error fetching Event requests" });
         }

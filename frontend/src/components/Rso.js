@@ -49,7 +49,7 @@ const Rso = () => {
 
     // call api route to get all the RSOs from the db
     const getAllRSOs = async () => {
-        const getAllRSOsUrl = 'http://localhost:3500/rso/api/rsos';
+        const getAllRSOsUrl = `http://localhost:3500/rso/api/rsos/${user.uni_id}`;
         await axios.get(getAllRSOsUrl)
             .then((response) => {
                 const rsos = response.data.rsos;

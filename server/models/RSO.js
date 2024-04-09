@@ -48,13 +48,8 @@ class RSO {
     }
 
     // Method to retrieve all RSOs in a specific university
-    static getAll(universityId, callback) {
-        const query = `
-            SELECT RSO.*
-            FROM RSO
-            INNER JOIN RSO_University ON RSO.rso_id = RSO_University.rso_id
-            WHERE RSO_University.university_id = ?
-             `;
+    static getAllByUniversity(universityId, callback) {
+        const query = `SELECT * FROM RSO where uni_id = ? && approved = 2`;
         connection.query(query, [universityId], (error, results) => {
             if (error) {
                  console.error('Error fetching RSOs by university ID:', error);
@@ -149,7 +144,7 @@ class RSO {
             SELECT RSO.*
             FROM RSO
             INNER JOIN RSO_Users_Joined ON RSO.rso_id = RSO_Users_Joined.rso_id
-            WHERE RSO_Users_Joined.uid = ?
+            WHERE RSO_Users_Joined.uid = ? && RSO.approved = 2
         `;
         connection.query(query, [userId], (error, results) => {
             if (error) {
@@ -161,9 +156,9 @@ class RSO {
     }
 
     // Method to get RSO creations for super admin to approve/deny
-   static async getRsoRequests(callback) {
-    const query = 'SELECT * FROM RSO WHERE approved = 1';
-    connection.query(query, (error, results) => {
+   static async getRsoRequests(uni_id, callback) {
+    const query = 'SELECT * FROM RSO WHERE approved = 1 AND uni_id = ?';
+    connection.query(query, [uni_id], (error, results) => {
         if (error) {
             console.error('Error finding RSOs:', error);
             return callback(error);

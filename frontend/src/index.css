@@ -1261,6 +1261,7 @@ Styles for Comment.js
   justify-content: flex-end;
   align-items: center;
   gap: 0.5em;
+  margin-bottom: 1em;
 }
 
 .review-buttons button {

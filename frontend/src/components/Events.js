@@ -37,7 +37,7 @@ const Events = ({userLevel}) => {
     }
 
     const getEvents = async () => {
-        const getAllEventsUrl = 'http://localhost:3500/event/api/events';
+        const getAllEventsUrl = `http://localhost:3500/event/api/events/university/${user.uni_id}`;
         axios.get(getAllEventsUrl)
             .then((response) => {
                 const events = response.data.events;

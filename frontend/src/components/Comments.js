@@ -8,6 +8,8 @@ import Rating from "./Rating";
 import axios from "axios";
 
 const Comments = ({eventComments, setEventComments, setComments, eventId, eventRating, setEventRating, setStarRating, mouseOverStars, mouseLeaveStars, onStarClick}) => {
+    const [errorMessage, setErrorMessage] = useState('');
+    const [error, setError] = useState(false);
     const [text, setText] = useState(``);
     const [isEditing, setIsEditing] = useState(false);
     const { user } = useAuthContext();
@@ -42,9 +44,8 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
         setEventRating(0);
         setStarRating();
 
-        // reset error if shown
-        const commentError = document.querySelector('.error');
-        commentError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     // handle accept comment changes click
@@ -79,6 +80,8 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
     // handle cancel comment changes click
     const handleCancelChanges = () => {
         setIsEditing(false);
+        setError(false);
+        setErrorMessage('');
     }
 
     // give the ability to edit the user's comment when clicked
@@ -104,6 +107,8 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
             setEventRating(0);
             setStarRating();
             setText("");
+            setError(false);
+            setErrorMessage('');
         } catch (error) {
             console.log(error);
         }
@@ -112,13 +117,15 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
     // set the comment based on input
     const handleReviewInputChange = (e) => {
         setText(e.target.value);
-        const commentError = document.querySelector('.error');
-        commentError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     // set the comment based on input
     const handleCommentChange = (e) => {
         setText(e.target.value);
+        setError(false);
+        setErrorMessage('');
     }
 
     // submit new comment for event o the database
@@ -130,7 +137,6 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
         const event_id = parseInt(eventId);
         const rating = eventRating;
         const timestamp = new Date();
-        const commentError = document.querySelector('.error');
         
         // define the url
         const baseUrl = `http://localhost:3500/comment/api/create`;
@@ -157,9 +163,8 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
             setText("");
             setEventRating(0);
         } catch (error) {
-            console.log("error making comment")
-            console.log(error);
-            commentError.innerHTML = error.response.data.error;
+            setError(true);
+            setErrorMessage(error.response.data.error);
             return null;
         }
     }
@@ -195,7 +200,10 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
                                 <button onClick={handleCancel}>Cancel</button>
                                 <button onClick={handleCommentSubmit} type="submit">Comment</button>
                             </div>
-                            <p className="error"></p>
+                            {error
+                                ?   <p className="error">{errorMessage}</p>
+                                :   ''
+                            }
                         </div>
                     </form>
                 </div>

@@ -3,13 +3,15 @@ import { useEffect, useState } from "react"
 import RequestEventBox from "../components/RequestEventBox";
 import RequestRSOBox from "../components/RequestRSOBox";
 import axios from "axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const RequestsPage = () => {
     const [eventRequests, setEventRequests] = useState([]);
     const [rsoRequests, setRsoRequests] = useState([]);
+    const { user } = useAuthContext();
 
     const getEventRequests = async () => {
-        const baseUrl = 'http://localhost:3500/event/api/requests';
+        const baseUrl = `http://localhost:3500/event/api/requests/${user.uni_id}`;
         try {
             const response = await axios.get(baseUrl);
             const eventRequests = response.data.requests;
@@ -38,7 +40,7 @@ const RequestsPage = () => {
     }
 
     const getRsoRequests = async () => {
-        const baseUrl = 'http://localhost:3500/rso/api/requests';
+        const baseUrl = `http://localhost:3500/rso/api/requests/${user.uni_id}`;
         try {
             const response = await axios.get(baseUrl);
             const rsoRequests = response.data.requests;

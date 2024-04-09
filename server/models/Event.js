@@ -34,12 +34,8 @@ class Event {
     }
 
 // Method to retrieve all events specific to a university (when event is not public)
-static getAll(universityId, callback) {
-    const query = `
-        SELECT * 
-        FROM Events 
-        WHERE university_id = ? AND is_public = 0;
-    `;
+static getAllByUniversity(universityId, callback) {
+    const query = `SELECT * FROM Events WHERE uni_id = ? || event_type = 'Public'`;
     connection.query(query, [universityId], (error, results) => {
         if (error) {
             console.error('Error fetching events:', error);
@@ -79,12 +75,13 @@ static getEvents(callback) {
     }
 
     // Method to get RSO event creations for super admin to approve/deny
-    static async getEventRequests(callback) {
+    static async getEventRequests(uni_id, callback) {
         const query = `SELECT E.* 
         FROM Events E, RSO_Events R
             WHERE R.event_id = E.event_id
+                AND E.uni_id = ?
                 AND R.approved = 1;`
-        connection.query(query, (error, results) => {
+        connection.query(query, [uni_id], (error, results) => {
             if (error) {
                 console.error('Error finding event requests:', error);
                 return callback(error);
