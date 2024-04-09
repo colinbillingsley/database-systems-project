@@ -1091,7 +1091,7 @@ Styles for EventInfo.js
 .event-info-category {
   padding: 0.3em 1em;
   border-radius: 20px;
-  background-color: var(--filter-hover-bg-color);
+  background-color: rgba(44, 44, 255, 0.224);
 }
 
 .stars {
