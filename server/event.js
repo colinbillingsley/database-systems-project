@@ -8,10 +8,10 @@ const RsoEvent = require('./models/RsoEvent');
 // Route to create a new event
 router.post('/api/events', (req, res) => {
     console.log("Route ran");
-    const { time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude } = req.body;
+    const { uni_id, time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude } = req.body;
 
     // Check if all required fields are provided
-    if (!time || !desc || !location_name || !date || !category || !event_host || !event_phone || !event_email || !event_type || !event_name || !longitude || !latitude) {
+    if (!uni_id || !time || !desc || !location_name || !date || !category || !event_host || !event_phone || !event_email || !event_type || !event_name || !longitude || !latitude) {
         return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -29,6 +29,7 @@ router.post('/api/events', (req, res) => {
             else {
                 // Create a new event using the Event model
                 Event.create(
+                    uni_id,
                     time,
                     desc,
                     location_name,

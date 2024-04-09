@@ -87,7 +87,8 @@ const CreateEvent = ({getEvents}) => {
         }
 
         try {
-            const response = await axios.post(baseUrl, {time, desc, location_name, date: formattedDateString, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude});
+            const uni_id = user.uni_id;
+            const response = await axios.post(baseUrl, {uni_id, time, desc, location_name, date: formattedDateString, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude});
             console.log("success inserting event");
             return response.data.eventId;
         } catch (error) {

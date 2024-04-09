@@ -48,7 +48,8 @@ const CreateRSO = ({getAllRSOs, getUserRSOs}) => {
     const createRSO = async () => {
         const baseUrl = 'http://localhost:3500/rso/api/rso/create';
         try {
-            const response = await axios.post(baseUrl, {name: rsoName, created_by: user.uid, type: rsoType, desc: rsoDesc, email: rsoEmail, number: rsoPhone, status: 'Inactive'});
+            const uni_id = user.uni_id;
+            const response = await axios.post(baseUrl, {uni_id, name: rsoName, created_by: user.uid, type: rsoType, desc: rsoDesc, email: rsoEmail, number: rsoPhone, status: 'Inactive'});
             console.log("Rso created");
             console.log(response);
             return response.data.rsoId;

@@ -64,16 +64,16 @@ router.get('/api/rso/members/:rsoId', (req, res) => {
 
 // Route to create a new RSO
 router.post('/api/rso/create', (req, res) => {
-    const { name, created_by, type, desc, email, number, status } = req.body;
+    const { uni_id, name, created_by, type, desc, email, number, status } = req.body;
     console.log("create rso route ran")
 
     // Check if all required fields are provided
-    if (!name || !created_by || !type || !email || !number || !status || !desc) {
+    if (!uni_id || !name || !created_by || !type || !email || !number || !status || !desc) {
         return res.status(400).json({ error: "All fields are required" });
     }
 
     // Create a new RSO using the RSO model
-    RSO.create(name, created_by, type, desc, email, number, status, (error, rsoId) => {
+    RSO.create(uni_id, name, created_by, type, desc, email, number, status, (error, rsoId) => {
         if (error) {
             return res.status(500).json({ error: "Error creating RSO" });
         }

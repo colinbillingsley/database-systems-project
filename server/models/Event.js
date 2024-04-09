@@ -2,8 +2,9 @@
 const connection = require('../db');
 
 class Event {
-    constructor(event_id, time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude) {
+    constructor(event_id, uni_id, time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude) {
         this.event_id = event_id;
+        this.uni_id = uni_id;
         this.time = time;
         this.desc = desc;
         this.location_name = location_name;
@@ -19,10 +20,10 @@ class Event {
     }
 
     // Method to create a new event
-    static create(time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude, callback) {
+    static create(uni_id, time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude, callback) {
         
-        const query = 'INSERT INTO Events (`time`, `desc`, location_name, `date`, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        connection.query(query, [time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude], (error, results) => {
+        const query = 'INSERT INTO Events (uni_id, `time`, `desc`, location_name, `date`, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        connection.query(query, [uni_id, time, desc, location_name, date, category, event_host, event_phone, event_email, event_type, event_name, longitude, latitude], (error, results) => {
             if (error) {
                 console.error('Error creating event:', error);
                 return callback(error);
