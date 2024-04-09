@@ -8,7 +8,7 @@ export const useLogin = () => {
     const login = async (username, password) => {
 
         // get the error element
-        const loginError = document.querySelector('.error');
+        const loginError = document.querySelector('.login-error');
 
         try {
             // get the response from the api call

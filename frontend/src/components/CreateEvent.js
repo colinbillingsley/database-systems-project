@@ -4,6 +4,8 @@ import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreateEvent = ({getEvents}) => {
+    const [errorMessage, setErrorMessage] = useState('');
+    const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [event_name, setEvent_Name] = useState('');
     const [event_host, setEvent_Host] = useState('');
@@ -37,6 +39,20 @@ const CreateEvent = ({getEvents}) => {
         });
         // hide the event menu
         createEvent.classList.add('hidden');
+
+        setEvent_Name('');
+        setEvent_Host('');
+        setEvent_Phone('');
+        setEvent_Email('');
+        setEvent_Type('');
+        setCategory('');
+        setEventDate('');
+        setDesc('');
+        setTime('');
+        setDesc('');
+        setDesc('');
+        setError(false);
+        setErrorMessage('');
     }
 
     const getRsoId = async () => {
@@ -45,8 +61,8 @@ const CreateEvent = ({getEvents}) => {
             const response = await axios.get(baseUrl);
             return response.data.rsoId;
         } catch (error) {
-            const createError = document.querySelector('.error');
-            createError.innerHTML = error.response.data.error;
+            setError(true);
+            setErrorMessage(error.response.data.error);
         }
     }
 
@@ -68,7 +84,6 @@ const CreateEvent = ({getEvents}) => {
 
             // Format the date as 'YYYY-MM-DD'
             var formattedDateString = formattedDate.toISOString().slice(0, 10);
-            setEventDate(formattedDateString);
         }
 
         try {
@@ -76,8 +91,8 @@ const CreateEvent = ({getEvents}) => {
             console.log("success inserting event");
             return response.data.eventId;
         } catch (error) {
-            const createError = document.querySelector('.error');
-            createError.innerHTML = error.response.data.error;
+            setError(true);
+            setErrorMessage(error.response.data.error);
         }
     }
 
@@ -155,63 +170,63 @@ const CreateEvent = ({getEvents}) => {
 
     // set the name value and reset error text
     const handleEventNameChange = (e) => {
-        const createError = document.querySelector('.error');
         setEvent_Name(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the host value and reset error text
     const handleEventHostChange = (e) => {
-        const createError = document.querySelector('.error');
         setEvent_Host(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the description value and reset error text
     const handleEventDescChange = (e) => {
-        const createError = document.querySelector('.error');
         setDesc(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the location value and reset error text
     const handleEventLocationChange = () => {
-        const createError = document.querySelector('.error');
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     // set the category value and reset error text
     const handleEventCategoryChange = (e) => {
-        const createError = document.querySelector('.error');
         setCategory(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the type value and reset error text
     const handleEventTypeChange = (e) => {
-        const createError = document.querySelector('.error');
         setEvent_Type(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the date value and reset error text
     const handleEventDateChange = (e) => {
-        const createError = document.querySelector('.error');
         setEventDate(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the time value and reset error text
     const handleEventTimeChange = (e) => {
-        const createError = document.querySelector('.error');
         setTime(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the phone value and reset error text
     const handleEventPhoneChange = (e) => {
-        const createError = document.querySelector('.error');
         setEvent_Phone(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     // set the email value and reset error text
     const handleEventEmailChange = (e) => {
-        const createError = document.querySelector('.error');
         setEvent_Email(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
     
     return (
@@ -347,7 +362,11 @@ const CreateEvent = ({getEvents}) => {
                             </div>
                         </div>
 
-                        <p className="error"></p>
+                        {error
+                        ?   <p className="error">{errorMessage}</p>
+                        :   ''
+                        }
+    
                         {success
                             ? event_type === 'RSO'
                                 ? <p className="success">Event created successfully! It has been sent for approval</p>

@@ -29,7 +29,7 @@ const CreateAdminForm = () => {
     // call api to create user with inputs and uni_id
     const createUser = async () => {
         const baseUrl = 'http://localhost:3500/admin/api/register';
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         try {
             // get the id from inputted university
             const uni_id = await getUniId();
@@ -62,28 +62,28 @@ const CreateAdminForm = () => {
 
     // set the username value and reset error text
     const handleUsernameChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setUsername(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the password value and reset error text
     const handlePasswordChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setPassword(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the email value and reset error text
     const handleEmailChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setEmail(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the university value and reset error text
     const handleUniversityChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setUniversity(e.target.value);
         createError.innerHTML = '';
     }
@@ -123,7 +123,7 @@ const CreateAdminForm = () => {
                         <input type="password" name="password1" id="password1" placeholder="Enter password" onChange={handlePasswordChange}/>
                     </div>
 
-                    <p className="error"></p>
+                    <p className="login-error"></p>
 
                     {/* create account button */}
                     <div className="form-section">

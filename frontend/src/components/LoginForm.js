@@ -11,14 +11,14 @@ const LoginForm = () => {
 
     // set the username value and reset error text
     const handleUsernameChange = (e) => {
-        const loginError = document.querySelector('.error');
+        const loginError = document.querySelector('.login-error');
         setUsername(e.target.value);
         loginError.innerHTML = '';
     }
 
     // set the password value and reset error text
     const handlePasswordChange = (e) => {
-        const loginError = document.querySelector('.error');
+        const loginError = document.querySelector('.login-error');
         setPassword(e.target.value);
         loginError.innerHTML = '';
     }
@@ -64,7 +64,7 @@ const LoginForm = () => {
                         onChange={handlePasswordChange}/>
                     </div>
 
-                    <p className="error"></p>
+                    <p className="login-error"></p>
 
                     {/* login button */}
                     <div className="form-section">

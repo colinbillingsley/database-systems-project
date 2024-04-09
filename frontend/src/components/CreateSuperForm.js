@@ -54,7 +54,7 @@ const CreateSuperForm = () => {
     // call api to create user with inputs and uni_id
     const createUser = async () => {
         const baseUrl = 'http://localhost:3500/super_admin/api/register';
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         try {
             // get the university id from input
             const uni_id = await getUniId();
@@ -89,49 +89,49 @@ const CreateSuperForm = () => {
 
     // set the username value and reset error text
     const handleUsernameChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setUsername(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the password value and reset error text
     const handlePasswordChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setPassword(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the email value and reset error text
     const handleEmailChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setEmail(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the university value and reset error text
     const handleUniversityChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setUniversity(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the university address value and reset error text
     const handleUniAddressChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setUniAddress(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the university description value and reset error text
     const handleUniDescChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setUniDesc(e.target.value);
         createError.innerHTML = '';
     }
 
     // set the student population value and reset error text
     const handleStudentPopChange = (e) => {
-        const createError = document.querySelector('.error');
+        const createError = document.querySelector('.login-error');
         setStudentPop(e.target.value);
         createError.innerHTML = '';
     }
@@ -195,7 +195,7 @@ const CreateSuperForm = () => {
                         </div>
                 </div>
 
-                <p className="error"></p>
+                <p className="login-error"></p>
 
                 {/* create account button */}
                 <div className="form-section">

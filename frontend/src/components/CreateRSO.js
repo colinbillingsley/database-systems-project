@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreateRSO = ({getAllRSOs, getUserRSOs}) => {
+    const [errorMessage, setErrorMessage] = useState('');
+    const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [rsoName, setRsoName] = useState('');
     const [rsoType, setRsoType] = useState('');
@@ -27,8 +29,13 @@ const CreateRSO = ({getAllRSOs, getUserRSOs}) => {
         // hide the rso menu
         createRSO.classList.add('hidden');
 
-        const createError = document.querySelector('.error');
-        createError.innerHTML = '';
+        setRsoName('');
+        setRsoType('');
+        setRsoPhone('');
+        setRsoEmail('');
+        setRsoDesc('');
+        setError(false);
+        setErrorMessage('');
     }
 
     // method to handel when user presses cancel button
@@ -48,8 +55,8 @@ const CreateRSO = ({getAllRSOs, getUserRSOs}) => {
         } catch (error) {
             console.log("error creating rso");
             console.log(error);
-            const createError = document.querySelector('.error');
-            createError.innerHTML = error.response.data.error;
+            setError(true);
+            setErrorMessage(error.response.data.error);
         }
     }
 
@@ -90,44 +97,44 @@ const CreateRSO = ({getAllRSOs, getUserRSOs}) => {
 
         } catch (error) {
             console.log("error creating rso process");
-            const createError = document.querySelector('.error');
-            createError.innerHTML = error.response.data.error;
+            setError(true);
+            setErrorMessage(error.response.data.error);
         }
     }
 
     // set the name value and reset error text
     const handleNameChange = (e) => {
-        const createError = document.querySelector('.error');
         setRsoName(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     // set the type value and reset error text
     const handleTypeChange = (e) => {
-        const createError = document.querySelector('.error');
         setRsoType(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     // set the phone value and reset error text
     const handlePhoneChange = (e) => {
-        const createError = document.querySelector('.error');
         setRsoPhone(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     // set the email value and reset error text
     const handleEmailChange = (e) => {
-        const createError = document.querySelector('.error');
         setRsoEmail(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     // set the description value and reset error text
     const handleDescChange = (e) => {
-        const createError = document.querySelector('.error');
         setRsoDesc(e.target.value);
-        createError.innerHTML = '';
+        setError(false);
+        setErrorMessage('');
     }
 
     return (
@@ -185,7 +192,11 @@ const CreateRSO = ({getAllRSOs, getUserRSOs}) => {
                             <p className="rso-disclaimer">Your RSO must have at least 5 registered students at the university to become active. Otherwise, the RSO will be listed as inactive. </p>
                         </div>
 
-                        <p className="error"></p>
+                        {error
+                        ?   <p className="error">{errorMessage}</p>
+                        :   ''
+                        }
+
                         {success
                             ? <p className="success">RSO created successfully! It has been sent for approval</p>
                             : ''
