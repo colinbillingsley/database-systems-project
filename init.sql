@@ -65,6 +65,7 @@ USE `eventdb`;
   `email` varchar(255),
   `number` varchar(25),
   `status` varchar(255),
+  `approved` INT,
   PRIMARY KEY (`rso_id`),
   FOREIGN KEY (created_by) references Admins(uid) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -79,6 +80,7 @@ USE `eventdb`;
    CREATE TABLE `RSO_Events` (
   `event_id` int NOT NULL,
   `owned_by` int NOT NULL,
+   `approved` INT,
   PRIMARY KEY (event_id, owned_by),
   FOREIGN KEY (owned_by) references RSO(rso_id) ON DELETE CASCADE,
   FOREIGN KEY (event_id) references Events(event_id) ON DELETE CASCADE
