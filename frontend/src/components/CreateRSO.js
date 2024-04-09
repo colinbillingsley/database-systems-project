@@ -2,7 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-const CreateRSO = () => {
+const CreateRSO = ({getAllRSOs, getUserRSOs}) => {
+    const [success, setSuccess] = useState(false);
     const [rsoName, setRsoName] = useState('');
     const [rsoType, setRsoType] = useState('');
     const [rsoPhone, setRsoPhone] = useState('');
@@ -10,8 +11,7 @@ const CreateRSO = () => {
     const [rsoDesc, setRsoDesc] = useState('');
     const { user } = useAuthContext();
 
-    const HandleCancelClick = (e) => {
-        e.preventDefault();
+    const resetFields = () => {
         const createRSO = document.querySelector('.create-rso-wrapper');
         const textFields = document.querySelectorAll('.create-rso-text-field');
         const selectFields = document.querySelectorAll('.create-rso-select-field');
@@ -31,17 +31,65 @@ const CreateRSO = () => {
         createError.innerHTML = '';
     }
 
-    const handleCreateClick = async (e) => {
+    // method to handel when user presses cancel button
+    const handleCancelClick = (e) => {
         e.preventDefault();
+        resetFields();
+    }
 
+    // method to create rso and insert into db
+    const createRSO = async () => {
         const baseUrl = 'http://localhost:3500/rso/api/rso/create';
         try {
             const response = await axios.post(baseUrl, {name: rsoName, created_by: user.uid, type: rsoType, desc: rsoDesc, email: rsoEmail, number: rsoPhone, status: 'Inactive'});
             console.log("Rso created");
             console.log(response);
+            return response.data.rsoId;
         } catch (error) {
             console.log("error creating rso");
             console.log(error);
+            const createError = document.querySelector('.error');
+            createError.innerHTML = error.response.data.error;
+        }
+    }
+
+    // join RSO
+    const joinRSO = async (rso_id) => {
+        const baseUrl = 'http://localhost:3500/rso/api/rso/join';
+        await axios.post(`${baseUrl}/${rso_id}/${user.uid}`)
+            .then((response) => {
+            })
+            .catch((error) => {
+                console.log(error);
+                return null;
+            })
+    }
+
+    const handleCreateClick = async (e) => {
+        e.preventDefault();
+
+        try {
+            // create the rso and get the id
+            const rso_id = await createRSO();
+
+            // if id received make the user who created the rso a member
+            if (rso_id) {
+                joinRSO(rso_id);
+
+                // event sucessfully added
+                setSuccess(true);
+
+                // hide menu and clear input after 2 seconds
+                setTimeout(() => {
+                    resetFields();
+                    setSuccess(false);
+                    getAllRSOs();
+                    getUserRSOs();
+                }, 2000)
+            }
+
+        } catch (error) {
+            console.log("error creating rso process");
             const createError = document.querySelector('.error');
             createError.innerHTML = error.response.data.error;
         }
@@ -138,12 +186,22 @@ const CreateRSO = () => {
                         </div>
 
                         <p className="error"></p>
-                        <p className="success"></p>
+                        {success
+                            ? <p className="success">RSO created successfully! It has been sent for approval</p>
+                            : ''
+                        }
 
                         {/* create/cancel buttons */}
                         <div className="form-section btn-section">
-                            <button className="cancel-btn" onClick={HandleCancelClick}>Cancel</button>
-                            <button className="create-btn" type="submit">Create RSO</button>
+                            {success
+                            ?
+                                ''
+                            :
+                                <>
+                                    <button className="cancel-btn" onClick={handleCancelClick}>Cancel</button>
+                                    <button className="create-btn" type="submit">Create RSO</button>
+                                </>
+                            }
                         </div>
                     </form>
                 </div>

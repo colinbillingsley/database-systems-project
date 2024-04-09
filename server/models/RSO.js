@@ -55,14 +55,25 @@ class RSO {
             WHERE RSO_University.university_id = ?
              `;
         connection.query(query, [universityId], (error, results) => {
-             if (error) {
+            if (error) {
                  console.error('Error fetching RSOs by university ID:', error);
-            return callback(error);
-        }
-        callback(null, results);
-    });
+                return callback(error);
+            }
+            callback(null, results);
+        });
+    }
 
-}
+    // Method to retrieve all RSOs in a specific university
+    static getRSOs(callback) {
+        const query = 'SELECT * FROM RSO';
+        connection.query(query, (error, results) => {
+            if (error) {
+                 console.error('Error fetching RSOs:', error);
+                return callback(error);
+            }
+            callback(null, results);
+        });
+    }
 
 
     // Method to find an RSO by ID
@@ -148,9 +159,43 @@ class RSO {
         });
     }
 
-   
+   static async getRsoRequests(callback) {
+    const query = 'SELECT * FROM RSO WHERE approved = 1';
+    connection.query(query, (error, results) => {
+        if (error) {
+            console.error('Error finding RSOs:', error);
+            return callback(error);
+        }
+        if (results.length === 0) {
+            return callback(null, null); // no rso requests
+        }
+        callback(null, results);
+    })
+   }
 
+     // method to approve a RSO
+  static async approveRSO(rso_id, callback) {
+    const query = 'UPDATE RSO SET approved = 2 WHERE rso_id = ?'
+    connection.query(query, [rso_id], (error, result) => {
+      if (error) {
+        console.error('Error finding RSO', error);
+        return callback(error);
+      }
+      callback(null, result);
+    })
+  }
 
+  // method to deny a RSO
+  static async denyRSO(rso_id, callback) {
+    const query = 'UPDATE RSO SET approved = 0 WHERE rso_id = ?'
+    connection.query(query, [rso_id], (error, result) => {
+      if (error) {
+        console.error('Error finding RSO', error);
+        return callback(error);
+      }
+      callback(null, result);
+    })
+  }
 
 }
 

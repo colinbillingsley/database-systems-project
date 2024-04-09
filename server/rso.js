@@ -5,7 +5,7 @@ const RSO = require('./models/RSO');
 // Route to get all RSOs
 router.get('/api/rsos', (req, res) => {
     // Retrieve all rsos using the RSO model
-    RSO.getAll((error, rsos) => {
+    RSO.getRSOs((error, rsos) => {
         if (error) {
             return res.status(500).json({ error: "Error fetching rsos" });
         }
@@ -121,7 +121,7 @@ router.get('/api/user/rsos/:userId', (req, res) => {
             return res.status(500).json({ error: "Error fetching RSOs by user ID" });
         }
         if (!rsos || rsos.length === 0) {
-            return res.status(404).json({ error: "User is not part of any RSOs" });
+            return res.status(404).json({ error: "User is not a member of any RSOs" });
         }
         res.status(200).json({ rsos });
     });
@@ -177,5 +177,18 @@ router.delete('/api/rso/leave/:rsoId/:userId', (req, res) => {
         }
     })
 });
+
+// Route to get RSO requests for Super Admin to approve
+router.get('/api/requests', (req, res) => {
+    RSO.getRsoRequests((error, requests) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching RSO requests" });
+        }
+        if (!requests) {
+            return res.status(404).json({ error: "No RSO requests currently" });
+        }
+        res.status(200).json({ requests });
+    })
+})
 
 module.exports = router;

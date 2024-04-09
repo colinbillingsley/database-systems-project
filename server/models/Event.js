@@ -76,6 +76,23 @@ static getEvents(callback) {
             callback(null, event);
         });
     }
+
+    static async getEventRequests(callback) {
+        const query = `SELECT E.* 
+        FROM Events E, RSO_Events R
+            WHERE R.event_id = E.event_id
+                AND R.approved = 1;`
+        connection.query(query, (error, results) => {
+            if (error) {
+                console.error('Error finding event requests:', error);
+                return callback(error);
+            }
+            if (results.length === 0) {
+                return callback(null, null); // no event requests
+            }
+            callback(null, results);
+        })
+    }
 }
 
 // Export the Event model

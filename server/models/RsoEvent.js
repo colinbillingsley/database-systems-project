@@ -16,6 +16,30 @@ class RsoEvent {
       callback(null, result.insertId);
       });
   }
+
+  // method to approve an event
+  static async approveEvent(event_id, callback) {
+    const query = 'UPDATE RSO_Events SET approved = 2 WHERE event_id = ?'
+    connection.query(query, [event_id], (error, result) => {
+      if (error) {
+        console.error('Error finding RSO Event', error);
+        return callback(error);
+      }
+      callback(null, result);
+    })
+  }
+
+  // method to deny an event
+  static async denyEvent(event_id, callback) {
+    const query = 'UPDATE RSO_Events SET approved = 0 WHERE event_id = ?'
+    connection.query(query, [event_id], (error, result) => {
+      if (error) {
+        console.error('Error finding RSO Event', error);
+        return callback(error);
+      }
+      callback(null, result);
+    })
+  }
 }
 
 module.exports = RsoEvent;

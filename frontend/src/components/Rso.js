@@ -4,8 +4,9 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 import axios from "axios";
 import RSOCard from "./RSOCard";
+import CreateRSO from "../components/CreateRSO";
 
-const Rso = ({userLevel}) => {
+const Rso = () => {
     const [rsos, setRsos] = useState([]);
     const [myRsos, setMyRsos] = useState([]);
     const [uniName, setUniName] = useState('');
@@ -42,7 +43,7 @@ const Rso = ({userLevel}) => {
                 setMyRsos(rsosArray);
         } catch (error) {
             console.log("error getting my RSOs")
-            console.log(error)
+            console.log(error.response.data.error)
         }
     }
 
@@ -87,7 +88,7 @@ const Rso = ({userLevel}) => {
             <div className="rsos-heading-container">
                 <h2 className="rso-main-heading">RSOs at {uniName}</h2>
                 {/* user is not student, they can create rso */}
-                {userLevel !== 0 ? <button className="btn" onClick={RSOClick}>Create RSO</button> : ''}
+                {user.role !== 0 ? <button className="btn" onClick={RSOClick}>Create RSO</button> : ''}
             </div>
 
             <div className="my-rsos-content-container">
@@ -99,7 +100,7 @@ const Rso = ({userLevel}) => {
                                 // if no rsos found, display message
                                 ? 
                                 <li>
-                                    <p className="no-data">You are not a part of any RSOs.</p>
+                                    <p className="no-data">You are not a member of any RSOs.</p>
                                 </li> 
                                 // if rsos found, display all rsos
                                 :
@@ -151,6 +152,7 @@ const Rso = ({userLevel}) => {
                     </ul>
                 </div>
             </div>
+            <CreateRSO getAllRSOs={getAllRSOs} getUserRSOs={getUserRSOs}/>
         </div>
     )
 }

@@ -1,45 +1,70 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import RequestEventBox from "../components/RequestEventBox";
 import RequestRSOBox from "../components/RequestRSOBox";
-
-// temp date for styling
-const date = new Date();
-
-// temp event for styling
-const tempEvent = {
-    id:'0',
-    name: 'UCF Database Project',
-    host: 'UCF',
-    location: 'L3Harris Engineering Center Room 115',
-    category: 'Tech',
-    time: '3pm',
-    date: `${date.toDateString()}`,
-    type: 'Public',
-    email: 'example@gmail.com',
-    phone: '123-123-4567',
-    description: `You are asked to implement a web-based application that solves the problems. Any student
-    (user) may register with the application to obtain a user ID and a password. There are three
-    user levels: super admin who creates a profile for a university (name, location, description,
-    number of students, pictures, etc.), admin who owns an RSO and may host events, and student
-    who uses the application to look up information about the various events.`
-}
-
-const tempRSO = {
-    id: 0,
-    name: 'UCF Soccer',
-    type: 'Club',
-    numMembers: 4,
-    members: ['Colin Billingsley', 'Joshua Easterling', 'Jordan Morillo', 'Guest User'],
-    email: 'abc_example@gmail.com',
-    phone: '123-456-7890',
-    description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa quidem nesciunt eligendi, suscipit vel corrupti unde, inventore placeat possimus quas necessitatibus aperiam. Expedita, perspiciatis? Qui, natus! Eius commodi nemo cum.`
-}
+import axios from "axios";
 
 const RequestsPage = () => {
-    const [userLevel, setUserLevel] = useState(2);
-    const [eventRequests, setEventRequests] = useState([tempEvent]);
-    const [rsoRequests, setRsoRequests] = useState([tempRSO]);
+    const [eventRequests, setEventRequests] = useState([]);
+    const [rsoRequests, setRsoRequests] = useState([]);
+
+    const getEventRequests = async () => {
+        const baseUrl = 'http://localhost:3500/event/api/requests';
+        try {
+            const response = await axios.get(baseUrl);
+            const eventRequests = response.data.requests;
+
+            const requestArray = eventRequests.map(request => ({
+                event_id: request.event_id,
+                    time: request.time?.trim(),
+                    desc: request.desc?.trim(),
+                    location_name: request.location_name?.trim(),
+                    date: request.date ? request.date.trim() : '', // Handle undefined date
+                    category: request.category ? request.category.trim() : '', // Handle undefined category
+                    event_type: request.event_type ? request.event_type.trim() : '', // Handle undefined category
+                    event_host: request.event_host?.trim(),
+                    event_phone: request.event_phone?.trim(),
+                    event_email: request.event_email?.trim(),
+                    event_name: typeof request.event_name === 'string' ? request.event_name.trim() : '',
+                    longitude: request.longitude,
+                    latitude: request.latitude,
+                    }));
+
+            setEventRequests(requestArray);
+        } catch (error) {
+            console.log(error.response.data.error);
+            return null;
+        }
+    }
+
+    const getRsoRequests = async () => {
+        const baseUrl = 'http://localhost:3500/rso/api/requests';
+        try {
+            const response = await axios.get(baseUrl);
+            const rsoRequests = response.data.requests;
+
+            const requestArray = rsoRequests.map(request => ({
+                rso_id: request.rso_id,
+                name: request.name?.trim(),
+                created_by: request.created_by,
+                type: request.type?.trim(),
+                desc: request.desc?.trim(),
+                number: request.number?.trim(),
+                email: request.email?.trim(),
+                status: request.status?.trim(),
+                    }));
+
+            setRsoRequests(requestArray);
+        } catch (error) {
+            console.log(error.response.data.error);
+            return null;
+        }
+    }
+
+    useEffect(() => {
+        getEventRequests();
+        getRsoRequests();
+    }, [])
 
     return (
         <div className="requests-page">
@@ -57,7 +82,7 @@ const RequestsPage = () => {
                                 :
                                 eventRequests.map((event, index) => {
                                     return (
-                                        <li className="event-item"><RequestEventBox event={event}/></li>
+                                        <li className="event-item"><RequestEventBox event={event} eventRequests={eventRequests} setEventRequests={setEventRequests}/></li>
                                     )
                                 })
                             }
@@ -77,7 +102,7 @@ const RequestsPage = () => {
                             :
                             rsoRequests.map((rso, index) => {
                                 return (
-                                    <li className="event-item"><RequestRSOBox rso={rso}/></li>
+                                    <li className="event-item"><RequestRSOBox rso={rso} rsoRequests={rsoRequests} setRsoRequests={setRsoRequests}/></li>
                                 )
                             })
                         }

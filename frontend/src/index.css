@@ -41,6 +41,21 @@ a {
   border-radius: 1em;
 }
 
+.rso-active {
+  padding: 0.3em 1em;
+  border-radius: 20px;
+  background-color: rgba(0, 128, 0, 0.288);
+  color: green;
+  font-weight: 400;
+}
+
+.rso-inactive {
+  padding: 0.3em 1em;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 0, 0.361);
+  color: rgb(104, 104, 0);
+}
+
 /* ===================================
 Styles for Nav.js
 =================================== */
@@ -875,7 +890,7 @@ Styles for Rso.js
 .list-of-active-rsos {
   list-style: none;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
   column-gap: 3em;
   row-gap: 2em;
@@ -889,6 +904,7 @@ Styles for RSOCard.js
   outline: 4px solid transparent;
   background-color: white;
   box-shadow: 0 5px 10px rgba(128, 128, 128, 0.416);
+  height: 250px;
   padding: 1em;
   border-radius: 10px;
   transition: all 0.3s ease;
@@ -898,6 +914,7 @@ Styles for RSOCard.js
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 0.5em;
 }
 
 .rso-name {
@@ -912,11 +929,15 @@ Styles for RSOCard.js
   border-radius: 20px;
 }
 
-.rso-members span {
+.rso-status span:first-child {
   font-weight: 600;
 }
 
-.rso-members {
+.rso-status span:nth-child(2) {
+  margin-left: 0.5em;
+}
+
+.rso-status {
   margin-bottom: 1em;
 }
 
@@ -1411,10 +1432,19 @@ Styles for RequestEventBox.js
   font-weight: 600;
 }
 
-.request-box-info-container p:first-child {
-  margin-bottom: 1em;
+.accept-event {
+  background-color: rgba(0, 203, 0, 0.227);
+  color: green;
+  padding: 1em 2em;
+  border-radius: 20px;
 }
 
+.deny-event {
+  background-color: rgba(203, 0, 0, 0.227);
+  color: red;
+  padding: 1em 2em;
+  border-radius: 20px;
+}
 
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!! 

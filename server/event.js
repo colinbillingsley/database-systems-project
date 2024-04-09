@@ -122,5 +122,17 @@ router.get('/api/events/:universityId', (req, res) => {
     });
 });
 
+router.get('/api/requests', (req, res) => {
+    Event.getEventRequests((error, requests) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching Event requests" });
+        }
+        if (!requests) {
+            return res.status(404).json({ error: "No Event requests currently" });
+        }
+        res.status(200).json({ requests });
+    })
+})
+
 
 module.exports = router;
