@@ -35,15 +35,21 @@ class Event {
 
 // Method to retrieve all events specific to a university (when event is not public)
 static getAllByUniversity(universityId, callback) {
-    const query = ` SELECT * FROM Events 
+    const query = ` (
+                    SELECT *
+                    FROM Events
                     WHERE (uni_id = ? AND event_type = 'Private')
-                    OR (event_type = 'Public')
+                    OR event_type = 'Public'
+                    )
                     UNION
-                    SELECT E.* 
-                    FROM Events E
-                    JOIN RSO_Events R ON R.event_id = E.event_id
-                    WHERE E.uni_id = ?
-                    AND R.approved = 2;`;
+                    (
+                        SELECT E.*
+                        FROM Events E
+                        JOIN RSO_Events R ON R.event_id = E.event_id
+                        WHERE E.uni_id = ?
+                        AND R.approved = 2
+                    )
+                    ORDER BY date;`;
     connection.query(query, [universityId, universityId], (error, results) => {
         if (error) {
             console.error('Error fetching events:', error);
@@ -62,6 +68,24 @@ static getEvents(callback) {
             return callback(error);
         }
         callback(null, results); // Return all events
+    });
+}
+
+// Method to retrieve all RSO events that a user is a member of
+static getMyEvents(uid, callback) {
+    const query = ` (SELECT E.*
+                    FROM Events E
+                    JOIN RSO_Events R ON R.event_id = E.event_id
+                    JOIN RSO_Users_Joined RUJ ON RUJ.rso_id = R.owned_by
+                    WHERE R.approved = 2 AND RUJ.uid = ?
+                    )
+                    ORDER BY date;`;
+    connection.query(query, [uid], (error, results) => {
+        if (error) {
+            console.error('Error fetching events:', error);
+            return callback(error);
+        }
+        callback(null, results); // Return events specific to user RSOs
     });
 }
 

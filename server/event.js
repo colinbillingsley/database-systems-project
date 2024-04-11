@@ -137,6 +137,23 @@ router.get('/api/events/university/:universityId', (req, res) => {
     });
 });
 
+router.get('/api/myevents/:uid', (req, res) => {
+    const {uid} = req.params;
+
+    console.log(uid)
+    console.log("my events ran")
+
+    Event.getMyEvents(uid, (error, events) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching events" });
+        }
+        if (events.length === 0) {
+            return res.status(404).json({ error: "No events found for user" });
+        }
+        res.status(200).json({ events });
+    })
+})
+
 // route to get all RSO event requests for university
 router.get('/api/requests/:uni_id', (req, res) => {
     const { uni_id } = req.params;
