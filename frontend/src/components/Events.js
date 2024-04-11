@@ -43,6 +43,7 @@ const Events = ({userLevel}) => {
                 const events = response.data.events;
                 const eventsArray = events.map(event => ({
                     event_id: event.event_id,
+                    uni_id: event.uni_id,
                     time: event.time?.trim(),
                     desc: event.desc?.trim(),
                     location_name: event.location_name?.trim(),

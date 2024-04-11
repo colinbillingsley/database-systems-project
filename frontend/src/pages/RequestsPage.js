@@ -17,7 +17,8 @@ const RequestsPage = () => {
             const eventRequests = response.data.requests;
 
             const requestArray = eventRequests.map(request => ({
-                event_id: request.event_id,
+                    event_id: request.event_id,
+                    uni_id: request.uni_id,
                     time: request.time?.trim(),
                     desc: request.desc?.trim(),
                     location_name: request.location_name?.trim(),
@@ -47,6 +48,7 @@ const RequestsPage = () => {
 
             const requestArray = rsoRequests.map(request => ({
                 rso_id: request.rso_id,
+                uni_id: request.uni_id,
                 name: request.name?.trim(),
                 created_by: request.created_by,
                 type: request.type?.trim(),

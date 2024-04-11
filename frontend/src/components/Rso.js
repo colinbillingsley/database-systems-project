@@ -32,6 +32,7 @@ const Rso = () => {
             const rsos = response.data.rsos;
                 const rsosArray = rsos.map(rso => ({
                     rso_id: rso.rso_id,
+                    uni_id: rso.uni_id,
                     name: rso.name?.trim(),
                     created_by: rso.created_by,
                     type: rso.type?.trim(),

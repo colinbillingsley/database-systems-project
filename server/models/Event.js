@@ -35,8 +35,16 @@ class Event {
 
 // Method to retrieve all events specific to a university (when event is not public)
 static getAllByUniversity(universityId, callback) {
-    const query = `SELECT * FROM Events WHERE uni_id = ? || event_type = 'Public'`;
-    connection.query(query, [universityId], (error, results) => {
+    const query = ` SELECT * FROM Events 
+                    WHERE (uni_id = ? AND event_type = 'Private')
+                    OR (event_type = 'Public')
+                    UNION
+                    SELECT E.* 
+                    FROM Events E
+                    JOIN RSO_Events R ON R.event_id = E.event_id
+                    WHERE E.uni_id = ?
+                    AND R.approved = 2;`;
+    connection.query(query, [universityId, universityId], (error, results) => {
         if (error) {
             console.error('Error fetching events:', error);
             return callback(error);
