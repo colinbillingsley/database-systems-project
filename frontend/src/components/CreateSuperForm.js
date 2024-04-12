@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 
 const CreateSuperForm = () => {
+    const [success, setSuccess] = useState(false);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,6 +13,17 @@ const CreateSuperForm = () => {
     const [uniDesc, setUniDesc] = useState('');
     const role = '2';
     const navigate = useNavigate();
+
+    const resetFields = () => {
+        setUniAddress('');
+        setStudentPop('');
+        setUniDesc('');
+        setUniversity('');
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setSuccess(false);
+    }
  
     // call api to create university based on inputs
     const createUni = async () => {
@@ -83,7 +95,14 @@ const CreateSuperForm = () => {
 
         // if university and user were successfully inserted in db, go to login
         if (uniCreated && userCreated) {
-            navigate('/login');
+            // event sucessfully added
+            setSuccess(true);
+
+            // hide menu and clear input after 2 seconds
+            setTimeout(() => {
+                resetFields();
+                navigate('/login');
+            }, 2000)
         }
     }
 
@@ -194,6 +213,11 @@ const CreateSuperForm = () => {
                             </div>
                         </div>
                 </div>
+
+                {success
+                    ? <p className="success">Account created successfully! Navigating back to login page.</p>
+                    : ''
+                }
 
                 <p className="login-error"></p>
 

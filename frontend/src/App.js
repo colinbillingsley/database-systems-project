@@ -16,6 +16,7 @@ import RSOInfoPage from './pages/RSOInfoPage';
 import RequestsPage from './pages/RequestsPage';
 import Layout from './components/Layout';
 import CreateAdminAccount from './pages/CreateAdminAccount';
+import CreatedEvents from './pages/CreatedEvents';
 
 function App() {
   
@@ -58,12 +59,16 @@ function App() {
           element: isLoggedIn() ? <AllEvents /> : <Navigate to="/login" />,
         },
         {
-          path: "/my-events",
+          path: "/my-rso-events",
           element: isLoggedIn() ? <MyEvents /> : <Navigate to="/login" />,
         },
         {
           path: "/events/:event_id/:event_name",
           element: isLoggedIn() ? <EventInfo /> : <Navigate to="/login" />,
+        },
+        {
+          path: "/created-events",
+          element: isLoggedIn() ? <CreatedEvents /> : <Navigate to="/login" />,
         },
         {
           path: "/my-events/:event_id/:event_name",

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 const EventBox = ({event}) => {
     const [formattedTime, setFormattedTime] = useState('');
     const [formattedDate, setFormattedDate] = useState('');
-    
-    useEffect(() => {
+
+    const formatDateAndTime = () => {
         const dateString = event.date;
         const timeString = event.time;
 
@@ -19,6 +19,10 @@ const EventBox = ({event}) => {
         const timeOptions = { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' };
         setFormattedTime(time.toLocaleTimeString('en-US', timeOptions));
 
+    }
+    
+    useEffect(() => {
+        formatDateAndTime();
     }, [event])
     
     return (

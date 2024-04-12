@@ -154,6 +154,62 @@ router.get('/api/myevents/:uid', (req, res) => {
     })
 })
 
+router.get('/api/event-approval-status/:eventId', (req, res) => {
+    const {eventId} = req.params;
+
+    Event.getApprovalStatus(eventId, (error, status) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching status" });
+        }
+        if (!status) {
+            return res.status(404).json({ error: "No status found for eventid" });
+        }
+        res.status(200).json({ status });
+    })
+})
+
+router.get('/api/my-created-events/approved/:uid', (req, res) => {
+    const {uid} = req.params;
+
+    Event.getMyApprovedCreatedEvents(uid, (error, events) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching events" });
+        }
+        if (events.length === 0) {
+            return res.status(404).json({ error: "No created events found for user" });
+        }
+        res.status(200).json({ events });
+    })
+})
+
+router.get('/api/my-created-events/pending/:uid', (req, res) => {
+    const {uid} = req.params;
+
+    Event.getMyPendingCreatedEvents(uid, (error, events) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching events" });
+        }
+        if (events.length === 0) {
+            return res.status(404).json({ error: "No created events found for user" });
+        }
+        res.status(200).json({ events });
+    })
+})
+
+router.get('/api/my-created-events/denied/:uid', (req, res) => {
+    const {uid} = req.params;
+
+    Event.getMyDeniedCreatedEvents(uid, (error, events) => {
+        if (error) {
+            return res.status(500).json({ error: "Error fetching events" });
+        }
+        if (events.length === 0) {
+            return res.status(404).json({ error: "No created events found for user" });
+        }
+        res.status(200).json({ events });
+    })
+})
+
 // route to get all RSO event requests for university
 router.get('/api/requests/:uni_id', (req, res) => {
     const { uni_id } = req.params;

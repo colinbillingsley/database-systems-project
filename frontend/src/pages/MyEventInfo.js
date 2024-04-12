@@ -1,37 +1,45 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import EventContent from "../components/EventContent";
-
-// temp date for styling
-const date = new Date();
-
-// temp event for styling
-const tempEvent = {
-    id:'0',
-    name: 'UCF Database Project',
-    orgName: 'UCF',
-    location: 'L3Harris Engineering Center Room 115',
-    category: 'Tech',
-    time: '3pm',
-    date: `${date.toDateString()}`,
-    type: 'Public',
-    email: 'example@gmail.com',
-    phone: '123-123-4567',
-    description: `You are asked to implement a web-based application that solves the problems. Any student
-    (user) may register with the application to obtain a user ID and a password. There are three
-    user levels: super admin who creates a profile for a university (name, location, description,
-    number of students, pictures, etc.), admin who owns an RSO and may host events, and student
-    who uses the application to look up information about the various events.`
-}
+import axios from "axios";
 
 const MyEventInfo = () => {
-    const [eventInfo, setEventInfo] = useState('');
-    const [eventStatus, setEventStatus]= useState('');
+    const [eventInfo, setEventInfo] = useState({});
+    const { event_id: eventId } = useParams();
+    const [status, setStatus] = useState('');
+
+    const getApprovalStatus = async () => {
+        const baseUrl = `http://localhost:3500/event/api/event-approval-status/${eventId}`
+        try {
+            const response = await axios.get(baseUrl);
+            const approved = response.data.status.approved;
+
+            if (approved === 2) {
+                setStatus('Accepted');
+            } else if (approved === 1) {
+                setStatus('Pending');
+            } else {
+                setStatus('Denied')
+            }
+        } catch (error) {
+            return null;
+        }
+    }
+
+    const getEvent = async () => {
+        await axios.get(`http://localhost:3500/event/api/events/${parseInt(eventId)}`)
+            .then((response) => {
+                const event = response.data.event;
+                setEventInfo(event);
+            }).catch((error) => {
+                console.log(error);
+            })
+    }
 
     useEffect(() => {
-        // get event data and set to eventInfo
-        setEventInfo(tempEvent);
-        setEventStatus('Accepted');
+        getEvent();
+        getApprovalStatus();
     }, [])
 
     return (
@@ -41,21 +49,21 @@ const MyEventInfo = () => {
                     <EventContent eventInfo={eventInfo}/>
                     <div className="event-status-container">
                         <h2 className="my-event-info-heading">Event Approval Status</h2>
-                        <p className={`event-status  + ${eventStatus === 'Accepted' ? 'accepted' : eventStatus === 'Pending' ? 'pending' : 'denied'}`}>{eventStatus}</p>
+                        <p className={`event-status  + ${status === 'Accepted' ? 'accepted' : status === 'Pending' ? 'pending' : 'denied'}`}>{status}</p>
                     </div>
                 </div>
 
                 <div className="event-info-right-content">
                     <div className="location-section">
                         <h3>Location</h3>
-                        <p>{eventInfo.location}</p>
+                        <p>{eventInfo.location_name}</p>
                     </div>
                     <hr />
                     <div className="contact-section">
                         <h3>Contact Info</h3>
-                        <p>{eventInfo.orgName}</p>
-                        <p>{eventInfo.email}</p>
-                        <p>{eventInfo.phone}</p>
+                        <p>{eventInfo.host_name}</p>
+                        <p>{eventInfo.event_email}</p>
+                        <p>{eventInfo.event_phone}</p>
                     </div>
                 </div>
             </div>

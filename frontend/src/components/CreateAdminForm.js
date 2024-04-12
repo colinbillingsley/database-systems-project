@@ -3,12 +3,21 @@ import { useState } from "react";
 import axios from "axios";
 
 const CreateAdminForm = () => {
+    const [success, setSuccess] = useState(false);
     const [university, setUniversity] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const role = '1';
     const navigate = useNavigate();
+
+    const resetFields = () => {
+        setUniversity('');
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setSuccess(false);
+    }
 
     // call api to get uni_id from university inputted
     const getUniId = async () => {
@@ -36,10 +45,8 @@ const CreateAdminForm = () => {
 
             // if university exists, create admin user
             const response = await axios.post(`${baseUrl}`, {username, password, role, email, uni_id});
-            console.log("success creating admin");
             return true;
                 } catch (error) {
-            console.log("error creating admin");
             if (createError) {
                 createError.innerHTML = error.response.data.error;
             }
@@ -56,7 +63,14 @@ const CreateAdminForm = () => {
 
         // if user was successfully inserted in db, go to login
         if (userCreated) {
-            navigate('/login');
+            // event sucessfully added
+            setSuccess(true);
+
+            // hide menu and clear input after 2 seconds
+            setTimeout(() => {
+                resetFields();
+                navigate('/login');
+            }, 2000)
         }
     }
 
@@ -122,6 +136,11 @@ const CreateAdminForm = () => {
                         <label htmlFor="password1">Password</label>
                         <input type="password" name="password1" id="password1" placeholder="Enter password" onChange={handlePasswordChange}/>
                     </div>
+
+                    {success
+                        ? <p className="success">User created successfully! Navigating back to login page.</p>
+                        : ''
+                    }
 
                     <p className="login-error"></p>
 

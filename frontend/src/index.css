@@ -29,6 +29,10 @@ a {
   text-decoration: none;
 }
 
+ul {
+  list-style: none;
+}
+
 .error {
   color: red;
   background-color: rgba(255, 0, 0, 0.179);
@@ -669,6 +673,19 @@ Styles for Filters.js
 }
 
 /* ===================================
+Styles for CreatedEvents.js
+=================================== */
+.event-heading {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 1em;
+}
+
+.created-rso-events li {
+  margin-bottom: 1em;
+}
+
+/* ===================================
 Styles for DayFilters.js
 =================================== */
 .day-filters-list {
@@ -912,7 +929,7 @@ Styles for RSOCard.js
   outline: 4px solid transparent;
   background-color: white;
   box-shadow: 0 5px 10px rgba(128, 128, 128, 0.416);
-  height: 250px;
+  height: 275px;
   padding: 1em;
   border-radius: 10px;
   transition: all 0.3s ease;

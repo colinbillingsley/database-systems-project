@@ -93,7 +93,7 @@ const Rso = () => {
             </div>
 
             <div className="my-rsos-content-container">
-                <h2 className="rso-heading">My RSOs</h2>
+                <h2 className="rso-heading">Joined RSOs</h2>
                 <div className="my-rsos-cards-container">
                     <ul className="list-of-my-rsos">
                             {/* check if there's any events in database */}

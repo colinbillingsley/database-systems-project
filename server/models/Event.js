@@ -33,61 +33,124 @@ class Event {
         });
     }
 
-// Method to retrieve all events specific to a university (when event is not public)
-static getAllByUniversity(universityId, callback) {
-    const query = ` (
-                    SELECT *
-                    FROM Events
-                    WHERE (uni_id = ? AND event_type = 'Private')
-                    OR event_type = 'Public'
-                    )
-                    UNION
-                    (
-                        SELECT E.*
+    // Method to retrieve all events specific to a university (when event is not public)
+    static getAllByUniversity(universityId, callback) {
+        const query = ` (
+                        SELECT *
+                        FROM Events
+                        WHERE (uni_id = ? AND event_type = 'Private')
+                        OR event_type = 'Public'
+                        )
+                        UNION
+                        (
+                            SELECT E.*
+                            FROM Events E
+                            JOIN RSO_Events R ON R.event_id = E.event_id
+                            WHERE E.uni_id = ?
+                            AND R.approved = 2
+                        )
+                        ORDER BY date;`;
+        connection.query(query, [universityId, universityId], (error, results) => {
+            if (error) {
+                console.error('Error fetching events:', error);
+                return callback(error);
+            }
+            callback(null, results); // Return events specific to the university
+        });
+    }
+
+    // Method to retrieve all events
+    static getEvents(callback) {
+        const query = 'SELECT * FROM Events';
+        connection.query(query, (error, results) => {
+            if (error) {
+                console.error('Error fetching events:', error);
+                return callback(error);
+            }
+            callback(null, results); // Return all events
+        });
+    }
+
+    // Method to retrieve all RSO events that a user is a member of
+    static getMyEvents(uid, callback) {
+        const query = ` (SELECT E.*
                         FROM Events E
                         JOIN RSO_Events R ON R.event_id = E.event_id
-                        WHERE E.uni_id = ?
-                        AND R.approved = 2
-                    )
-                    ORDER BY date;`;
-    connection.query(query, [universityId, universityId], (error, results) => {
-        if (error) {
-            console.error('Error fetching events:', error);
-            return callback(error);
-        }
-        callback(null, results); // Return events specific to the university
-    });
-}
+                        JOIN RSO_Users_Joined RUJ ON RUJ.rso_id = R.owned_by
+                        WHERE R.approved = 2 AND RUJ.uid = ?
+                        )
+                        ORDER BY date;`;
+        connection.query(query, [uid], (error, results) => {
+            if (error) {
+                console.error('Error fetching events:', error);
+                return callback(error);
+            }
+            callback(null, results); // Return events specific to user RSOs
+        });
+    }
 
-// Method to retrieve all events
-static getEvents(callback) {
-    const query = 'SELECT * FROM Events';
-    connection.query(query, (error, results) => {
-        if (error) {
-            console.error('Error fetching events:', error);
-            return callback(error);
-        }
-        callback(null, results); // Return all events
-    });
-}
+    // Method to retrieve all accepted RSO evented created by user
+    static getApprovalStatus(event_id, callback) {
+        const query = `SELECT approved from RSO_Events where event_id = ?`;
+        connection.query(query, [event_id], (error, results) => {
+            if (error) {
+                console.error('Error fetching events:', error);
+                return callback(error);
+            }
+            callback(null, results[0]);
+        });
+    }
 
-// Method to retrieve all RSO events that a user is a member of
-static getMyEvents(uid, callback) {
-    const query = ` (SELECT E.*
-                    FROM Events E
-                    JOIN RSO_Events R ON R.event_id = E.event_id
-                    JOIN RSO_Users_Joined RUJ ON RUJ.rso_id = R.owned_by
-                    WHERE R.approved = 2 AND RUJ.uid = ?
-                    )
-                    ORDER BY date;`;
-    connection.query(query, [uid], (error, results) => {
-        if (error) {
-            console.error('Error fetching events:', error);
-            return callback(error);
-        }
-        callback(null, results); // Return events specific to user RSOs
-    });
-}
+    // Method to retrieve all accepted RSO evented created by user
+    static getMyApprovedCreatedEvents(uid, callback) {
+        const query = ` SELECT E.*
+                        FROM Events E
+                        JOIN RSO_Events RE ON RE.event_id = E.event_id
+                        JOIN RSO R ON R.rso_id = RE.owned_by
+                        WHERE R.created_by = ?
+                        AND RE.approved = 2;`;
+        connection.query(query, [uid], (error, results) => {
+            if (error) {
+                console.error('Error fetching events:', error);
+                return callback(error);
+            }
+            callback(null, results); // Return events specific to user RSOs
+        });
+    }
+
+    // Method to retrieve all pending RSO evented created by user
+    static getMyPendingCreatedEvents(uid, callback) {
+        const query = ` SELECT E.*
+                        FROM Events E
+                        JOIN RSO_Events RE ON RE.event_id = E.event_id
+                        JOIN RSO R ON R.rso_id = RE.owned_by
+                        WHERE R.created_by = ?
+                        AND RE.approved = 1;`;
+        connection.query(query, [uid], (error, results) => {
+            if (error) {
+                console.error('Error fetching events:', error);
+                return callback(error);
+            }
+            callback(null, results); // Return events specific to user RSOs
+        });
+    }
+
+    // Method to retrieve all denied RSO evented created by user
+    static getMyDeniedCreatedEvents(uid, callback) {
+        const query = ` SELECT E.*
+                        FROM Events E
+                        JOIN RSO_Events RE ON RE.event_id = E.event_id
+                        JOIN RSO R ON R.rso_id = RE.owned_by
+                        WHERE R.created_by = ?
+                        AND RE.approved = 0;`;
+        connection.query(query, [uid], (error, results) => {
+            if (error) {
+                console.error('Error fetching events:', error);
+                return callback(error);
+            }
+            callback(null, results); // Return events specific to user RSOs
+        });
+    }
 
 
     // Method to find an event by ID
