@@ -6,6 +6,7 @@ class RsoEvent {
     this.owned_by = owned_by;
   }
 
+  // Method to insert an event into the RSO_Events table
   static async add(event_id, owned_by, callback) {
     const query = `INSERT INTO RSO_Events (event_id, owned_by) VALUES (?, ?)`;
     connection.query(query, [event_id, owned_by], (error, result) => {

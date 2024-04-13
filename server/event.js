@@ -65,6 +65,7 @@ router.post('/api/event/type', (req, res) => {
         return res.status(400).json({ error: "rso_id was not passed correctly" });
     }
 
+    // all fields recieved
     else {
         if (event_type === 'Private') {
             // insert event into the Public_Events table

@@ -124,9 +124,10 @@ const CreateEvent = ({getEvents}) => {
             // if RSO event
             if (event_type === 'RSO') {
                 const rso_id = await getRsoId();
-                // insert new event into Event table, and get the id
                 if (rso_id) {
+                    // insert new event into Event table, and get the id
                     const event_id = await insertEvent();
+                    // no errors inserting event into db
                     if (event_id) {
                         // use the id and event type to insert into the correct event type table
                         await insertEventByType(event_id, event_type, rso_id);
@@ -148,6 +149,7 @@ const CreateEvent = ({getEvents}) => {
             else {
                 // insert new event into Event table, and get the id
                 const event_id = await insertEvent();
+                // no errors inserting event into db
                 if (event_id) {
                     // use the id and event type to insert into the correct event type table
                     await insertEventByType(event_id, event_type, null);

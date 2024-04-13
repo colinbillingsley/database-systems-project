@@ -24,6 +24,7 @@ class PrivateEvent {
     .catch(err => console.log(err));
   }
 
+  // Method to insert event into Private_Events table
   static async add(event_id, created_by, callback) {
     const query = `INSERT INTO Private_Events (event_id, created_by) VALUES (?, ?)`;
     connection.query(query, [event_id, created_by], (error, result) => {

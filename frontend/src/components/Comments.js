@@ -248,7 +248,7 @@ const Comments = ({eventComments, setEventComments, setComments, eventId, eventR
                                 }
                             </div>
                             <p>{stars}</p>
-                            {isEditing
+                            {user.uid === comment.uid && isEditing
                             ? <textarea
                             name=""
                             cols="30"

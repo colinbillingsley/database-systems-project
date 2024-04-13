@@ -24,6 +24,7 @@ class PublicEvent {
     .catch(err => console.log(err));
   }
 
+  // Method to insert event into Public_Events table
   static async add(event_id, created_by, callback) {
     const query = `INSERT INTO Public_Events (event_id, created_by) VALUES (?, ?)`;
     connection.query(query, [event_id, created_by], (error, result) => {
