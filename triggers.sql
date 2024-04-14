@@ -11,11 +11,11 @@ BEGIN
     
     IF rso_count >= 5 THEN
         UPDATE rso
-        SET status = 'active'
+        SET status = 'Active'
         WHERE rso_id = NEW.rso_id;
     ELSE
         UPDATE rso
-        SET status = 'inactive'
+        SET status = 'Inactive'
         WHERE rso_id = NEW.rso_id;
     END IF;
 END//
@@ -35,11 +35,11 @@ BEGIN
     
     IF rso_count >= 5 THEN
         UPDATE rso
-        SET status = 'active'
+        SET status = 'Active'
         WHERE rso_id = OLD.rso_id;
     ELSE
         UPDATE rso
-        SET status = 'inactive'
+        SET status = 'Inactive'
         WHERE rso_id = OLD.rso_id;
     END IF;
 END//
