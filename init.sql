@@ -42,6 +42,7 @@ USE `eventdb`;
 
    CREATE TABLE `Events` (
   `event_id` int NOT NULL AUTO_INCREMENT,
+  `uni_id` int,
   `time` time(6) , 
   `desc` varchar(255) ,
   `location_name` varchar(255),
@@ -53,11 +54,13 @@ USE `eventdb`;
   `event_name` varchar(255),
   `longitude` varchar(255),
   `latitude` varchar(255),
-  PRIMARY KEY (`event_id`)
+  PRIMARY KEY (`event_id`),
+  FOREIGN KEY (uni_id) references Universities(uni_id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
  
     CREATE TABLE `RSO` (
   `rso_id` int NOT NULL AUTO_INCREMENT,
+  `uni_id` int,
   `name` varchar(255),
   `created_by` int,
   `type` varchar(255),
@@ -67,7 +70,8 @@ USE `eventdb`;
   `status` varchar(255),
   `approved` INT,
   PRIMARY KEY (`rso_id`),
-  FOREIGN KEY (created_by) references Admins(uid) ON DELETE CASCADE
+  FOREIGN KEY (created_by) references Admins(uid) ON DELETE CASCADE,
+  FOREIGN KEY (uni_id) references Universities(uni_id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
     CREATE TABLE `RSO_Users_Joined` (
